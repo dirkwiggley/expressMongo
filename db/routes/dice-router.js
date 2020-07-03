@@ -9,6 +9,5 @@ router.put('/dice/:id', DiceCtrl.updateDice)
 router.delete('/dice/:id', DiceCtrl.deleteDice)
 router.get('/dice/:id', DiceCtrl.getDiceById)
 router.get('/dice', DiceCtrl.getDice)
-router.get('/test', DiceCtrl.test)
 
 module.exports = router
