@@ -1,0 +1,3 @@
+7/2/2020
+* Updated the dice-ctrl, and dice-model
+* Added the admin-ctrl. So far it just seeds the collections

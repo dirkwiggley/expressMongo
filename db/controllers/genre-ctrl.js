@@ -1,6 +1,6 @@
 const Genre = require('../models/genre-model')
 
-createGenre = (req, res) => {
+insertGenre = (req, res) => {
     const body = req.body
 
     if (!body) {
@@ -117,9 +117,9 @@ getGenres = async (req, res) => {
 }
 
 module.exports = {
-    createGenre,
+    insertGenre,
     updateGenre,
     deleteGenre,
     getGenres,
-    getGenreById,
+    getGenreById
 }

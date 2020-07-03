@@ -4,7 +4,7 @@ const GenreCtrl = require('../controllers/genre-ctrl')
 
 const router = express.Router()
 
-router.post('/genre', GenreCtrl.createGenre)
+router.post('/genre', GenreCtrl.insertGenre)
 router.put('/genre/:id', GenreCtrl.updateGenre)
 router.delete('/genre/:id', GenreCtrl.deleteGenre)
 router.get('/genre/:id', GenreCtrl.getGenreById)
