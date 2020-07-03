@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const Dice = new Schema(
+const Rank = new Schema(
     {
         name: { type: String, required: true },
         max: { type: Number, required: true },
@@ -11,4 +11,4 @@ const Dice = new Schema(
     { timestamps: true },
 )
 
-module.exports = mongoose.model('dice', Dice)
+module.exports = mongoose.model('rank', Rank)

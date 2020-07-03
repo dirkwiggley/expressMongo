@@ -1,39 +1,39 @@
-const Dice = require('../models/dice-model')
+const Rank = require('../models/rank-model')
 
-insertDice = (req, res) => {
+insertRank = (req, res) => {
     const body = req.body
 
     if (!body) {
         return res.status(400).json({
             success: false,
-            error: 'You must provide a dice',
+            error: 'You must provide a rank',
         })
     }
 
-    const dice = new Dice(body)
+    const rank = new Rank(body)
 
-    if (!dice) {
+    if (!rank) {
         return res.status(400).json({ success: false, error: err })
     }
 
-    dice
+    rank
         .save()
         .then(() => {
             return res.status(201).json({
                 success: true,
-                id: dice._id,
-                message: 'Dice created!',
+                id: rank._id,
+                message: 'Rank created!',
             })
         })
         .catch(error => {
             return res.status(400).json({
                 error,
-                message: 'Dice not created!',
+                message: 'Rank not created!',
             })
         })
 }
 
-updateDice = async (req, res) => {
+updateRank = async (req, res) => {
     const body = req.body
 
     if (!body) {
@@ -43,76 +43,76 @@ updateDice = async (req, res) => {
         })
     }
 
-    Dice.findOne({ _id: req.params.id }, (err, dice) => {
+    Rank.findOne({ _id: req.params.id }, (err, rank) => {
         if (err) {
             return res.status(404).json({
                 err,
-                message: 'Dice not found!',
+                message: 'Rank not found!',
             })
         }
-        dice.name = body.name
-        // dice.time = body.time
-        // dice.rating = body.rating
-        dice
+        rank.name = body.name
+        // rank.time = body.time
+        // rank.rating = body.rating
+        rank
             .save()
             .then(() => {
                 return res.status(200).json({
                     success: true,
-                    id: dice._id,
-                    message: 'Dice updated!',
+                    id: rank._id,
+                    message: 'Rank updated!',
                 })
             })
             .catch(error => {
                 return res.status(404).json({
                     error,
-                    message: 'Dice not updated!',
+                    message: 'Rank not updated!',
                 })
             })
     })
 }
 
-deleteDice = async (req, res) => {
-    await Dice.findOneAndDelete({ _id: req.params.id }, (err, dice) => {
+deleteRank = async (req, res) => {
+    await Rank.findOneAndDelete({ _id: req.params.id }, (err, rank) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
 
-        if (!dice) {
+        if (!rank) {
             return res
                 .status(404)
-                .json({ success: false, error: `Dice not found` })
+                .json({ success: false, error: `Rank not found` })
         }
 
-        return res.status(200).json({ success: true, data: dice })
+        return res.status(200).json({ success: true, data: rank })
     }).catch(err => console.log(err))
 }
 
-getDiceById = async (req, res) => {
-    await Dice.findOne({ _id: req.params.id }, (err, dice) => {
+getRankById = async (req, res) => {
+    await Rank.findOne({ _id: req.params.id }, (err, rank) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
 
-        if (!dice) {
+        if (!rank) {
             return res
                 .status(404)
-                .json({ success: false, error: `Dice not found` })
+                .json({ success: false, error: `Rank not found` })
         }
-        return res.status(200).json({ success: true, data: dice })
+        return res.status(200).json({ success: true, data: rank })
     }).catch(err => console.log(err))
 }
 
-getDice = async (req, res) => {
+getRank = async (req, res) => {
     const byOrdinal = { ordinal: 1}
-    await Dice.find({}, (err, dice) => {
-        result = dice;
+    await Rank.find({}, (err, rank) => {
+        result = rank;
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
-        if (!dice.length) {
+        if (!rank.length) {
             return res
                 .status(404)
-                .json({ success: false, error: `Dice not found` })
+                .json({ success: false, error: `Rank not found` })
         }
     }).sort(byOrdinal).exec(function(err, result) {
         if (err) {
@@ -124,9 +124,9 @@ getDice = async (req, res) => {
 }
 
 module.exports = {
-    insertDice,
-    updateDice,
-    deleteDice,
-    getDice,
-    getDiceById
+    insertRank,
+    updateRank,
+    deleteRank,
+    getRank,
+    getRankById
 }

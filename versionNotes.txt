@@ -1,3 +1,6 @@
 7/2/2020
 * Updated the dice-ctrl, and dice-model
 * Added the admin-ctrl. So far it just seeds the collections
+7/3/2020
+* Added collections attributeType and rank CRUD and seeder methods
+* Added ordinal field to various Schemas
