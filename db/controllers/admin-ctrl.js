@@ -42,7 +42,6 @@ saveCampaigns = (res, body, finalVal) => {
     campaign
         .save()
         .then(() => {
-            console.log(body, finalVal)
             if (finalVal) {
                 return res.status(201).json({
                     success: true,
@@ -105,7 +104,6 @@ saveGenres = (res, body, finalVal) => {
             }
         })
         .catch(error => {
-            console.log(error)
             return res.status(400).json({
                 error,
                 message: 'Genres not created!',
@@ -157,7 +155,6 @@ saveDice = (res, body, finalVal) => {
             }
         })
         .catch(error => {
-            console.log(error)
             return res.status(400).json({
                 error,
                 message: 'Dice not created!',
