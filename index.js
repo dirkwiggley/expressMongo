@@ -9,6 +9,7 @@ const diceRouter = require('./db/routes/dice-router')
 const adminRouter = require('./db/routes/admin-router')
 const attributeTypeRouter = require('./db/routes/attributeType-router')
 const rankRouter = require('./db/routes/rank-router')
+const hindranceRouter = require('./db/routes/hindrance-router')
 
 const app = express()
 const apiPort = 3001
@@ -23,6 +24,6 @@ app.get('/', (req, res) => {
     res.send('Hello World!')
 })
 
-app.use('/api', campaignRouter, genreRouter, diceRouter, adminRouter, attributeTypeRouter, rankRouter)
+app.use('/api', campaignRouter, genreRouter, diceRouter, adminRouter, attributeTypeRouter, rankRouter, hindranceRouter)
 
 app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`))

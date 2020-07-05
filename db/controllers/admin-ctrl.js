@@ -3,6 +3,58 @@ const Genre = require('../models/genre-model')
 const Dice = require('../models/dice-model')
 const AttributeType = require('../models/attributeType-model')
 const Rank = require('../models/rank-model')
+const Hindrance = require('../models/hindrance-model')
+const attrData = require('./data/attributeData')
+const rankData = require('./data/rankData')
+
+initDataTypes = (req, res) => {
+    const bodyList = [
+        { name: 'attribute' },
+        { name: 'campaign' },
+        { name: 'dice' },
+        { name: 'genre' },
+        { name: 'hindrance' },
+        { name: 'rank' } ]
+
+    let finalVal = false
+    bodyList.map((body) => {
+        if (body.name == 'rank')
+            finalVal = true;
+        saveDataTypes(res, body, finalVal)
+    })
+}
+
+/**
+ * I know this is wrong. It's working well enough for me 
+ * to get back to it later.
+ */
+saveDataTypes = (res, body, finalVal) => {
+    const dataType = new DataType(body)
+
+    if (!dataType) {
+        return res.status(400).json({ success: false, error: err })
+    }
+
+    dataType
+        .save()
+        .then(() => {
+            if (finalVal) {
+                return res.status(201).json({
+                    success: true,
+                    id: dataType._id,
+                    message: 'DataTypes created!',
+                })
+            } else {
+                return
+            }
+        })
+        .catch(error => {
+            return res.status(400).json({
+                error,
+                message: 'DataTypes not created!',
+            })
+        })
+}
 
 initCampaigns = (req, res) => {
     const body = {name: 'Generic', gms: [{gmId: 'Tim'}, {gmId: 'Rob'}] }
@@ -166,27 +218,9 @@ saveDice = (res, body, finalVal) => {
 }
 
 initAttributeTypes = (req, res) => {
-    const bodyList = [
-        { name: 'Agility', abbreviation: 'AGI', description: 
-            "Agility is a measure of a characters nimbleness, dexterity and general coordination", 
-            ordinal: 0 },
-        { name: 'Smarts', abbreviation: 'SMA', description: 
-            "Smarts measures raw intelligence, mental acuity, and how fast a heroine thinks on her feet. It's used to resist certain types of mental and social attacks.", 
-            ordinal: 1 },
-        { name: 'Spirit', abbreviation: 'SPI', description: 
-            "Spirit is self-confidence, backbone, and willpower. It is used to resist supernatural attacks as well as fear", 
-            ordinal: 2 },
-        { name: 'Strength', abbreviation: 'STR', description: 
-            "Strength is physical power and fitness. It's also used as the basis for a warrior's damage in hand-to-hand combat, and to determine how much he can wear or carry.", 
-            ordinal: 3 },
-        { name: 'Vigour', abbreviation: 'VIG', description: 
-            "Vigour represents an individuals endurance, resistance to disease, poisons, or toxins, and how much physical damage she can take before she can't go on. It is most often used to resist fatigue effects, and as the basis for the derived stat of Toughness.", 
-            ordinal: 4 }
-        ]
-        
-    let finalVal = false;
+    let finalVal = false
 
-    bodyList.map((body) => {
+    attrData.getAttributes().map((body) => {
         if (body.name == 'Vigour') 
             finalVal = true;
         saveAttributeTypes(res, body, finalVal)
@@ -228,16 +262,9 @@ saveAttributeTypes = (res, body, finalVal) => {
 }
 
 initRanks = (req, res) => {
-    const bodyList = [
-        { name: 'Novice', min: 0, max: 3, ordinal: 0 },
-        { name: 'Seasoned', min: 4, max: 7, ordinal: 1 },
-        { name: 'Veteran', min: 8, max: 11, ordinal: 2 },
-        { name: 'Heroic', min: 12, max: 15, ordinal: 3 },
-        { name: 'Legendary', min: 16, max: 1000, ordinal: 4 }]
-        
-    let finalVal = false;
+    let finalVal = false
 
-    bodyList.map((body) => {
+    rankData.getRanks().map((body) => {
         if (body.ordinal == 4) 
             finalVal = true;
         saveRanks(res, body, finalVal)
@@ -278,10 +305,59 @@ saveRanks = (res, body, finalVal) => {
         })
 }
 
+initHindrances = (req, res) => {
+    const bodyList = [
+        { name: '', summary: '', description: '', incompatibilities: null, cost: 1 },
+        { name: '', summary: '', description: '', incompatibilities: null, cost: 1 }]
+        
+    let finalVal = false;
+
+    bodyList.map((body) => {
+        if (body.ordinal == 4) 
+            finalVal = true;
+        saveHindrances(res, body, finalVal)
+    })
+
+}
+
+/**
+ * I know this is wrong. It's working well enough for me 
+ * to get back to it later.
+ */
+saveHindrances = (res, body, finalVal) => {
+    const rank = new Hindrance(body)
+
+    if (!rank) {
+        return res.status(400).json({ success: false, error: err })
+    }
+
+    hindrance
+        .save()
+        .then(() => {
+            if (finalVal) {
+                return res.status(201).json({
+                    success: true,
+                    id: rank._id,
+                    message: 'Hindrance created!',
+                })
+            } else {
+                return
+            }
+        })
+        .catch(error => {
+            console.log('error', error)
+            return res.status(400).json({
+                error,
+                message: 'Hindrance not created!',
+            })
+        })
+}
+
 module.exports = {
     initCampaigns,
     initDice,
     initGenres,
     initAttributeTypes,
-    initRanks
+    initRanks,
+    initHindrances
 }
