@@ -6,3 +6,5 @@
 * Added ordinal field to various Schemas
 7/4/2020
 * Pushed proprietary data into separate files so that I could gitignore them
+7/7/2020
+* Updated handling of hindrances and added handling for skills (though both need the raw data added)

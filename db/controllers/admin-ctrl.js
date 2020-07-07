@@ -6,6 +6,7 @@ const Rank = require('../models/rank-model')
 const Hindrance = require('../models/hindrance-model')
 const attrData = require('./data/attributeData')
 const rankData = require('./data/rankData')
+const hindranceData  = require('./data/hindranceData')
 
 initDataTypes = (req, res) => {
     const bodyList = [
@@ -167,13 +168,15 @@ saveGenres = (res, body, finalVal) => {
 
 initDice = (req, res) => {
     const bodyList = [
-        { name: 'D4', min: 1, max: 4, ordinal: 0 },
-        { name: 'D6', min: 1, max: 6, ordinal: 1 },
-        { name: 'D8', min: 1, max: 8, ordinal: 2 },
-        { name: 'D10', min: 1, max: 10, ordinal: 3 },
-        { name: 'D12', min: 1, max: 12, ordinal: 4 },
-        { name: 'D12+1', min: 2, max: 13, ordinal: 5 },
-        { name: 'D12+2', min: 3, max: 14, ordinal: 6 } ]
+        { name: 'D4-2', min: 1, max: 2, ordinal: 0 },
+        { name: 'D4-1', min: 1, max: 3, ordinal: 1 },
+        { name: 'D4', min: 1, max: 4, ordinal: 2 },
+        { name: 'D6', min: 1, max: 6, ordinal: 3 },
+        { name: 'D8', min: 1, max: 8, ordinal: 4 },
+        { name: 'D10', min: 1, max: 10, ordinal: 5 },
+        { name: 'D12', min: 1, max: 12, ordinal: 6 },
+        { name: 'D12+1', min: 2, max: 13, ordinal: 7 },
+        { name: 'D12+2', min: 3, max: 14, ordinal: 8 } ]
         
     let finalVal = false;
 
@@ -306,14 +309,10 @@ saveRanks = (res, body, finalVal) => {
 }
 
 initHindrances = (req, res) => {
-    const bodyList = [
-        { name: '', summary: '', description: '', incompatibilities: null, cost: 1 },
-        { name: '', summary: '', description: '', incompatibilities: null, cost: 1 }]
-        
     let finalVal = false;
 
-    bodyList.map((body) => {
-        if (body.ordinal == 4) 
+    hindranceData.getHindrances().map((body) => {
+        if (body.name == 'Bloodthirsty') 
             finalVal = true;
         saveHindrances(res, body, finalVal)
     })
@@ -325,9 +324,9 @@ initHindrances = (req, res) => {
  * to get back to it later.
  */
 saveHindrances = (res, body, finalVal) => {
-    const rank = new Hindrance(body)
+    const hindrance = new Hindrance(body)
 
-    if (!rank) {
+    if (!hindrance) {
         return res.status(400).json({ success: false, error: err })
     }
 
@@ -337,7 +336,7 @@ saveHindrances = (res, body, finalVal) => {
             if (finalVal) {
                 return res.status(201).json({
                     success: true,
-                    id: rank._id,
+                    id: hindrance._id,
                     message: 'Hindrance created!',
                 })
             } else {

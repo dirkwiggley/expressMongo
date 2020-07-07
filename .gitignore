@@ -25,3 +25,5 @@ yarn-error.log*
 # proprietary data
 rankData.js
 attributeData.js
+hindranceData.js
+skillData.js
