@@ -1,12 +1,17 @@
+const DataTypes = require('../dataTypes')
 const Campaign = require('../models/campaign-model')
 const Genre = require('../models/genre-model')
 const Dice = require('../models/dice-model')
 const AttributeType = require('../models/attributeType-model')
 const Rank = require('../models/rank-model')
 const Hindrance = require('../models/hindrance-model')
+const Edge = require('../models/edge-model')
+const ArcaneBackground = require('../models/arcaneBackground-model')
 const attrData = require('./data/attributeData')
 const rankData = require('./data/rankData')
 const hindranceData  = require('./data/hindranceData')
+const edgeData = require('./data/edgeData')
+const arcaneBackgroundData = require('./data/arcaneBackgroundData')
 
 initDataTypes = (req, res) => {
     const bodyList = [
@@ -352,11 +357,101 @@ saveHindrances = (res, body, finalVal) => {
         })
 }
 
+initEdges = (req, res) => {
+    let finalVal = false;
+
+    edgeData.getEdges().map((body) => {
+        if (body.name == 'Aristocrat') 
+            finalVal = true;
+        saveEdges(res, body, finalVal)
+    })
+
+}
+
+/**
+ * I know this is wrong. It's working well enough for me 
+ * to get back to it later.
+ */
+saveEdges = (res, body, finalVal) => {
+    const edge = new Edge(body)
+
+    if (!edge) {
+        return res.status(400).json({ success: false, error: err })
+    }
+
+    edge
+        .save()
+        .then(() => {
+            if (finalVal) {
+                return res.status(201).json({
+                    success: true,
+                    id: edge._id,
+                    message: 'Edge created!',
+                })
+            } else {
+                return
+            }
+        })
+        .catch(error => {
+            console.log('error', error)
+            return res.status(400).json({
+                error,
+                message: 'Edge not created!',
+            })
+        })
+}
+
+initArcaneBackgrounds = (req, res) => {
+    let finalVal = false;
+
+    arcaneBackgroundData.getArcaneBackgrounds().map((body) => {
+        if (body.name == DataTypes.ARCANE_BACKGROUND_TYPES.WEIRD_SCIENCE) 
+            finalVal = true;
+        saveArcaneBackgrounds(res, body, finalVal)
+    })
+
+}
+
+/**
+ * I know this is wrong. It's working well enough for me 
+ * to get back to it later.
+ */
+saveArcaneBackgrounds = (res, body, finalVal) => {
+    const arcaneBackground = new ArcaneBackground(body)
+
+    if (!arcaneBackground) {
+        return res.status(400).json({ success: false, error: err })
+    }
+
+    arcaneBackground
+        .save()
+        .then(() => {
+            if (finalVal) {
+                return res.status(201).json({
+                    success: true,
+                    id: arcaneBackground._id,
+                    message: 'Arcane Background created!',
+                })
+            } else {
+                return
+            }
+        })
+        .catch(error => {
+            console.log('error', error)
+            return res.status(400).json({
+                error,
+                message: 'Arcane Background not created!',
+            })
+        })
+}
+
 module.exports = {
     initCampaigns,
     initDice,
     initGenres,
     initAttributeTypes,
     initRanks,
-    initHindrances
+    initHindrances,
+    initEdges,
+    initArcaneBackgrounds
 }
