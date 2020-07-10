@@ -8,3 +8,7 @@
 * Pushed proprietary data into separate files so that I could gitignore them
 7/7/2020
 * Updated handling of hindrances and added handling for skills (though both need the raw data added)
+7/8/2020
+* Added arcane edges and arcane background data
+7/9/2020
+* Added abilities

@@ -6,7 +6,8 @@ module.exports = {
     HINDRANCE : 'HINDRANCE',
     RANK : 'RANK',
     EDGE : 'EDGE',
-    SKILL: 'SKILL',
+    SKILL : 'SKILL',
+    ABILITY : 'ABILITY',
     EDGE_TYPE : {
         BACKGROUND : 'Background',
         COMBAT : 'Combat',
@@ -23,5 +24,13 @@ module.exports = {
         MIRACLES : 'Miracles',
         PSIONICS : 'Psionics',
         WEIRD_SCIENCE : 'Weird Science'
+    },
+    ABILITY_TYPES : {
+        GENERAL : 'GENERAL',
+        COMBAT : 'COMBAT',
+        MOVEMENT : 'MOVEMENT',
+        ENVIRONMENTAL : 'ENVIRONMENTAL',
+        EDGE : 'EDGE',
+        SKILL : 'SKILL'
     }
 }

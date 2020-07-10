@@ -12,6 +12,7 @@ const rankRouter = require('./db/routes/rank-router')
 const hindranceRouter = require('./db/routes/hindrance-router')
 const edgeRouter = require('./db/routes/edge-router')
 const arcaneBackgroundRouter = require('./db/routes/arcaneBackground-router')
+const abilityRouter = require('./db/routes/ability-router')
 
 const app = express()
 const apiPort = 3001
@@ -27,6 +28,6 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api', campaignRouter, genreRouter, diceRouter, adminRouter, attributeTypeRouter, rankRouter, hindranceRouter)
-app.use('/api', edgeRouter, arcaneBackgroundRouter)
+app.use('/api', edgeRouter, arcaneBackgroundRouter, abilityRouter)
 
 app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`))

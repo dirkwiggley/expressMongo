@@ -7,11 +7,13 @@ const Rank = require('../models/rank-model')
 const Hindrance = require('../models/hindrance-model')
 const Edge = require('../models/edge-model')
 const ArcaneBackground = require('../models/arcaneBackground-model')
+const Ability = require('../models/ability-model')
 const attrData = require('./data/attributeData')
 const rankData = require('./data/rankData')
 const hindranceData  = require('./data/hindranceData')
 const edgeData = require('./data/edgeData')
 const arcaneBackgroundData = require('./data/arcaneBackgroundData')
+const abilityData = require('./data/abilityData')
 
 initDataTypes = (req, res) => {
     const bodyList = [
@@ -445,6 +447,50 @@ saveArcaneBackgrounds = (res, body, finalVal) => {
         })
 }
 
+initAbilities = (req, res) => {
+    let finalVal = false;
+
+    abilityData.getAbilities().map((body) => {
+        if (body.name == 'Armor') 
+            finalVal = true;
+        saveAbilities(res, body, finalVal)
+    })
+
+}
+
+/**
+ * I know this is wrong. It's working well enough for me 
+ * to get back to it later.
+ */
+saveAbilities = (res, body, finalVal) => {
+    const ability = new Ability(body)
+
+    if (!ability) {
+        return res.status(400).json({ success: false, error: err })
+    }
+
+    ability
+        .save()
+        .then(() => {
+            if (finalVal) {
+                return res.status(201).json({
+                    success: true,
+                    id: ability._id,
+                    message: 'Ability created!',
+                })
+            } else {
+                return
+            }
+        })
+        .catch(error => {
+            console.log('error', error)
+            return res.status(400).json({
+                error,
+                message: 'Ability not created!',
+            })
+        })
+}
+
 module.exports = {
     initCampaigns,
     initDice,
@@ -453,5 +499,6 @@ module.exports = {
     initRanks,
     initHindrances,
     initEdges,
-    initArcaneBackgrounds
+    initArcaneBackgrounds,
+    initAbilities
 }
