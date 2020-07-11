@@ -12,3 +12,6 @@
 * Added arcane edges and arcane background data
 7/9/2020
 * Added abilities
+7/10/2020
+* Added races and removed a couple of console.log statements
+

@@ -103,9 +103,9 @@ getHindranceById = async (req, res) => {
 }
 
 getHindrance = async (req, res) => {
-    const byOrdinal = { ordinal: 1}
+    const byOrdinal = { ordinal: 1 }
     await Hindrance.find({}, (err, hindrance) => {
-        result = hindrance;
+        result = hindrance
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
@@ -116,11 +116,10 @@ getHindrance = async (req, res) => {
         }
     }).sort(byOrdinal).exec(function(err, result) {
         if (err) {
-            console.log(err)
             return res.status(400).json({ success: false, error: err })
         }
         return res.status(200).json({ success: true, data: result })
-    }).catch()
+    })
 }
 
 module.exports = {

@@ -103,9 +103,9 @@ getAbilityById = async (req, res) => {
 }
 
 getAbility = async (req, res) => {
-    const byOrdinal = { ordinal: 1}
+    const byName = { name: 1 }
     await Ability.find({}, (err, ability) => {
-        result = ability;
+        result = ability
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
@@ -114,13 +114,12 @@ getAbility = async (req, res) => {
                 .status(404)
                 .json({ success: false, error: `Ability not found` })
         }
-    }).sort(byOrdinal).exec(function(err, result) {
+    }).sort(byName).exec(function(err, result) {
         if (err) {
-            console.log(err)
             return res.status(400).json({ success: false, error: err })
         }
         return res.status(200).json({ success: true, data: result })
-    }).catch()
+    })
 }
 
 module.exports = {

@@ -8,12 +8,14 @@ const Hindrance = require('../models/hindrance-model')
 const Edge = require('../models/edge-model')
 const ArcaneBackground = require('../models/arcaneBackground-model')
 const Ability = require('../models/ability-model')
+const Race = require('../models/race-model')
 const attrData = require('./data/attributeData')
 const rankData = require('./data/rankData')
 const hindranceData  = require('./data/hindranceData')
 const edgeData = require('./data/edgeData')
 const arcaneBackgroundData = require('./data/arcaneBackgroundData')
 const abilityData = require('./data/abilityData')
+const raceData = require('./data/raceData')
 
 initDataTypes = (req, res) => {
     const bodyList = [
@@ -451,7 +453,7 @@ initAbilities = (req, res) => {
     let finalVal = false;
 
     abilityData.getAbilities().map((body) => {
-        if (body.name == 'Armor') 
+        if (body.name == 'Low Light Vision') 
             finalVal = true;
         saveAbilities(res, body, finalVal)
     })
@@ -491,6 +493,50 @@ saveAbilities = (res, body, finalVal) => {
         })
 }
 
+initRaces = (req, res) => {
+    let finalVal = false;
+
+    raceData.getRaces().map((body) => {
+        if (body.name == 'Elves') 
+            finalVal = true;
+        saveRaces(res, body, finalVal)
+    })
+
+}
+
+/**
+ * I know this is wrong. It's working well enough for me 
+ * to get back to it later.
+ */
+saveRaces = (res, body, finalVal) => {
+    const race = new Race(body)
+
+    if (!race) {
+        return res.status(400).json({ success: false, error: err })
+    }
+
+    race
+        .save()
+        .then(() => {
+            if (finalVal) {
+                return res.status(201).json({
+                    success: true,
+                    id: race._id,
+                    message: 'Race created!',
+                })
+            } else {
+                return
+            }
+        })
+        .catch(error => {
+            console.log('error', error)
+            return res.status(400).json({
+                error,
+                message: 'Race not created!',
+            })
+        })
+}
+
 module.exports = {
     initCampaigns,
     initDice,
@@ -500,5 +546,6 @@ module.exports = {
     initHindrances,
     initEdges,
     initArcaneBackgrounds,
-    initAbilities
+    initAbilities,
+    initRaces
 }

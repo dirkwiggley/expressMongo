@@ -8,7 +8,14 @@ module.exports = {
     EDGE : 'EDGE',
     SKILL : 'SKILL',
     ABILITY : 'ABILITY',
-    EDGE_TYPE : {
+    ATTRIBUTE_TYPES : {
+        AGILITY : 'AGILITY',
+        SMARTS : 'SMARTS',
+        SPIRIT : 'SPIRIT',
+        STRENGTH : 'STRENGTH',
+        VIGOUR : 'VIGOUR'
+    },
+    EDGE_TYPES : {
         BACKGROUND : 'Background',
         COMBAT : 'Combat',
         LEADERSHIP : 'Leadership',
@@ -31,6 +38,7 @@ module.exports = {
         MOVEMENT : 'MOVEMENT',
         ENVIRONMENTAL : 'ENVIRONMENTAL',
         EDGE : 'EDGE',
-        SKILL : 'SKILL'
+        SKILL : 'SKILL',
+        ATTRIBUTE : 'ATTRIBUTE',
     }
 }

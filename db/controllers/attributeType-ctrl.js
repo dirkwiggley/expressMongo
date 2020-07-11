@@ -116,7 +116,7 @@ getAttributeType = async (req, res) => {
         }
     }).sort(byOrdinal).exec(function(err, result) {
         return res.status(200).json({ success: true, data: result })
-    }).catch(err => console.log(err))
+    })
 }
 
 module.exports = {
