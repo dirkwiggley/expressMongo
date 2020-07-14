@@ -9,6 +9,10 @@ const Edge = require('../models/edge-model')
 const ArcaneBackground = require('../models/arcaneBackground-model')
 const Ability = require('../models/ability-model')
 const Race = require('../models/race-model')
+const Skill = require('../models/skill-model')
+const Character = require('../models/character-model')
+const campaignData = require('./data/campaignData')
+const genreData = require('./data/genreData')
 const attrData = require('./data/attributeData')
 const rankData = require('./data/rankData')
 const hindranceData  = require('./data/hindranceData')
@@ -16,6 +20,8 @@ const edgeData = require('./data/edgeData')
 const arcaneBackgroundData = require('./data/arcaneBackgroundData')
 const abilityData = require('./data/abilityData')
 const raceData = require('./data/raceData')
+const skillData = require('./data/skillData')
+const characterData = require('./data/characterData')
 
 initDataTypes = (req, res) => {
     const bodyList = [
@@ -23,8 +29,14 @@ initDataTypes = (req, res) => {
         { name: 'campaign' },
         { name: 'dice' },
         { name: 'genre' },
+        { name: 'ability' },
+        { name: 'edge' },
+        { name: 'arcaneBackground' },
         { name: 'hindrance' },
-        { name: 'rank' } ]
+        { name: 'rank' },
+        { name: 'race' },
+        { name: 'skill' }
+    ]
 
     let finalVal = false
     bodyList.map((body) => {
@@ -67,29 +79,13 @@ saveDataTypes = (res, body, finalVal) => {
 }
 
 initCampaigns = (req, res) => {
-    const body = {name: 'Generic', gms: [{gmId: 'Tim'}, {gmId: 'Rob'}] }
+    let finalVal = false
 
-    const campaign = new Campaign(body)
-
-    if (!campaign) {
-        return res.status(400).json({ success: false, error: err })
-    }
-
-    campaign
-        .save()
-        .then(() => {
-            return res.status(201).json({
-                success: true,
-                id: campaign._id,
-                message: 'Campaign created!',
-            })
-        })
-        .catch(error => {
-            return res.status(400).json({
-                error,
-                message: 'Campaign not created!',
-            })
-        })
+    campaignData.getCampaigns().map((body) => {
+        if (body.name == 'Generic') 
+            finalVal = true;
+        saveCampaigns(res, body, finalVal)
+    })
 }
 
 /**
@@ -97,7 +93,7 @@ initCampaigns = (req, res) => {
  * to get back to it later.
  */
 saveCampaigns = (res, body, finalVal) => {
-    const campaign = new Genre(body)
+    const campaign = new Campaign(body)
 
     if (!campaign) {
         return res.status(400).json({ success: false, error: err })
@@ -125,22 +121,13 @@ saveCampaigns = (res, body, finalVal) => {
 }
 
 initGenres = (req, res) => {
-    const bodyList = [{ name: 'Generic' },
-        { name: 'Fantasy' },
-        { name: 'Scifi' },
-        { name: 'Cyberpunk' },
-        { name: 'Steampunk' },
-        { name: 'Horror' },
-        { name: 'Modern' },
-        { name: 'Post apocalyptic'} ]
-
     let finalVal = false
-    bodyList.map((body) => {
-        if (body.name == 'Post apocalyptic')
+
+    genreData.getGenres().map((body) => {
+        if (body.name == 'Post Apocalyptic') 
             finalVal = true;
         saveGenres(res, body, finalVal)
     })
-
 }
 
 /**
@@ -537,6 +524,92 @@ saveRaces = (res, body, finalVal) => {
         })
 }
 
+initSkills = (req, res) => {
+    let finalVal = false;
+
+    skillData.getSkills().map((body) => {
+        if (body.name == 'Battle') 
+            finalVal = true;
+        saveSkills(res, body, finalVal)
+    })
+
+}
+
+/**
+ * I know this is wrong. It's working well enough for me 
+ * to get back to it later.
+ */
+saveSkills = (res, body, finalVal) => {
+    const skill = new Skill(body)
+
+    if (!skill) {
+        return res.status(400).json({ success: false, error: err })
+    }
+
+    skill
+        .save()
+        .then(() => {
+            if (finalVal) {
+                return res.status(201).json({
+                    success: true,
+                    id: skill._id,
+                    message: 'Skill created!',
+                })
+            } else {
+                return
+            }
+        })
+        .catch(error => {
+            console.log('error', error)
+            return res.status(400).json({
+                error,
+                message: 'Skill not created!',
+            })
+        })
+}
+
+initCharacters = (req, res) => {
+    let finalVal = false
+
+    characterData.getCharacters().map((body) => {
+        if (body.name == 'Blank') 
+            finalVal = true;
+        saveCharacters(res, body, finalVal)
+    })
+}
+
+/**
+ * I know this is wrong. It's working well enough for me 
+ * to get back to it later.
+ */
+saveCharacters = (res, body, finalVal) => {
+    const character = new Character(body)
+
+    if (!character) {
+        return res.status(400).json({ success: false, error: err })
+    }
+
+    character
+        .save()
+        .then(() => {
+            if (finalVal) {
+                return res.status(201).json({
+                    success: true,
+                    id: character._id,
+                    message: 'Characters created!',
+                })
+            } else {
+                return
+            }
+        })
+        .catch(error => {
+            return res.status(400).json({
+                error,
+                message: 'Characters not created!',
+            })
+        })
+}
+
 module.exports = {
     initCampaigns,
     initDice,
@@ -547,5 +620,7 @@ module.exports = {
     initEdges,
     initArcaneBackgrounds,
     initAbilities,
-    initRaces
+    initRaces,
+    initSkills,
+    initCharacters
 }

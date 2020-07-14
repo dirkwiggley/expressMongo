@@ -14,5 +14,7 @@ router.get('/admin/init-edges', AdminCtrl.initEdges)
 router.get('/admin/init-arcaneBackgrounds', AdminCtrl.initArcaneBackgrounds)
 router.get('/admin/init-abilities', AdminCtrl.initAbilities)
 router.get('/admin/init-races', AdminCtrl.initRaces)
+router.get('/admin/init-skills', AdminCtrl.initSkills)
+router.get('/admin/init-characters', AdminCtrl.initCharacters)
 
 module.exports = router

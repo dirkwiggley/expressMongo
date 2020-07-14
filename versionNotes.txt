@@ -14,4 +14,7 @@
 * Added abilities
 7/10/2020
 * Added races and removed a couple of console.log statements
+7/13/2020
+* Added more detail to Campaigns and added Characters
+
 
