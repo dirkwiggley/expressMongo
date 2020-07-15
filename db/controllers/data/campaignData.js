@@ -1,5 +1,3 @@
-const DataTypes = require('../../dataTypes')
-
 // name: { type: String, required: true },
 // genres: [ { genreId: { type: String, required: true } } ],
 // races: [ { raceId: { type: String, required: true } } ],

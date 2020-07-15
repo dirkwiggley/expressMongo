@@ -11,6 +11,7 @@ const Ability = require('../models/ability-model')
 const Race = require('../models/race-model')
 const Skill = require('../models/skill-model')
 const Character = require('../models/character-model')
+const User = require('../models/user-model')
 const campaignData = require('./data/campaignData')
 const genreData = require('./data/genreData')
 const attrData = require('./data/attributeData')
@@ -22,6 +23,7 @@ const abilityData = require('./data/abilityData')
 const raceData = require('./data/raceData')
 const skillData = require('./data/skillData')
 const characterData = require('./data/characterData')
+const userData = require('./data/userData')
 
 initDataTypes = (req, res) => {
     const bodyList = [
@@ -610,6 +612,47 @@ saveCharacters = (res, body, finalVal) => {
         })
 }
 
+initUsers = (req, res) => {
+    let finalVal = false
+    userData.getUsers().map((body) => {
+        if (body.login == 'test') 
+            finalVal = true;
+        saveUsers(res, body, finalVal)
+    })
+}
+
+/**
+ * I know this is wrong. It's working well enough for me 
+ * to get back to it later.
+ */
+saveUsers = (res, body, finalVal) => {
+    const user = new User(body)
+
+    if (!user) {
+        return res.status(400).json({ success: false, error: err })
+    }
+
+    user
+        .save()
+        .then(() => {
+            if (finalVal) {
+                return res.status(201).json({
+                    success: true,
+                    id: user._id,
+                    message: 'Users created!',
+                })
+            } else {
+                return
+            }
+        })
+        .catch(error => {
+            return res.status(400).json({
+                error,
+                message: 'Users not created!',
+            })
+        })
+}
+
 module.exports = {
     initCampaigns,
     initDice,
@@ -622,5 +665,6 @@ module.exports = {
     initAbilities,
     initRaces,
     initSkills,
-    initCharacters
+    initCharacters,
+    initUsers
 }

@@ -16,5 +16,6 @@ router.get('/admin/init-abilities', AdminCtrl.initAbilities)
 router.get('/admin/init-races', AdminCtrl.initRaces)
 router.get('/admin/init-skills', AdminCtrl.initSkills)
 router.get('/admin/init-characters', AdminCtrl.initCharacters)
+router.get('/admin/init-users', AdminCtrl.initUsers)
 
 module.exports = router
