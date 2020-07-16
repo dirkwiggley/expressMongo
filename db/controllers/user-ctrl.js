@@ -3,6 +3,7 @@ const { v4: uuidv4 } = require('uuid')
 // UUID from https://www.npmjs.com/package/uuid
 const util = require('util')
 const User = require('../models/user-model')
+const Constants = require('../models/constants')
 
 insertUser = (req, res) => {
     const body = req.body
@@ -10,16 +11,17 @@ insertUser = (req, res) => {
     if (!body) {
         return res.status(400).json({
             success: false,
-            error: 'You must provide a user',
+            error: 'No user sent!'
         })
     }
 
     const user = new User(body)
-
     if (!user) {
         return res.status(400).json({ success: false, error: err })
     }
 
+    user.priviliges = [ { id: Constants.APP_USER } ]
+    
     user
         .save()
         .then(() => {
@@ -43,7 +45,7 @@ updateUser = async (req, res) => {
     if (!body) {
         return res.status(400).json({
             success: false,
-            error: 'You must provide a body to update',
+            error: 'You must provide a user to update',
         })
     }
 
@@ -136,8 +138,7 @@ createToken = () => {
 }
 
 login = async (req, res) => {
-    // console.log(util.inspect(req.body, false, null, true))
-    await User.findOne({ _id: req.body.id }, (err, user) => {
+    await User.findOne({ login: req.body.id }, (err, user) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
@@ -151,7 +152,6 @@ login = async (req, res) => {
         if (req.body.password === user.password) {
             let token = createToken()
             user.token = token
-            console.log(util.inspect(user))
             user.save().then(() => {
                 return res.status(200).json({
                     success: true,
@@ -170,7 +170,6 @@ login = async (req, res) => {
 
 
 checkToken = async (req, res) => {
-    console.log('id: ' + req.body.id)
     await User.findOne({ _id: req.body.id }, (err, user) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
@@ -187,7 +186,6 @@ checkToken = async (req, res) => {
         if (token != null) {
             let expires = token.expires
 
-            console.log(expires + "    " + now)
             if (now < expires) {
                 let token = createToken()
                 user.token = token

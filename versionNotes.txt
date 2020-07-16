@@ -18,5 +18,7 @@
 * Added more detail to Campaigns and added Characters
 7/14/2020
 * Added basic user data (still needs encryption)
+7/15/2020
+* Refined user creation
 
 
