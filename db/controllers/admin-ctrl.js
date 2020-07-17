@@ -615,7 +615,7 @@ saveCharacters = (res, body, finalVal) => {
 initUsers = (req, res) => {
     let finalVal = false
     userData.getUsers().map((body) => {
-        if (body.login == 'test') 
+        if (body.ordinal == 2) 
             finalVal = true;
         saveUsers(res, body, finalVal)
     })

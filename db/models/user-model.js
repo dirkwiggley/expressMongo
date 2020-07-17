@@ -10,7 +10,7 @@ const User = new Schema(
         email: { type: String, required: false },
         campaignsPlayer: [ { id: { type: String, required: false } } ],
         campaignsGM: [ { id: { type: String, required: false } } ],
-        priviliges: [ { id: { type: String, required: true } } ],
+        privileges: [ { id: { type: String, required: true } } ],
         token: { id: { type: String, required: false }, issued: { type: Number, required: false }, expires: { type: Number, required: false } }
     },
     { timestamps: true },

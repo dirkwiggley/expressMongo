@@ -1,4 +1,4 @@
-const Privilige = require('../../models/constants')
+const Privilege = require('../../models/constants')
 
 function getUsers() {
     return  [
@@ -10,8 +10,9 @@ function getUsers() {
             email: 'dm_tim@yahoo.com',
             campaignsPlayer: null,
             campaignsGM: null,
-            priviliges: [ { id: Privilige.APP_ADMIN } ],
-            token: null
+            privileges: [ { id: Privilege.APP_ADMIN } ],
+            token: null,
+            ordinal: 0
         },
         { 
             login: 'player',
@@ -21,19 +22,21 @@ function getUsers() {
             email: 'dm_tim@yahoo.com',
             campaignsPlayer: [ { id: 'Generic' } ],
             campaignsGM: [ { id: 'Generic' } ],
-            priviliges: [ { id: Privilige.APP_USER } ],
-            token: null
+            privileges: [ { id: Privilege.APP_USER } ],
+            token: null,
+            ordinal: 1
         },
         { 
-            login: 'test',
-            password: 'test',
+            login: 'tim',
+            password: 'adminadmin',
             name: 'Tim',
             nickname: 'Timmay',
             email: 'dm_tim@yahoo.com',
             campaignsPlayer: [ { id: 'Generic' } ],
             campaignsGM: [ { id: 'Generic' } ],
-            priviliges: [ { id: Privilige.APP_ADMIN }, { id: Privilige.APP_USER } ],
-            token: null
+            privileges: [ { id: Privilege.APP_ADMIN }, { id: Privilege.APP_USER } ],
+            token: null,
+            ordinal: 2
         }
     ]
 }
