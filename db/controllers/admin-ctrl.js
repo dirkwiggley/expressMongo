@@ -398,7 +398,7 @@ initArcaneBackgrounds = (req, res) => {
     let finalVal = false;
 
     arcaneBackgroundData.getArcaneBackgrounds().map((body) => {
-        if (body.name == DataTypes.ARCANE_BACKGROUND_TYPES.WEIRD_SCIENCE) 
+        if (body.ordinal === 4) 
             finalVal = true;
         saveArcaneBackgrounds(res, body, finalVal)
     })

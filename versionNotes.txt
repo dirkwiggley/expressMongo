@@ -20,5 +20,8 @@
 * Added basic user data (still needs encryption)
 7/15/2020
 * Refined user creation
+7/18/2020
+* Bug fixes for arcane backgrounds and campaigns
+
 
 

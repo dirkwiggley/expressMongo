@@ -9,7 +9,8 @@ const Campaign = new Schema(
         edges: [ { name: { type: String, required: true } } ],
         hindrances: [ { name: { type: String, required: true } } ],
         skills: [ { name: { type: String, required: true } } ],
-        arcaneBackgrounds: [ { name: { type: String, required: false } } ]
+        arcaneBackgrounds: [ { name: { type: String, required: false } } ],
+        powers: [ { name: { type: String, required: false } } ]
     },
     { timestamps: true },
 )

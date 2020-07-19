@@ -103,7 +103,7 @@ getArcaneBackgroundById = async (req, res) => {
 }
 
 getArcaneBackground = async (req, res) => {
-    const byOrdinal = { ordinal: 1}
+    const byOrdinal = { ordinal: 1 }
     await ArcaneBackground.find({}, (err, arcaneBackground) => {
         result = arcaneBackground;
         if (err) {
@@ -120,7 +120,7 @@ getArcaneBackground = async (req, res) => {
             return res.status(400).json({ success: false, error: err })
         }
         return res.status(200).json({ success: true, data: result })
-    }).catch()
+    })
 }
 
 module.exports = {

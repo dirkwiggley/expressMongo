@@ -8,7 +8,8 @@ const ArcaneBackground = new Schema(
         attribute: { type: String, required: true },
         startingPowers: { type: Number, required: false },
         powerPoints: { type: Number, required: false },
-        description: { type: String, required: true }
+        description: { type: String, required: true },
+        ordinal: { type: Number, required: true}
     },
     { timestamps: true },
 )
