@@ -56,9 +56,15 @@ updateUser = async (req, res) => {
                 message: 'User not found!',
             })
         }
+        user.login = body.login
+        user.password = body.password
         user.name = body.name
-        // user.time = body.time
-        // user.rating = body.rating
+        user.nickname = body.nickname
+        user.email = body.email
+        user.campaignsPlayer = body.campaignsPlayer
+        user.campaignsGM = body.campaignsGM
+        user.privileges = body.privileges;
+
         user
             .save()
             .then(() => {

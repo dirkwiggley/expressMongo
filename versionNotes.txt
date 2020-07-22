@@ -22,6 +22,8 @@
 * Refined user creation
 7/18/2020
 * Bug fixes for arcane backgrounds and campaigns
+7/21/2020
+* Fixed updateUser so that all of the user can be updated
 
 
 
