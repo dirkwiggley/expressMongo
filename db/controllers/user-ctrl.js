@@ -174,9 +174,12 @@ login = async (req, res) => {
     }).catch(err => console.log(err))
 }
 
-
+/**
+ * req.body.id : userId
+ * req.body.token : token
+ */
 checkToken = async (req, res) => {
-    await User.findOne({ _id: req.body.id }, (err, user) => {
+    await User.findOne({ login: req.body.login }, (err, user) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
@@ -188,33 +191,34 @@ checkToken = async (req, res) => {
         }
 
         let now = new Date().getTime()
-        let token = user.token
-        if (token != null) {
-            let expires = token.expires
+        if (user._doc.token.id != req.body.token) {
+            return res.status(400).json({ success: false, error: "Invalid token sent" })
+        }
+        let expires = user.token._doc.token.expires;
 
-            if (now < expires) {
-                let token = createToken()
-                user.token = token
-                user.save().then(() => {
-                    return res.status(200).json({
-                        success: true,
-                        data: user,
-                        message: 'Token aquired!',
-                    })
+        if (now < expires) {
+            let token = createToken()
+            user._doc.token = token
+            user.save().then(() => {
+                return res.status(200).json({
+                    success: true,
+                    token: token,
+                    privileges: user.privileges,
+                    message: 'Token aquired!',
                 })
-                .catch(error => {
-                    return res.status(400).json({ success: false, error: "Could not update token" })
-                })
-            } else {
-                user.token = null
-                user.save().then(() => {
-                    return res.status(400).json({ success: false, error: "Token expired" })
-                })
-                .catch(error => {
-                    return res.status(400).json({ success: false, error: "Token expired: Could not update token" })
-                })
-            }
-        } 
+            })
+            .catch(error => {
+                return res.status(400).json({ success: false, error: "Could not update token" })
+            })
+        } else {
+            user.token = null
+            user.save().then(() => {
+                return res.status(400).json({ success: false, error: "Token expired" })
+            })
+            .catch(error => {
+                return res.status(400).json({ success: false, error: "Token expired: Could not update token" })
+            })
+        }
     }).catch(err => console.log(err))
 }
 

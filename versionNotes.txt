@@ -24,6 +24,8 @@
 * Bug fixes for arcane backgrounds and campaigns
 7/21/2020
 * Fixed updateUser so that all of the user can be updated
+7/22/2020
+* Got token checking up and running
 
 
 
