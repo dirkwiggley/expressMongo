@@ -194,16 +194,17 @@ checkToken = async (req, res) => {
         if (user._doc.token.id != req.body.token) {
             return res.status(400).json({ success: false, error: "Invalid token sent" })
         }
-        let expires = user.token._doc.token.expires;
+        let expires = user._doc.token.expires;
 
         if (now < expires) {
             let token = createToken()
             user._doc.token = token
+            let privs = user._doc.privileges
             user.save().then(() => {
                 return res.status(200).json({
                     success: true,
                     token: token,
-                    privileges: user.privileges,
+                    privileges: privs,
                     message: 'Token aquired!',
                 })
             })
