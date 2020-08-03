@@ -26,6 +26,8 @@
 * Fixed updateUser so that all of the user can be updated
 7/22/2020
 * Got token checking up and running
+8/2/2020
+* Added edges array to genres
 
 
 
