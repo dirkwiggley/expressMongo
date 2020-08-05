@@ -4,7 +4,11 @@ const Schema = mongoose.Schema
 const Genre = new Schema(
     {
         name: { type: String, required: true },
-        edges: [ { name: { type: String, required: false } } ]
+        races: [ { name: { type: String, required: false } } ],
+        edges: [ { name: { type: String, required: false } } ],
+        hindrances: [ { name: { type: String, required: false } } ],
+        skills: [ { name: { type: String, required: false } } ],
+        arcaneBackgrounds: [ { name: { type: String, required: false } } ]
     },
     { timestamps: true },
 )

@@ -28,6 +28,8 @@
 * Got token checking up and running
 8/2/2020
 * Added edges array to genres
+8/4/2020
+* Added hindrances, skills, races, and arcane backgrounds to genres
 
 
 

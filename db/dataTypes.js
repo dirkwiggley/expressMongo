@@ -8,6 +8,7 @@ module.exports = {
     EDGE : 'EDGE',
     SKILL : 'SKILL',
     ABILITY : 'ABILITY',
+    RACE : 'RACE',
     ATTRIBUTE_TYPES : {
         AGILITY : 'AGILITY',
         SMARTS : 'SMARTS',
