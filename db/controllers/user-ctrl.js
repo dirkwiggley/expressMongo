@@ -20,8 +20,6 @@ insertUser = (req, res) => {
         return res.status(400).json({ success: false, error: err })
     }
 
-    user.priviliges = [ { id: Constants.APP_USER } ]
-    
     user
         .save()
         .then(() => {
@@ -110,12 +108,12 @@ getUserById = async (req, res) => {
                 .status(404)
                 .json({ success: false, error: `User not found` })
         }
-        return res.status(200).json({ success: true, data: user })
+        return res.status(200).json({ success: true, user: user })
     }).catch(err => console.log(err))
 }
 
 getAllUsers = async (req, res) => {
-    const byOrdinal = { ordinal: 1 }
+    const byLogin = { login: 1 }
     await User.find({}, (err, user) => {
         result = user;
         if (err) {
@@ -126,12 +124,19 @@ getAllUsers = async (req, res) => {
                 .status(404)
                 .json({ success: false, error: `User not found` })
         }
-    }).sort(byOrdinal).exec(function(err, result) {
+    }).sort(byLogin).exec(function(err, result) {
         if (err) {
             console.log(err)
             return res.status(400).json({ success: false, error: err })
         }
-        return res.status(200).json({ success: true, data: result })
+        const users = result.map(user => {
+            const privileges = user.privileges.map(privilege => {
+                return privilege.id;
+            });
+            return { id: user._id, login: user.login, name: user.name, nickname: user.nickname, privileges: privileges }
+        })
+
+        return res.status(200).json({ success: true, users: users })
     })
 }
 
@@ -161,7 +166,7 @@ login = async (req, res) => {
             user.save().then(() => {
                 return res.status(200).json({
                     success: true,
-                    data: user,
+                    user: user,
                     message: 'User logged in!',
                 })
             })
@@ -191,15 +196,15 @@ checkToken = async (req, res) => {
         }
 
         let now = new Date().getTime()
-        if (user._doc.token.id != req.body.token) {
+        if (user.token.id != req.body.token) {
             return res.status(400).json({ success: false, error: "Invalid token sent" })
         }
-        let expires = user._doc.token.expires;
+        let expires = user.token.expires;
 
         if (now < expires) {
             let token = createToken()
-            user._doc.token = token
-            let privs = user._doc.privileges
+            user.token = token
+            let privs = user.privileges
             user.save().then(() => {
                 return res.status(200).json({
                     success: true,
