@@ -3,39 +3,40 @@ function getGenres() {
         { 
             name: 'Generic', 
             races: [ 
-                'Humans', 
-                'Elves'
+                { name: 'Humans' }, 
+                { name: 'Elves' }
             ], 
             edges: [ 
-                'Alertness', 
-                'Ambidextrous', 
-                'Arcane Background', 
-                'Arcane Resistance', 
-                'Improved Arcane Resistance', 
-                'Aristocrat'],
+                { name: 'Alertness' }, 
+                { name: 'Ambidextrous' }, 
+                { name: 'Arcane Background' }, 
+                { name: 'Arcane Resistance' }, 
+                { name: 'Improved Arcane Resistance' }, 
+                { name: 'Aristocrat' }
+            ],
             hindrances: [
-                'All Thumbs', 
-                'Anemic', 
-                'Arrogant', 
-                'Bad Eyes - Minor', 
-                'Bad Eyes - Major', 
-                'Bad Luck', 
-                'Big Mouth', 
-                'Blind', 
-                'Bloodthirsty'
+                { name: 'All Thumbs' }, 
+                { name: 'Anemic' }, 
+                { name: 'Arrogant' }, 
+                { name: 'Bad Eyes - Minor' }, 
+                { name: 'Bad Eyes - Major' }, 
+                { name: 'Bad Luck' }, 
+                { name: 'Big Mouth' }, 
+                { name: 'Blind' }, 
+                { name: 'Bloodthirsty' }
             ],
             skills: [
-                'Academics', 
-                'Athletics (Agility)', 
-                'Athletics (Strength)', 
-                'Battle'
+                { name: 'Academics' }, 
+                { name: 'Athletics (Agility)' }, 
+                { name: 'Athletics (Strength)' }, 
+                { name: 'Battle' }
             ],
             arcaneBackgrounds: [
-                'Gifted',
-                'Magic',
-                'Miracles',
-                'Psionics',
-                'Weird Science'
+                { name: 'Gifted' },
+                { name: 'Magic' },
+                { name: 'Miracles' },
+                { name: 'Psionics' },
+                { name: 'Weird Science' }
             ]
         },
         { name: 'Fantasy' },
