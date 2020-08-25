@@ -32,6 +32,8 @@
 * Added hindrances, skills, races, and arcane backgrounds to genres
 8/23/2020
 * Updated Genre Data
+8/24/2020
+* Minor changes to genre data
 
 
 
