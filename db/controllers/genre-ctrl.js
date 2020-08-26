@@ -10,19 +10,27 @@ insertGenre = (req, res) => {
         })
     }
 
-    const genre = new Genre(body)
+    Genre.findOne({ name: req.params.name }, (err, genre) => {
+        if (genre) {
+            return res.status(404).json({
+                err,
+                message: 'Genre already exists!',
+            });
+        }
+    } );
 
+    const genre = new Genre(body)
     if (!genre) {
         return res.status(400).json({ success: false, error: err })
     }
 
     genre
         .save()
-        .then(() => {
+        .then((saveResponse) => {
             return res.status(201).json({
                 success: true,
                 id: genre._id,
-                message: 'Genre created!',
+                message: saveResponse,
             })
         })
         .catch(error => {
@@ -30,7 +38,7 @@ insertGenre = (req, res) => {
                 error,
                 message: 'Genre not created!',
             })
-        })
+        });
 }
 
 updateGenre = async (req, res) => {
@@ -43,32 +51,29 @@ updateGenre = async (req, res) => {
         })
     }
 
-    Genre.findOne({ _id: req.params.id }, (err, genre) => {
-        if (err) {
-            return res.status(404).json({
-                err,
-                message: 'Genre not found!',
+    const genre = new Genre(body)
+    if (!genre) {
+        return res.status(400).json({ success: false, error: err })
+    }
+    
+    var mongoose = require('mongoose');
+    var id = mongoose.Types.ObjectId(body.id);
+
+    Genre
+        .updateOne( { '_id': id }, body )
+        .then((updateResponse) => {
+            return res.status(201).json({
+                success: true,
+                id: genre._id,
+                message: updateResponse,
             })
-        }
-        genre.name = body.name
-        // genre.time = body.time
-        // genre.rating = body.rating
-        genre
-            .save()
-            .then(() => {
-                return res.status(200).json({
-                    success: true,
-                    id: genre._id,
-                    message: 'Genre updated!',
-                })
+        })
+        .catch(error => {
+            return res.status(400).json({
+                error,
+                message: 'Genre not updated!',
             })
-            .catch(error => {
-                return res.status(404).json({
-                    error,
-                    message: 'Genre not updated!',
-                })
-            })
-    })
+        });
 }
 
 deleteGenre = async (req, res) => {
@@ -112,7 +117,7 @@ getGenres = async (req, res) => {
                 .status(404)
                 .json({ success: false, error: `Genre not found` })
         }
-        return res.status(200).json({ success: true, data: genres })
+        return res.status(200).json({ success: true, genres: genres })
     })
 }
 
