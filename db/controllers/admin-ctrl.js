@@ -653,6 +653,252 @@ saveUsers = (res, body, finalVal) => {
         })
 }
 
+getItemId = (type, name, params) => {
+    let items = null;
+    switch (type) {
+        case DataTypes.ABILITY:
+            items = params.abilities ? params.abilities : [];
+            break;
+        case DataTypes.EDGE:
+            items = params.edges ? params.edges : [];
+            break;
+        case DataTypes.HINDRANCE:
+            items = params.hindrances ? params.hindrances : [];
+            break;
+        case DataTypes.SKILL:
+            items = params.skills ? params.skills : [];
+            break;
+        case DataTypes.GENRE:
+            items = params.genres ? params.genres : [];
+            break;
+        case DataTypes.RACE:
+            items = params.races ? params.races : [];
+            break;
+        case DataTypes.ARCANE_BACKGROUND:
+            items = params.arcaneBackgrounds ? params.arcaneBackgrounds : [];
+            break;
+        default:
+            console.log(type, 'WTF?');
+    }
+
+    for (const item of items) {
+        if (item.name === name) {
+            return item._id;
+        }
+    }
+
+    return null;
+}
+
+async function updateIds(req, res) {
+    var abilities = null;
+    var edges = null;
+    var hindrances = null;
+    var skills = null;
+    var races = null;
+    var genres = null;
+    var arcaneBackgrounds = null;
+
+    abilities = await Ability.find({ }, (err, abilityList) => {
+        if (err) {
+            console.log('Abilities not found!');
+            return;
+        };
+
+        return abilityList;
+    });
+        
+    edges = await Edge.find({ }, (err, edgeList) => {
+        if (err) {
+            console.log('Edges not found!');
+            return;
+        };
+
+        return edgeList;
+    });
+    
+    hindrances = await Hindrance.find({ }, (err, hindranceList) => {
+        if (err) {
+            console.log('Hindrances not found!');
+            return;
+        };
+
+        return hindranceList;
+    });
+    
+    skills = await Skill.find({ }, (err, skillList) => {
+        if (err) {
+            console.log('Skills not found!');
+            return;
+        };
+
+        return skillList;
+    });
+
+    races = await Race.find({ }, (err, raceList) => {
+        if (err) {
+            console.log('Races not found!');
+            return;
+        };
+
+        return raceList;
+    });
+
+    genres = await Genre.find({ }, (err, genreList) => {
+        if (err) {
+            console.log('Genres not found!');
+            return;
+        };
+
+        return genreList;
+    });
+
+    arcaneBackgrounds = await ArcaneBackground.find({ }, (err, arcaneBackgroundList) => {
+        if (err) {
+            console.log('Arcane Backgrounds not found!');
+            return;
+        };
+
+        return arcaneBackgroundList;
+    });
+
+    let params = {
+        'abilities': abilities,
+        'edges': edges,
+        'hindrances': hindrances,
+        'skills': skills,
+        'races': races,
+        'genres': genres,
+        'arcaneBackgrounds': arcaneBackgrounds
+    }
+    updateAll(params);
+
+    return res.status(201).json({
+        success: true,
+        message: 'Request recieved',
+    })
+};
+
+updateAll = (params) => {
+    if (params.abilities) {
+        for (const ability of params.abilities) {
+            let saveAbility = false;
+            if (ability.incompatible) {
+                for (incompatability of ability.incompatible) {
+                    if (!incompatability.id) {
+                        incompatability.id = getItemId(incompatability.dataType, incompatability.name, params);
+                        saveAbility = true;
+                    }
+                }
+                if (saveAbility) {
+                    ability.save();
+                }
+            }
+        };
+    }
+    if (params.edges) {
+        for (const edge of params.edges) {
+            if (edge.requires) {
+                let saveEdge = false;
+                for (requirement of edge.requires) {
+                    // Not all edge requirements need this, hence the requirement.name
+                    if (requirement.name && !requirement.id) {
+                        requirement.id = getItemId(requirement.dataType, requirement.name, params);
+                        saveEdge = true;
+                    }
+                }
+                if (saveEdge) {
+                    edge.save();
+                }
+            }
+        }
+    }
+    if (params.hindrances) {
+        for (const hindrance of params.hindrances) {
+            if (hindrance.incompatible) {
+                let saveHindrance = false;
+                for (incompatability of hindrance.incompatible) {
+                    if (!incompatability.id) {
+                        incompatability.id = getItemId(incompatability.dataType, incompatability.name, params);
+                        if (incompatability.id) {
+                            saveHindrance = true;
+                        }
+                    }
+                }
+                if (saveHindrance) {
+                    hindrance.save();
+                }
+            }
+        }
+    }
+    if (params.skills) {
+        for (const skill of params.skills) {
+            if (skill.requires) {
+                let saveSkill = false;
+                for (requirement of skill.requires) {
+                    if (!requirement.id) {
+                        requirement.id = getItemId(requirement.dataType, requirement.name, params);
+                        saveSkill = true;
+                    }
+                }
+                if (saveSkill) {
+                    skill.save();
+                }
+            }
+        }        
+    }
+    if (params.genres) {
+        let saveGenre = false;
+        for (const genre of params.genres) {
+            for (const ability of genre.abilities) {
+                if (!ability.id) {
+                    ability.id = getItemId(DataTypes.ABILITY, ability.name, params);
+                    saveGenre = true;
+                }
+            }
+
+            for (const race of genre.races) {
+                if (!race.id) {
+                    race.id = getItemId(DataTypes.RACE, race.name, params);
+                    saveGenre = true;
+                }
+            }
+
+            for (const edge of genre.edges) {
+                if (!edge.id) {
+                    edge.id = getItemId(DataTypes.EDGE, edge.name, params);
+                    saveGenre = true;
+                }
+            }
+            
+            for (const hindrance of genre.hindrances) {
+                if (!hindrance.id) {
+                    hindrance.id = getItemId(DataTypes.HINDRANCE, hindrance.name, params);
+                    saveGenre = true;
+                }
+            }
+            
+            for (const skill of genre.skills) {
+                if (!skill.id) {
+                    skill.id = getItemId(DataTypes.SKILL, skill.name, params);
+                    saveGenre = true;
+                }
+            }
+            
+            for (const arcaneBackground of genre.arcaneBackgrounds) {
+                if (!arcaneBackground.id) {
+                    arcaneBackground.id = getItemId(DataTypes.ARCANE_BACKGROUND, arcaneBackground.name, params);
+                    saveGenre = true;
+                }
+            }
+
+            if (saveGenre) {
+                genre.save();
+            }
+        }        
+    }
+};
+
 module.exports = {
     initCampaigns,
     initDice,
@@ -666,5 +912,6 @@ module.exports = {
     initRaces,
     initSkills,
     initCharacters,
-    initUsers
+    initUsers,
+    updateIds
 }

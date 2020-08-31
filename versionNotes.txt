@@ -36,5 +36,7 @@
 * Minor changes to genre data
 8/26/2020
 * Fixed updating genres
+8/31/2020
+* Updated to put proper id references in documents
 
 

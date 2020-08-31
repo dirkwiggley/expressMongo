@@ -7,8 +7,17 @@ const Edge = new Schema(
         name: { type: String, required: true },
         summary: { type: String, required: true },
         description: { type: String, required: true },
-        requires: [ { dataType: { type: String, required: false}, id: { type: String, required: false } } ],
-        incompatible: [ { dataType: { type: String, required: false }, id: { type: String, required: false } } ],
+        requires: [ { 
+            dataType: { type: String, required: false}, 
+            subType: { type: String, required: false },
+            id: { type: String, required: false },
+            name: { type: String, required: false },
+            value: { type: String, required: false },
+            requirement: { type: String, required: false} } ],
+        incompatible: [ { 
+            dataType: { type: String, required: false }, 
+            id: { type: String, required: false },
+            name: { type: String, required: false } } ],
         special: [ { rule: { type: String, required: false} } ],
         cost: { type: Number, required: true }
     },

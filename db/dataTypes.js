@@ -9,6 +9,7 @@ module.exports = {
     SKILL : 'SKILL',
     ABILITY : 'ABILITY',
     RACE : 'RACE',
+    ARCANE_BACKGROUND : 'ARCANE_BACKGROUND',
     ATTRIBUTE_TYPES : {
         AGILITY : 'AGILITY',
         SMARTS : 'SMARTS',
