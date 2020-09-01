@@ -38,5 +38,7 @@
 * Fixed updating genres
 8/31/2020
 * Updated to put proper id references in documents
+9/1/2020
+* Updating the campaign model
 
 

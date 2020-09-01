@@ -4,13 +4,45 @@ const Schema = mongoose.Schema
 const Campaign = new Schema(
     {
         name: { type: String, required: true },
-        genres: [ { name: { type: String, required: true } } ],
-        races: [ { name: { type: String, required: true } } ],
-        edges: [ { name: { type: String, required: true } } ],
-        hindrances: [ { name: { type: String, required: true } } ],
-        skills: [ { name: { type: String, required: true } } ],
-        arcaneBackgrounds: [ { name: { type: String, required: false } } ],
-        powers: [ { name: { type: String, required: false } } ]
+        genre: { 
+            id: { type: String, required: false }, 
+            name: { type: String, required: true } },
+        owner: { 
+            id: { type: String, required: false }, 
+            login: { type: String, required: true }, 
+            nickname: { type: String, required: true } },
+        gms: [ { 
+            id: { type: String, required: false }, 
+            login: { type: String, required: false }, 
+            nickname: { type: String, required: false } } ],
+        players: [ { 
+            id: { type: String, required: false }, 
+            login: { type: String, required: false }, 
+            nickname: { type: String, required: false } } ],
+        metaData: {
+            abilities: [ { 
+                id: { type: String, required: false }, 
+                name: { type: String, required: true } } ],
+            races: [ { 
+                id: { type: String, required: false }, 
+                name: { type: String, required: true } } ],
+            edges: [ { 
+                id: { type: String, required: false }, 
+                name: { type: String, required: true } } ],
+            hindrances: [ { 
+                id: { type: String, required: false }, 
+                name: { type: String, required: true } } ],
+            skills: [ { 
+                id: { type: String, required: false }, 
+                name: { type: String, required: true } } ],
+            arcaneBackgrounds: [ { 
+                id: { type: String, required: false }, 
+                name: { type: String, required: true } } ],
+            powers: [ { 
+                id: { type: String, required: false }, 
+                name: { type: String, required: false } } ],
+        },
+        description: { type: String, required: true }
     },
     { timestamps: true },
 )
