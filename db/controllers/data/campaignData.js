@@ -68,7 +68,7 @@ function getCampaigns() {
                     { name: 'Alertness' },
                     { name: 'Ambidexterous' },
                     { name: 'Arcane Background' },
-                    { name: 'Arcane Reistance' },
+                    { name: 'Arcane Resistance' },
                     { name: 'Improved Arcane Resistance' },
                     { name: 'Aristocrat' }
                 ],

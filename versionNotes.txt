@@ -40,5 +40,7 @@
 * Updated to put proper id references in documents
 9/1/2020
 * Updating the campaign model
+9/2/2020
+* Updated the updateIds api to handle the default campaign
 
 

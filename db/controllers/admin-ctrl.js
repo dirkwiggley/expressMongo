@@ -677,12 +677,20 @@ getItemId = (type, name, params) => {
         case DataTypes.ARCANE_BACKGROUND:
             items = params.arcaneBackgrounds ? params.arcaneBackgrounds : [];
             break;
+        case DataTypes.CAMPAIGN:
+            items = params.campaigns ? params.campaigns : [];
+            break;
+        case DataTypes.USER:
+            items = params.users ? params.users : [];
+            break;
         default:
             console.log(type, 'WTF?');
     }
 
     for (const item of items) {
-        if (item.name === name) {
+        if (DataTypes.USER === type && item.login === name) {
+            return item._id;
+        } else if (item.name === name) {
             return item._id;
         }
     }
@@ -698,6 +706,8 @@ async function updateIds(req, res) {
     var races = null;
     var genres = null;
     var arcaneBackgrounds = null;
+    var campaigns = null;
+    var users = null;
 
     abilities = await Ability.find({ }, (err, abilityList) => {
         if (err) {
@@ -762,6 +772,24 @@ async function updateIds(req, res) {
         return arcaneBackgroundList;
     });
 
+    campaigns = await Campaign.find({ }, (err, campaignList) => {
+        if (err) {
+            console.log('Campaigns not found!');
+            return;
+        };
+
+        return campaignList;
+    });
+
+    users = await User.find({ }, (err, userList) => {
+        if (err) {
+            console.log('Users not found!');
+            return
+        }
+
+        return userList;
+    });
+
     let params = {
         'abilities': abilities,
         'edges': edges,
@@ -769,7 +797,9 @@ async function updateIds(req, res) {
         'skills': skills,
         'races': races,
         'genres': genres,
-        'arcaneBackgrounds': arcaneBackgrounds
+        'arcaneBackgrounds': arcaneBackgrounds,
+        'campaigns': campaigns,
+        'users': users
     }
     updateAll(params);
 
@@ -896,6 +926,60 @@ updateAll = (params) => {
                 genre.save();
             }
         }        
+    }
+    if (params.campaigns) {
+        // iterate over the campaigns
+        for (const campaign of params.campaigns) {
+            // set the genre id
+            let genre = campaign.genre;
+            genre.id = getItemId(DataTypes.GENRE, genre.name, params);
+            // set the owner id
+            let owner = campaign.owner;
+            owner.id = getItemId(DataTypes.USER, campaign.owner.login, params);
+            // set the gm ids
+            for (i = 0; i < campaign.gms.length; i++) {
+                let gm = campaign.gms[i];
+                gm.id = getItemId(DataTypes.USER, campaign.gms[i].login, params);
+            }
+            // set the player ids
+            for (i = 0; i < campaign.players.length; i++) {
+                let player = campaign.players[i];
+                player.id = getItemId(DataTypes.USER, campaign.players[i].login, params);
+            }
+            // set the ability ids
+            for (i = 0; i < campaign.metaData.abilities.length; i++) {
+                let ability = campaign.metaData.abilities[i];
+                ability.id = getItemId(DataTypes.ABILITY, campaign.metaData.abilities[i].name, params)
+            }
+            // set the race ids
+            for (i = 0; i < campaign.metaData.races.length; i++) {
+                let race = campaign.metaData.races[i];
+                race.id = getItemId(DataTypes.RACE, campaign.metaData.races[i].name, params)
+            }
+            // set the edge ids
+            for (i = 0; i < campaign.metaData.edges.length; i++) {
+                let edge = campaign.metaData.edges[i];
+                edge.id = getItemId(DataTypes.EDGE, campaign.metaData.edges[i].name, params)
+            }
+            // set the hindrance ids
+            for (i = 0; i < campaign.metaData.hindrances.length; i++) {
+                let hindrance = campaign.metaData.hindrances[i];
+                hindrance.id = getItemId(DataTypes.HINDRANCE, campaign.metaData.hindrances[i].name, params)
+            }
+            // set the skill ids
+            for (i = 0; i < campaign.metaData.skills.length; i++) {
+                let skill = campaign.metaData.skills[i];
+                skill.id = getItemId(DataTypes.SKILL, campaign.metaData.skills[i].name, params)
+            }            
+            // set the arcaneBackground ids
+            for (i = 0; i < campaign.metaData.arcaneBackgrounds.length; i++) {
+                let arcaneBackground = campaign.metaData.arcaneBackgrounds[i];
+                arcaneBackground.id = getItemId(DataTypes.ARCANE_BACKGROUND, campaign.metaData.arcaneBackgrounds[i].name, params)
+            }            
+
+            campaign.save();
+        }
+
     }
 };
 
