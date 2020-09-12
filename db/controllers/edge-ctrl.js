@@ -118,7 +118,7 @@ getEdge = async (req, res) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
-        return res.status(200).json({ success: true, data: result })
+        return res.status(200).json({ success: true, edges: result })
     })
 }
 

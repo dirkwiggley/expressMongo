@@ -44,7 +44,7 @@ function getCampaigns() {
             name: 'Generic',
             genre: { name: 'Generic' },
             owner: { login: 'player', nickname: 'Demo' },
-            // gms: [ {} ],
+            gms: [ { login: 'tim', nickname: 'DM Tim' } ],
             // players: [ {} ],
             metaData: {
                 abilities: [

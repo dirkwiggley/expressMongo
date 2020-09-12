@@ -1,7 +1,20 @@
 function getGenres() {
     return [
         { 
-            name: 'Generic', 
+            name: 'Generic',
+            abilities: [
+                { name: 'Adaptable' },
+                { name: 'Additional Action' },
+                { name: 'Semi-Aquatic' },
+                { name: 'Aquatic' },
+                { name: 'Armor' },
+                { name: 'Agile' },
+                { name: 'Smart' },
+                { name: 'Spirited' },
+                { name: 'Strong' },
+                { name: 'Vigorous' },
+                { name: 'Low Light Vision'}
+            ],
             races: [ 
                 { name: 'Humans' }, 
                 { name: 'Elves' }
@@ -44,9 +57,23 @@ function getGenres() {
         { name: 'Horror' },
         { name: 'Cyberpunk' },
         { name: 'Steampunk' },
-        { name: 'Modern',
+        { 
+            name: 'Modern',
+            abilities: [
+                { name: 'Adaptable' },
+                { name: 'Additional Action' },
+                { name: 'Semi-Aquatic' },
+                { name: 'Aquatic' },
+                { name: 'Armor' },
+                { name: 'Agile' },
+                { name: 'Smart' },
+                { name: 'Spirited' },
+                { name: 'Strong' },
+                { name: 'Vigorous' },
+                { name: 'Low Light Vision'}
+            ],
             races: [ 
-                { name: 'Humans' }
+                    { name: 'Humans' }
             ], 
             edges: [ 
                 { name: 'Alertness' }, 
