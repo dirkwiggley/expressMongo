@@ -10,6 +10,7 @@ const ArcaneBackground = require('../models/arcaneBackground-model')
 const Ability = require('../models/ability-model')
 const Race = require('../models/race-model')
 const Skill = require('../models/skill-model')
+const Power = require('../models/power-model')
 const Character = require('../models/character-model')
 const User = require('../models/user-model')
 const campaignData = require('./data/campaignData')
@@ -22,6 +23,7 @@ const arcaneBackgroundData = require('./data/arcaneBackgroundData')
 const abilityData = require('./data/abilityData')
 const raceData = require('./data/raceData')
 const skillData = require('./data/skillData')
+const powerData = require('./data/powerData')
 const characterData = require('./data/characterData')
 const userData = require('./data/userData')
 
@@ -570,6 +572,50 @@ saveSkills = (res, body, finalVal) => {
         })
 }
 
+initPowers = (req, res) => {
+    let finalVal = false;
+
+    powerData.getPowers().map((body) => {
+        if (body.name == 'Armor') 
+            finalVal = true;
+        savePowers(res, body, finalVal)
+    })
+
+}
+
+/**
+ * I know this is wrong. It's working well enough for me 
+ * to get back to it later.
+ */
+savePowers = (res, body, finalVal) => {
+    const power = new Power(body)
+
+    if (!power) {
+        return res.status(400).json({ success: false, error: err })
+    }
+
+    power
+        .save()
+        .then(() => {
+            if (finalVal) {
+                return res.status(201).json({
+                    success: true,
+                    id: power._id,
+                    message: 'Power created!',
+                })
+            } else {
+                return
+            }
+        })
+        .catch(error => {
+            console.log('error', error)
+            return res.status(400).json({
+                error,
+                message: 'Power not created!',
+            })
+        })
+}
+
 initCharacters = (req, res) => {
     let finalVal = false
 
@@ -677,6 +723,9 @@ getItemId = (type, name, params) => {
         case DataTypes.ARCANE_BACKGROUND:
             items = params.arcaneBackgrounds ? params.arcaneBackgrounds : [];
             break;
+        case DataTypes.POWER:
+            items = params.powers ? params.powers : [];
+            break;
         case DataTypes.CAMPAIGN:
             items = params.campaigns ? params.campaigns : [];
             break;
@@ -706,6 +755,7 @@ async function updateIds(req, res) {
     var races = null;
     var genres = null;
     var arcaneBackgrounds = null;
+    var powers = null;
     var campaigns = null;
     var users = null;
 
@@ -772,6 +822,15 @@ async function updateIds(req, res) {
         return arcaneBackgroundList;
     });
 
+    powers = await Power.find({ }, (err, powerList) => {
+        if (err) {
+            console.log('Powers not found!');
+            return;
+        };
+
+        return powerList;
+    });
+
     campaigns = await Campaign.find({ }, (err, campaignList) => {
         if (err) {
             console.log('Campaigns not found!');
@@ -798,6 +857,7 @@ async function updateIds(req, res) {
         'races': races,
         'genres': genres,
         'arcaneBackgrounds': arcaneBackgrounds,
+        'powers': powers,
         'campaigns': campaigns,
         'users': users
     }
@@ -922,6 +982,13 @@ updateAll = (params) => {
                 }
             }
 
+            for (const power of genre.powers) {
+                if (!power.id) {
+                    power.id = getItemId(DataTypes.POWER, power.name, params);
+                    saveGenre = true;
+                }
+            }
+
             if (saveGenre) {
                 genre.save();
             }
@@ -976,6 +1043,11 @@ updateAll = (params) => {
                 let arcaneBackground = campaign.metaData.arcaneBackgrounds[i];
                 arcaneBackground.id = getItemId(DataTypes.ARCANE_BACKGROUND, campaign.metaData.arcaneBackgrounds[i].name, params)
             }            
+            // set the power ids
+            for (i = 0; i < campaign.metaData.powers.length; i++) {
+                let power = campaign.metaData.powers[i];
+                power.id = getItemId(DataTypes.POWER, campaign.metaData.powers[i].name, params)
+            }  
 
             campaign.save();
         }
@@ -995,6 +1067,7 @@ module.exports = {
     initAbilities,
     initRaces,
     initSkills,
+    initPowers,
     initCharacters,
     initUsers,
     updateIds

@@ -44,5 +44,7 @@
 * Updated the updateIds api to handle the default campaign
 9/11/2020
 * Added abilities to genres in the data seeder
-
-
+9/15/2020
+* fixed some of the items in the campaign data seeder
+9/16/2020
+* Added powers

@@ -17,6 +17,7 @@ const raceRouter = require('./db/routes/race-router')
 const characterRouter = require('./db/routes/character-router')
 const userRouter = require('./db/routes/user-router')
 const skillRouter = require('./db/routes/skill-router')
+const powerRouter = require('./db/routes/power-router')
 
 const app = express()
 const apiPort = 3001
@@ -33,5 +34,6 @@ app.get('/', (req, res) => {
 
 app.use('/api', campaignRouter, genreRouter, diceRouter, adminRouter, attributeTypeRouter, rankRouter, hindranceRouter)
 app.use('/api', edgeRouter, arcaneBackgroundRouter, abilityRouter, raceRouter, characterRouter, userRouter, skillRouter)
+app.use('/api', powerRouter)
 
 app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`))

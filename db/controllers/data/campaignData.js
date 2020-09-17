@@ -66,15 +66,17 @@ function getCampaigns() {
                 ],
                 edges: [
                     { name: 'Alertness' },
-                    { name: 'Ambidexterous' },
+                    { name: 'Ambidextrous' },
                     { name: 'Arcane Background' },
                     { name: 'Arcane Resistance' },
                     { name: 'Improved Arcane Resistance' },
-                    { name: 'Aristocrat' }
+                    { name: 'Aristocrat' },
+                    { name: 'Luck' }
                 ],
                 hindrances: [
                     { name: 'All Thumbs' },
-                    { name: 'Aarogant' },
+                    { name: 'Anemic' },
+                    { name: 'Arrogant' },
                     { name: 'Bad Eyes - Minor' },
                     { name: 'Bad Eyes - Major' },
                     { name: 'Bad Luck' },
@@ -95,10 +97,76 @@ function getCampaigns() {
                     { name: 'Psionics' },
                     { name: 'Weird Science' }
                 ],
-                powers: [ {} ]
+                powers: [
+                    { name: 'Arcane Protection' },
+                    { name: 'Armor' }
+                ]
             },
-            description: "<p>This is the default campaign setting. All hindrances, races, edges, skills, etc., should be in here.</p>", 
-        }
+            description: "This is the default campaign setting. All hindrances, races, edges, skills, etc., should be in here.", 
+        },
+        { 
+            name: 'Pirates',
+            genre: { name: 'Fantasy' },
+            owner: { login: 'player', nickname: 'Demo' },
+            gms: [ { login: 'player', nickname: 'Demo' } ],
+            players: [ { login: 'tim', nickname: 'DM Tim' } ],
+            metaData: {
+                abilities: [
+                    { name: 'Adaptable' },
+                    { name: 'Additional Action' },
+                    { name: 'Semi-Aquatic' },
+                    { name: 'Aquatic' },
+                    { name: 'Armor' },
+                    { name: 'Agile' },
+                    { name: 'Smart' },
+                    { name: 'Spirited' },
+                    { name: 'Strong' },
+                    { name: 'Vigorous' },
+                    { name: 'Low Light Vision' }
+                ],
+                races: [ 
+                    { name: 'Humans' },
+                    { name: 'Elves' }
+                ],
+                edges: [
+                    { name: 'Alertness' },
+                    { name: 'Ambidextrous' },
+                    { name: 'Arcane Background' },
+                    { name: 'Arcane Resistance' },
+                    { name: 'Improved Arcane Resistance' },
+                    { name: 'Aristocrat' },
+                    { name: 'Luck' }
+                ],
+                hindrances: [
+                    { name: 'All Thumbs' },
+                    { name: 'Anemic' },
+                    { name: 'Arrogant' },
+                    { name: 'Bad Eyes - Minor' },
+                    { name: 'Bad Eyes - Major' },
+                    { name: 'Bad Luck' },
+                    { name: 'Big Mouth' },
+                    { name: 'Blind' },
+                    { name: 'Bloodthirsty' },
+                ],
+                skills: [
+                    { name: 'Academics' },
+                    { name: 'Athletics (Agility)' },
+                    { name: 'Athletics (Strength)' },
+                    { name: 'Battle' }
+                ],
+                arcaneBackgrounds: [
+                    { name: 'Gifted' },
+                    { name: 'Magic' },
+                    { name: 'Miracles' },
+                    { name: 'Weird Science' }
+                ],
+                powers: [
+                    { name: 'Arcane Protection' },
+                    { name: 'Armor' }
+                ]
+            },
+            description: "This is a fantasy pirates setting.", 
+        }        
     ]
 }
 

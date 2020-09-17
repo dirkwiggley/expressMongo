@@ -21,6 +21,9 @@ const Genre = new Schema(
             name: { type: String, required: false } } ],
         arcaneBackgrounds: [ { 
             id: { type: String, required: false },
+            name: { type: String, required: false } } ],
+        powers: [ { 
+            id: { type: String, required: false },
             name: { type: String, required: false } } ]
     },
     { timestamps: true },

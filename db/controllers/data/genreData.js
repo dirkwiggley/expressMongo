@@ -25,7 +25,9 @@ function getGenres() {
                 { name: 'Arcane Background' }, 
                 { name: 'Arcane Resistance' }, 
                 { name: 'Improved Arcane Resistance' }, 
-                { name: 'Aristocrat' }
+                { name: 'Aristocrat' },
+
+                { name: 'Luck' }
             ],
             hindrances: [
                 { name: 'All Thumbs' }, 
@@ -50,6 +52,10 @@ function getGenres() {
                 { name: 'Miracles' },
                 { name: 'Psionics' },
                 { name: 'Weird Science' }
+            ],
+            powers: [
+                { name: 'Arcane Protection' },
+                { name: 'Armor' }
             ]
         },
         { name: 'Fantasy' },
@@ -79,7 +85,9 @@ function getGenres() {
                 { name: 'Alertness' }, 
                 { name: 'Ambidextrous' }, 
                 { name: 'Arcane Background' }, 
-                { name: 'Aristocrat' }
+                { name: 'Aristocrat' },
+
+                { name: 'Luck' }
             ],
             hindrances: [
                 { name: 'All Thumbs' }, 
@@ -101,6 +109,10 @@ function getGenres() {
             arcaneBackgrounds: [
                 { name: 'Gifted' },
                 { name: 'Psionics' }
+            ],
+            powers: [
+                { name: 'Arcane Protection' },
+                { name: 'Armor' }
             ]
         },
         { name: 'Post Apocalyptic' }
