@@ -51,30 +51,55 @@ updateGenre = async (req, res) => {
         })
     }
 
-    const genre = new Genre(body)
-    if (!genre) {
-        return res.status(400).json({ success: false, error: err })
-    }
-    
-    var mongoose = require('mongoose');
-    var id = mongoose.Types.ObjectId(body.id);
-
-    Genre
-        .updateOne( { '_id': id }, body )
-        .then((updateResponse) => {
-            return res.status(201).json({
-                success: true,
-                id: genre._id,
-                message: updateResponse,
-            })
-        })
-        .catch(error => {
-            return res.status(400).json({
+    Genre.findOneAndUpdate({ _id: req.params.id}, body, (error, genre) => {
+        if (err) {
+            return res.status(404).json({
                 error,
                 message: 'Genre not updated!',
             })
-        });
+        } else {
+            return res.status(200).json({
+                success: true,
+                id: genre._id,
+                message: 'Genre updated!',
+            })
+        }
+    })    
 }
+// updateGenre = async (req, res) => {
+//     const body = req.body
+
+//     if (!body) {
+//         return res.status(400).json({
+//             success: false,
+//             error: 'You must provide a body to update',
+//         })
+//     }
+
+//     const genre = new Genre(body)
+//     if (!genre) {
+//         return res.status(400).json({ success: false, error: err })
+//     }
+
+//     var mongoose = require('mongoose');
+//     var id = mongoose.Types.ObjectId(body.id);
+
+//     Genre
+//         .updateOne( { '_id': id }, body )
+//         .then((updateResponse) => {
+//             return res.status(201).json({
+//                 success: true,
+//                 id: genre._id,
+//                 message: updateResponse,
+//             })
+//         })
+//         .catch(error => {
+//             return res.status(400).json({
+//                 error,
+//                 message: 'Genre not updated!',
+//             })
+//         });
+// }
 
 deleteGenre = async (req, res) => {
     await Genre.findOneAndDelete({ _id: req.params.id }, (err, genre) => {

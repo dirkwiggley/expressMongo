@@ -1,6 +1,6 @@
 const Campaign = require('../models/campaign-model')
 
-createCampaign = (req, res) => {
+insertCampaign = (req, res) => {
     const body = req.body
 
     if (!body) {
@@ -43,32 +43,20 @@ updateCampaign = async (req, res) => {
         })
     }
 
-    Campaign.findOne({ _id: req.params.id }, (err, campaign) => {
-        if (err) {
+    Campaign.findOneAndUpdate({ _id: req.params.id}, body, (error, campaign) => {
+        if (error) {
             return res.status(404).json({
-                err,
-                message: 'Campaign not found!',
+                error,
+                message: 'Campaign not updated!',
+            })
+        } else {
+            return res.status(200).json({
+                success: true,
+                id: campaign._id,
+                message: 'Campaign updated!',
             })
         }
-        campaign.name = body.name
-        // campaign.time = body.time
-        // campaign.rating = body.rating
-        campaign
-            .save()
-            .then(() => {
-                return res.status(200).json({
-                    success: true,
-                    id: campaign._id,
-                    message: 'Campaign updated!',
-                })
-            })
-            .catch(error => {
-                return res.status(404).json({
-                    error,
-                    message: 'Campaign not updated!',
-                })
-            })
-    })
+    })    
 }
 
 deleteCampaign = async (req, res) => {
@@ -98,7 +86,7 @@ getCampaignById = async (req, res) => {
                 .status(404)
                 .json({ success: false, error: `Campaign not found` })
         }
-        return res.status(200).json({ success: true, data: campaign })
+        return res.status(200).json({ success: true, campaign: campaign })
     }).catch(err => console.log(err))
 }
 
@@ -112,12 +100,12 @@ getCampaigns = async (req, res) => {
                 .status(404)
                 .json({ success: false, error: `Campaign not found` })
         }
-        return res.status(200).json({ success: true, data: campaigns })
+        return res.status(200).json({ success: true, campaigns: campaigns })
     }).catch(err => console.log(err))
 }
 
 module.exports = {
-    createCampaign,
+    insertCampaign,
     updateCampaign,
     deleteCampaign,
     getCampaigns,

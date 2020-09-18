@@ -48,3 +48,5 @@
 * fixed some of the items in the campaign data seeder
 9/16/2020
 * Added powers
+9/18/2020
+* Updated campaign methods and fixed saving updated genres
