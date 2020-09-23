@@ -50,3 +50,5 @@
 * Added powers
 9/18/2020
 * Updated campaign methods and fixed saving updated genres
+9/22/2020
+* Added Folio model etc.

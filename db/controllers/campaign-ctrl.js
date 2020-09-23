@@ -1,6 +1,6 @@
 const Campaign = require('../models/campaign-model')
 
-insertCampaign = (req, res) => {
+insertCampaign = async (req, res) => {
     const body = req.body
 
     if (!body) {
