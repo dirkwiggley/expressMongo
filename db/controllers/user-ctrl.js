@@ -43,43 +43,25 @@ updateUser = async (req, res) => {
     if (!body) {
         return res.status(400).json({
             success: false,
-            error: 'You must provide a user to update',
+            error: 'You must provide a body to update',
         })
     }
 
-    User.findOne({ _id: req.params.id }, (err, user) => {
-        if (err) {
+    User.replaceOne({ _id: req.params.id}, body, (error, user) => {
+        if (error) {
             return res.status(404).json({
-                err,
-                message: 'User not found!',
+                error,
+                message: 'User not updated!',
+            })
+        } else {
+            return res.status(200).json({
+                success: true,
+                message: 'User updated!',
             })
         }
-        user.login = body.login
-        user.password = body.password
-        user.name = body.name
-        user.nickname = body.nickname
-        user.email = body.email
-        user.campaignsPlayer = body.campaignsPlayer
-        user.campaignsGM = body.campaignsGM
-        user.privileges = body.privileges;
-
-        user
-            .save()
-            .then(() => {
-                return res.status(200).json({
-                    success: true,
-                    id: user._id,
-                    message: 'User updated!',
-                })
-            })
-            .catch(error => {
-                return res.status(404).json({
-                    error,
-                    message: 'User not updated!',
-                })
-            })
-    })
+    })    
 }
+
 
 deleteUser = async (req, res) => {
     await User.findOneAndDelete({ _id: req.params.id }, (err, user) => {

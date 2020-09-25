@@ -43,31 +43,18 @@ updateRace = async (req, res) => {
         })
     }
 
-    Race.findOne({ _id: req.params.id }, (err, race) => {
-        if (err) {
+    Race.replaceOne({ _id: req.params.id}, body, (error, race) => {
+        if (error) {
             return res.status(404).json({
-                err,
-                message: 'Race not found!',
+                error,
+                message: 'Race not updated!',
+            })
+        } else {
+            return res.status(200).json({
+                success: true,
+                message: race,
             })
         }
-        race.name = body.name
-        // race.time = body.time
-        // race.rating = body.rating
-        race
-            .save()
-            .then(() => {
-                return res.status(200).json({
-                    success: true,
-                    id: race._id,
-                    message: 'Race updated!',
-                })
-            })
-            .catch(error => {
-                return res.status(404).json({
-                    error,
-                    message: 'Race not updated!',
-                })
-            })
     })
 }
 

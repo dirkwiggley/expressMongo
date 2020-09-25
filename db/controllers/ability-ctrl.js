@@ -43,31 +43,18 @@ updateAbility = async (req, res) => {
         })
     }
 
-    Ability.findOne({ _id: req.params.id }, (err, ability) => {
-        if (err) {
+    Ability.replaceOne({ _id: req.params.id}, body, (error, ability) => {
+        if (error) {
             return res.status(404).json({
-                err,
-                message: 'Ability not found!',
+                error,
+                message: 'Ability not updated!',
+            })
+        } else {
+            return res.status(200).json({
+                success: true,
+                message: ability,
             })
         }
-        ability.name = body.name
-        // ability.time = body.time
-        // ability.rating = body.rating
-        ability
-            .save()
-            .then(() => {
-                return res.status(200).json({
-                    success: true,
-                    id: ability._id,
-                    message: 'Ability updated!',
-                })
-            })
-            .catch(error => {
-                return res.status(404).json({
-                    error,
-                    message: 'Ability not updated!',
-                })
-            })
     })
 }
 

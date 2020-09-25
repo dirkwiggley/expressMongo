@@ -43,31 +43,18 @@ updateDice = async (req, res) => {
         })
     }
 
-    Dice.findOne({ _id: req.params.id }, (err, dice) => {
-        if (err) {
+    Dice.replaceOne({ _id: req.params.id}, body, (error, dice) => {
+        if (error) {
             return res.status(404).json({
-                err,
-                message: 'Dice not found!',
+                error,
+                message: 'Dice not updated!',
+            })
+        } else {
+            return res.status(200).json({
+                success: true,
+                message: dice,
             })
         }
-        dice.name = body.name
-        // dice.time = body.time
-        // dice.rating = body.rating
-        dice
-            .save()
-            .then(() => {
-                return res.status(200).json({
-                    success: true,
-                    id: dice._id,
-                    message: 'Dice updated!',
-                })
-            })
-            .catch(error => {
-                return res.status(404).json({
-                    error,
-                    message: 'Dice not updated!',
-                })
-            })
     })
 }
 

@@ -43,31 +43,18 @@ updateAttributeType = async (req, res) => {
         })
     }
 
-    AttributeType.findOne({ _id: req.params.id }, (err, attributeType) => {
-        if (err) {
+    AttributeType.replaceOne({ _id: req.params.id}, body, (error, attributeType) => {
+        if (error) {
             return res.status(404).json({
-                err,
-                message: 'AttributeType not found!',
+                error,
+                message: 'AttributeType not updated!',
+            })
+        } else {
+            return res.status(200).json({
+                success: true,
+                message: attributeType,
             })
         }
-        attributeType.name = body.name
-        // attributeType.time = body.time
-        // attributeType.rating = body.rating
-        attributeType
-            .save()
-            .then(() => {
-                return res.status(200).json({
-                    success: true,
-                    id: attributeType._id,
-                    message: 'AttributeType updated!',
-                })
-            })
-            .catch(error => {
-                return res.status(404).json({
-                    error,
-                    message: 'AttributeType not updated!',
-                })
-            })
     })
 }
 

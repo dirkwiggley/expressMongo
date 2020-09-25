@@ -43,31 +43,18 @@ updateEdge = async (req, res) => {
         })
     }
 
-    Edge.findOne({ _id: req.params.id }, (err, edge) => {
-        if (err) {
+    Edge.replaceOne({ _id: req.params.id}, body, (error, edge) => {
+        if (error) {
             return res.status(404).json({
-                err,
-                message: 'Edge not found!',
+                error,
+                message: 'Edge not updated!',
+            })
+        } else {
+            return res.status(200).json({
+                success: true,
+                message: edge,
             })
         }
-        edge.name = body.name
-        // edge.time = body.time
-        // edge.rating = body.rating
-        edge
-            .save()
-            .then(() => {
-                return res.status(200).json({
-                    success: true,
-                    id: edge._id,
-                    message: 'Edge updated!',
-                })
-            })
-            .catch(error => {
-                return res.status(404).json({
-                    error,
-                    message: 'Edge not updated!',
-                })
-            })
     })
 }
 

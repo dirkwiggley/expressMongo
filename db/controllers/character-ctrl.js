@@ -43,31 +43,18 @@ updateCharacter = async (req, res) => {
         })
     }
 
-    Character.findOne({ _id: req.params.id }, (err, character) => {
-        if (err) {
+    Character.replaceOne({ _id: req.params.id}, body, (error, character) => {
+        if (error) {
             return res.status(404).json({
-                err,
-                message: 'Character not found!',
+                error,
+                message: 'Character not updated!',
+            })
+        } else {
+            return res.status(200).json({
+                success: true,
+                message: character,
             })
         }
-        character.name = body.name
-        // character.time = body.time
-        // character.rating = body.rating
-        character
-            .save()
-            .then(() => {
-                return res.status(200).json({
-                    success: true,
-                    id: character._id,
-                    message: 'Character updated!',
-                })
-            })
-            .catch(error => {
-                return res.status(404).json({
-                    error,
-                    message: 'Character not updated!',
-                })
-            })
     })
 }
 

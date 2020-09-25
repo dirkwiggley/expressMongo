@@ -52,3 +52,5 @@
 * Updated campaign methods and fixed saving updated genres
 9/22/2020
 * Added Folio model etc.
+9/25/2020
+* Changed various update methods

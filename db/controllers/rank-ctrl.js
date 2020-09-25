@@ -43,31 +43,18 @@ updateRank = async (req, res) => {
         })
     }
 
-    Rank.findOne({ _id: req.params.id }, (err, rank) => {
-        if (err) {
+    Rank.replaceOne({ _id: req.params.id}, body, (error, rank) => {
+        if (error) {
             return res.status(404).json({
-                err,
-                message: 'Rank not found!',
+                error,
+                message: 'Rank not updated!',
+            })
+        } else {
+            return res.status(200).json({
+                success: true,
+                message: rank,
             })
         }
-        rank.name = body.name
-        // rank.time = body.time
-        // rank.rating = body.rating
-        rank
-            .save()
-            .then(() => {
-                return res.status(200).json({
-                    success: true,
-                    id: rank._id,
-                    message: 'Rank updated!',
-                })
-            })
-            .catch(error => {
-                return res.status(404).json({
-                    error,
-                    message: 'Rank not updated!',
-                })
-            })
     })
 }
 

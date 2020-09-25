@@ -43,31 +43,18 @@ updatePower = async (req, res) => {
         })
     }
 
-    Power.findOne({ _id: req.params.id }, (err, power) => {
-        if (err) {
+    Power.replaceOne({ _id: req.params.id}, body, (error, power) => {
+        if (error) {
             return res.status(404).json({
-                err,
-                message: 'Power not found!',
+                error,
+                message: 'Power not updated!',
+            })
+        } else {
+            return res.status(200).json({
+                success: true,
+                message: power,
             })
         }
-        power.name = body.name
-        // power.time = body.time
-        // power.rating = body.rating
-        power
-            .save()
-            .then(() => {
-                return res.status(200).json({
-                    success: true,
-                    id: power._id,
-                    message: 'Power updated!',
-                })
-            })
-            .catch(error => {
-                return res.status(404).json({
-                    error,
-                    message: 'Power not updated!',
-                })
-            })
     })
 }
 

@@ -43,7 +43,7 @@ updateFolio = async (req, res) => {
         })
     }
 
-    Folio.findOneAndUpdate({ _id: req.params.id}, body, (error, folio) => {
+    Folio.replaceOne({ _id: req.params.id}, body, (error, folio) => {
         if (error) {
             return res.status(404).json({
                 error,
@@ -52,11 +52,10 @@ updateFolio = async (req, res) => {
         } else {
             return res.status(200).json({
                 success: true,
-                id: folio._id,
-                message: 'Folio updated!',
+                message: folio,
             })
         }
-    })        
+    })      
 }
 
 deleteFolio = async (req, res) => {

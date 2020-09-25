@@ -43,31 +43,18 @@ updateHindrance = async (req, res) => {
         })
     }
 
-    Hindrance.findOne({ _id: req.params.id }, (err, hindrance) => {
-        if (err) {
+    Hindrance.replaceOne({ _id: req.params.id}, body, (error, hindrance) => {
+        if (error) {
             return res.status(404).json({
-                err,
-                message: 'Hindrance not found!',
+                error,
+                message: 'Hindrance not updated!',
+            })
+        } else {
+            return res.status(200).json({
+                success: true,
+                message: hindrance,
             })
         }
-        hindrance.name = body.name
-        // hindrance.time = body.time
-        // hindrance.rating = body.rating
-        hindrance
-            .save()
-            .then(() => {
-                return res.status(200).json({
-                    success: true,
-                    id: hindrance._id,
-                    message: 'Hindrance updated!',
-                })
-            })
-            .catch(error => {
-                return res.status(404).json({
-                    error,
-                    message: 'Hindrance not updated!',
-                })
-            })
     })
 }
 

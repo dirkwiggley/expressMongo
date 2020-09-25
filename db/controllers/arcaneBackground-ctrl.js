@@ -43,31 +43,18 @@ updateArcaneBackground = async (req, res) => {
         })
     }
 
-    ArcaneBackground.findOne({ _id: req.params.id }, (err, arcaneBackground) => {
-        if (err) {
+    ArcaneBackground.replaceOne({ _id: req.params.id}, body, (error, arcaneBackground) => {
+        if (error) {
             return res.status(404).json({
-                err,
-                message: 'Arcane Background not found!',
+                error,
+                message: 'ArcaneBackground not updated!',
+            })
+        } else {
+            return res.status(200).json({
+                success: true,
+                message: arcaneBackground,
             })
         }
-        arcaneBackground.name = body.name
-        // arcaneBackground.time = body.time
-        // arcaneBackground.rating = body.rating
-        arcaneBackground
-            .save()
-            .then(() => {
-                return res.status(200).json({
-                    success: true,
-                    id: arcaneBackground._id,
-                    message: 'Arcane Background updated!',
-                })
-            })
-            .catch(error => {
-                return res.status(404).json({
-                    error,
-                    message: 'Arcane Background not updated!',
-                })
-            })
     })
 }
 

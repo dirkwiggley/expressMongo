@@ -43,7 +43,7 @@ updateCampaign = async (req, res) => {
         })
     }
 
-    Campaign.findOneAndUpdate({ _id: req.params.id}, body, (error, campaign) => {
+    Campaign.replaceOne({ _id: req.params.id}, body, (error, campaign) => {
         if (error) {
             return res.status(404).json({
                 error,
@@ -52,11 +52,10 @@ updateCampaign = async (req, res) => {
         } else {
             return res.status(200).json({
                 success: true,
-                id: campaign._id,
-                message: 'Campaign updated!',
+                message: campaign,
             })
         }
-    })    
+    })   
 }
 
 deleteCampaign = async (req, res) => {

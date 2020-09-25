@@ -43,32 +43,19 @@ updateSkill = async (req, res) => {
         })
     }
 
-    Skill.findOne({ _id: req.params.id }, (err, skill) => {
-        if (err) {
+    Skill.replaceOne({ _id: req.params.id}, body, (error, skill) => {
+        if (error) {
             return res.status(404).json({
-                err,
-                message: 'Skill not found!',
+                error,
+                message: 'Skill not updated!',
+            })
+        } else {
+            return res.status(200).json({
+                success: true,
+                message: skill,
             })
         }
-        skill.name = body.name
-        // skill.time = body.time
-        // skill.rating = body.rating
-        skill
-            .save()
-            .then(() => {
-                return res.status(200).json({
-                    success: true,
-                    id: skill._id,
-                    message: 'Skill updated!',
-                })
-            })
-            .catch(error => {
-                return res.status(404).json({
-                    error,
-                    message: 'Skill not updated!',
-                })
-            })
-    })
+    });
 }
 
 deleteSkill = async (req, res) => {
