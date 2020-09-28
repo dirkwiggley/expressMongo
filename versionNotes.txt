@@ -54,3 +54,5 @@
 * Added Folio model etc.
 9/25/2020
 * Changed various update methods
+9/27/2020
+* Improvements to authorization code

@@ -10,6 +10,7 @@ router.delete('/user/:id', UserCtrl.deleteUser)
 router.get('/user/:id', UserCtrl.getUserById)
 router.get('/user', UserCtrl.getAllUsers)
 router.post('/user/login', UserCtrl.login)
-router.post('/user/checkToken', UserCtrl.checkToken)
+router.post('/user/refreshtoken', UserCtrl.refreshToken)
+router.post('/user/checktoken', UserCtrl.checkToken)
 
 module.exports = router

@@ -131,12 +131,14 @@ createToken = () => {
 }
 
 login = async (req, res) => {
+    console.log('[user-ctrl] - login: ', JSON.stringify(req.body, null, 2));
     await User.findOne({ login: req.body.id }, (err, user) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
 
         if (!user) {
+            console.log('[user-ctrl] - login error: user not found');
             return res
                 .status(404)
                 .json({ success: false, error: `User not found` })
@@ -146,6 +148,7 @@ login = async (req, res) => {
             let token = createToken()
             user.token = token
             user.save().then(() => {
+                console.log('[user-ctrl] - login: user logged in');
                 return res.status(200).json({
                     success: true,
                     user: user,
@@ -153,9 +156,11 @@ login = async (req, res) => {
                 })
             })
             .catch(error => {
+                console.log('[user-ctrl] - login: Could not update token');
                 return res.status(400).json({ success: false, error: "Could not update token" })
             })
         } else {
+            console.log('[user-ctrl] - login: Login id and/or Password not correct');
             return res.status(400).json({ success: false, error: "Login id and/or Password not correct" })
         }
     }).catch(err => console.log(err))
@@ -165,7 +170,8 @@ login = async (req, res) => {
  * req.body.id : userId
  * req.body.token : token
  */
-checkToken = async (req, res) => {
+refreshToken = async (req, res) => {
+    // console.log('[user-ctrl] - refreshToken: ', req.body);
     await User.findOne({ login: req.body.login }, (err, user) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
@@ -179,18 +185,19 @@ checkToken = async (req, res) => {
 
         let now = new Date().getTime()
         if (user.token.id != req.body.token) {
-            return res.status(400).json({ success: false, error: "Invalid token sent" })
+            return res.status(400).json({ success: false, error: "Invalid token sent. Expected " + user.token.id + " got " + req.body.token })
         }
         let expires = user.token.expires;
 
         if (now < expires) {
-            let token = createToken()
-            user.token = token
+            let newToken = createToken();
+            user.token = newToken;
+            // console.log('user.token: ', JSON.stringify(user.token, null, 2));
             let privs = user.privileges
             user.save().then(() => {
                 return res.status(200).json({
                     success: true,
-                    token: token,
+                    token: newToken,
                     privileges: privs,
                     message: 'Token aquired!',
                 })
@@ -210,6 +217,40 @@ checkToken = async (req, res) => {
     }).catch(err => console.log(err))
 }
 
+checkToken = async (req, res) => {
+    // console.log('[user-ctrl] - checkToken', JSON.stringify(req.body, null, 2));
+    await User.findOne( { login: req.body.login }, (err, user) => {
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
+        }
+
+        if (!user) {
+            return res
+                .status(404)
+                .json({ success: false, error: `User not found` })
+        }
+        if (!user.token) {
+            return res
+                .status(404)
+                .json({ success: false, error: `Token found` })
+        }
+
+        let now = new Date().getTime()
+        if (user.token.id != req.body.token) {
+            return res.status(400).json({ success: false, error: "Invalid token sent" })
+        }
+        
+        if (now < user.token.expires) {
+            return res.status(200).json({
+                success: true,
+                message: 'Token valid',
+            })
+        } else {
+            return res.status(400).json({ success: false, error: "Token expired" });
+        }
+    } );
+}
+
 module.exports = {
     insertUser,
     updateUser,
@@ -217,5 +258,6 @@ module.exports = {
     getAllUsers,
     getUserById,
     login,
+    refreshToken,
     checkToken
 }
