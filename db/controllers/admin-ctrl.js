@@ -660,8 +660,10 @@ saveCharacters = (res, body, finalVal) => {
 
 initUsers = (req, res) => {
     let finalVal = false
+    let max = userData.getUsers.length
+    let index = 0;
     userData.getUsers().map((body) => {
-        if (body.ordinal == 2) 
+        if (++index === max) 
             finalVal = true;
         saveUsers(res, body, finalVal)
     })

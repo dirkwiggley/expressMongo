@@ -56,3 +56,5 @@
 * Changed various update methods
 9/27/2020
 * Improvements to authorization code
+10/1/2020
+* Fixed the data structure for privileges

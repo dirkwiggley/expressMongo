@@ -112,10 +112,7 @@ getAllUsers = async (req, res) => {
             return res.status(400).json({ success: false, error: err })
         }
         const users = result.map(user => {
-            const privileges = user.privileges.map(privilege => {
-                return privilege.id;
-            });
-            return { id: user._id, login: user.login, name: user.name, nickname: user.nickname, privileges: privileges }
+            return { id: user._id, login: user.login, name: user.name, nickname: user.nickname, isAdmin: user.isAdmin, isUser: user.isUser };
         })
 
         return res.status(200).json({ success: true, users: users })
@@ -131,14 +128,12 @@ createToken = () => {
 }
 
 login = async (req, res) => {
-    console.log('[user-ctrl] - login: ', JSON.stringify(req.body, null, 2));
     await User.findOne({ login: req.body.id }, (err, user) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
 
         if (!user) {
-            console.log('[user-ctrl] - login error: user not found');
             return res
                 .status(404)
                 .json({ success: false, error: `User not found` })
@@ -148,7 +143,6 @@ login = async (req, res) => {
             let token = createToken()
             user.token = token
             user.save().then(() => {
-                console.log('[user-ctrl] - login: user logged in');
                 return res.status(200).json({
                     success: true,
                     user: user,
@@ -156,11 +150,9 @@ login = async (req, res) => {
                 })
             })
             .catch(error => {
-                console.log('[user-ctrl] - login: Could not update token');
                 return res.status(400).json({ success: false, error: "Could not update token" })
             })
         } else {
-            console.log('[user-ctrl] - login: Login id and/or Password not correct');
             return res.status(400).json({ success: false, error: "Login id and/or Password not correct" })
         }
     }).catch(err => console.log(err))
@@ -171,7 +163,6 @@ login = async (req, res) => {
  * req.body.token : token
  */
 refreshToken = async (req, res) => {
-    // console.log('[user-ctrl] - refreshToken: ', req.body);
     await User.findOne({ login: req.body.login }, (err, user) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
@@ -192,13 +183,10 @@ refreshToken = async (req, res) => {
         if (now < expires) {
             let newToken = createToken();
             user.token = newToken;
-            // console.log('user.token: ', JSON.stringify(user.token, null, 2));
-            let privs = user.privileges
             user.save().then(() => {
                 return res.status(200).json({
                     success: true,
                     token: newToken,
-                    privileges: privs,
                     message: 'Token aquired!',
                 })
             })
@@ -218,7 +206,6 @@ refreshToken = async (req, res) => {
 }
 
 checkToken = async (req, res) => {
-    // console.log('[user-ctrl] - checkToken', JSON.stringify(req.body, null, 2));
     await User.findOne( { login: req.body.login }, (err, user) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })

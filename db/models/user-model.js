@@ -8,9 +8,8 @@ const User = new Schema(
         name: { type: String, required: true },
         nickname: { type: String, required: true },
         email: { type: String, required: false },
-        campaignsPlayer: [ { id: { type: String, required: false } } ],
-        campaignsGM: [ { id: { type: String, required: false } } ],
-        privileges: [ { id: { type: String, required: true } } ],
+        isAdmin: { type: Boolean, required: true },
+        isUser: { type: Boolean, required: true },
         token: { id: { type: String, required: false }, issued: { type: Number, required: false }, expires: { type: Number, required: false } }
     },
     { timestamps: true },

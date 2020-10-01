@@ -1,4 +1,3 @@
-const Privilege = require('../../models/constants')
 
 function getUsers() {
     return  [
@@ -10,9 +9,9 @@ function getUsers() {
             email: 'dm_tim@yahoo.com',
             campaignsPlayer: null,
             campaignsGM: null,
-            privileges: [ { id: Privilege.APP_ADMIN } ],
-            token: null,
-            ordinal: 0
+            isAdmin: true,
+            isUser: false,
+            token: null
         },
         { 
             login: 'player',
@@ -22,9 +21,9 @@ function getUsers() {
             email: 'dm_tim@yahoo.com',
             campaignsPlayer: [ { id: 'Generic' } ],
             campaignsGM: [ { id: 'Generic' } ],
-            privileges: [ { id: Privilege.APP_USER } ],
-            token: null,
-            ordinal: 1
+            isAdmin: false,
+            isUser: true,
+            token: null
         },
         { 
             login: 'tim',
@@ -34,9 +33,9 @@ function getUsers() {
             email: 'dm_tim@yahoo.com',
             campaignsPlayer: [ { id: 'Generic' } ],
             campaignsGM: [ { id: 'Generic' } ],
-            privileges: [ { id: Privilege.APP_ADMIN }, { id: Privilege.APP_USER } ],
-            token: null,
-            ordinal: 2
+            isAdmin: true,
+            isUser: true,
+            token: null
         }
     ]
 }
