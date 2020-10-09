@@ -58,3 +58,5 @@
 * Improvements to authorization code
 10/1/2020
 * Fixed the data structure for privileges
+10/8/2020
+* Now only returning folios that the user has owner/read/write permissions on

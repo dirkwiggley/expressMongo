@@ -8,7 +8,7 @@ router.post('/folio', FolioCtrl.insertFolio)
 router.put('/folio/:id', FolioCtrl.updateFolio)
 router.delete('/folio/:id', FolioCtrl.deleteFolio)
 router.get('/folio/:id', FolioCtrl.getFolioById)
-router.get('/folios/campaign/:id', FolioCtrl.getFoliosByCampaignId)
+router.get('/folios/campaign/:id/user/:userId', FolioCtrl.getFoliosByCampaignId)
 router.get('/folio', FolioCtrl.getFolio)
 
 module.exports = router

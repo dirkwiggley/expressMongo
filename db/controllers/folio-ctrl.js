@@ -101,15 +101,36 @@ getFoliosByCampaignId = async (req, res) => {
                 .json({ success: false, error: `Folio not found` })
         }
         let folios = [];
+        let userId = req.params.userId;
         for (let i=0; i < data.length; i++) {
-            folios.push( { 
-                id: data[i]._id,
-                campaignid: data[i].campaignid,
-                title: data[i].title,
-                owner: data[i].owner,
-                read: data[i].read,
-                write: data[i].write
-            } )
+            let folio = data[i];
+            let push = false;
+            if (folio.owner.id === userId) {
+                push = true;
+            } else {
+                folio.write.forEach(writer => {
+                    if (writer.id === userId) {
+                        push = true;
+                    }
+                } );
+                if (!push) {
+                    folio.read.forEach(reader => {
+                        if (reader.id === userId) {
+                            push = true;
+                        }
+                    } );
+                }
+            }
+            if (push) {
+                folios.push( { 
+                    id: folio._id,
+                    campaignid: folio.campaignid,
+                    title: folio.title,
+                    owner: folio.owner,
+                    read: folio.read,
+                    write: folio.write
+                } );
+            }
         }
         return res.status(200).json({ success: true, folios: folios })
     }).catch(err => console.log(err))
