@@ -39,9 +39,7 @@ const folioRouter = require('./db/routes/folio-router')
 
 
 app.use(bodyParser.urlencoded({ extended: true }))
-// app.use(cors())
 app.use(bodyParser.json())
-
 
 app.get('/', (req, res) => {
     res.send('Hello World!')
@@ -61,7 +59,6 @@ function error(err, req, res, next) {
 
 // This overrides the default error handler, and must be called _last_ on the app
 app.use(error);
-
 
 const apiPort = 3001
 app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`))

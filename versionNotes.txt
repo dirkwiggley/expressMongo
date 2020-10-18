@@ -60,3 +60,5 @@
 * Fixed the data structure for privileges
 10/8/2020
 * Now only returning folios that the user has owner/read/write permissions on
+10/18/2020
+* A little work on auth. More to do though

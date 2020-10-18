@@ -47,7 +47,10 @@ updateUser = async (req, res) => {
         })
     }
 
-    User.replaceOne({ _id: req.params.id}, body, (error, user) => {
+    let token = createToken();
+    body.token = token;
+
+    User.replaceOne({ _id: body._id}, body, (error, data) => {
         if (error) {
             return res.status(404).json({
                 error,
@@ -57,6 +60,7 @@ updateUser = async (req, res) => {
             return res.status(200).json({
                 success: true,
                 message: 'User updated!',
+                data: data
             })
         }
     })    
@@ -75,7 +79,7 @@ deleteUser = async (req, res) => {
                 .json({ success: false, error: `User not found` })
         }
 
-        return res.status(200).json({ success: true, data: user })
+        return res.status(200).json({ success: true })
     }).catch(err => console.log(err))
 }
 
@@ -176,7 +180,9 @@ refreshToken = async (req, res) => {
 
         let now = new Date().getTime()
         if (user.token.id != req.body.token) {
-            return res.status(400).json({ success: false, error: "Invalid token sent. Expected " + user.token.id + " got " + req.body.token })
+            return res.status(400).json({ 
+                success: false, 
+                error: `Invalid token sent. Expected ${user.token.id} got ${req.body.token}` })
         }
         let expires = user.token.expires;
 
@@ -219,7 +225,7 @@ checkToken = async (req, res) => {
         if (!user.token) {
             return res
                 .status(404)
-                .json({ success: false, error: `Token found` })
+                .json({ success: false, error: `Token not found` })
         }
 
         let now = new Date().getTime()
