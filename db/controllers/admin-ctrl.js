@@ -26,6 +26,7 @@ const skillData = require('./data/skillData')
 const powerData = require('./data/powerData')
 const characterData = require('./data/characterData')
 const userData = require('./data/userData')
+const sha256 = require('js-sha256');
 
 initDataTypes = (req, res) => {
     const bodyList = [
@@ -662,9 +663,13 @@ initUsers = (req, res) => {
     let finalVal = false
     let max = userData.getUsers.length
     let index = 0;
+    const pwd = sha256.hmac('key', body.password);
+    body.password = pwd;
     userData.getUsers().map((body) => {
-        if (++index === max) 
+        if (++index === max) {
             finalVal = true;
+        }
+
         saveUsers(res, body, finalVal)
     })
 }

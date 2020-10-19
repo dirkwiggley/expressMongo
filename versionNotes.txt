@@ -62,3 +62,5 @@
 * Now only returning folios that the user has owner/read/write permissions on
 10/18/2020
 * A little work on auth. More to do though
+10/19/2020
+* Using sha256 hash on seed user passwords
