@@ -9,7 +9,8 @@ const corsOptions = {
     // origin: whitelist,
     origin: '*',
     methods: methods,
-    preflightContinue: true
+    preflightContinue: true,
+    allowedHeaders: 'Content-Type'
 }
 const app = express()
 app.use(cors(corsOptions))
@@ -36,7 +37,7 @@ const userRouter = require('./db/routes/user-router')
 const skillRouter = require('./db/routes/skill-router')
 const powerRouter = require('./db/routes/power-router')
 const folioRouter = require('./db/routes/folio-router')
-
+const userImageRouter = require('./db/routes/userImage-router')
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
@@ -47,7 +48,7 @@ app.get('/', (req, res) => {
 
 app.use('/api', campaignRouter, genreRouter, diceRouter, adminRouter, attributeTypeRouter, rankRouter, hindranceRouter)
 app.use('/api', edgeRouter, arcaneBackgroundRouter, abilityRouter, raceRouter, characterRouter, userRouter, skillRouter)
-app.use('/api', powerRouter, folioRouter)
+app.use('/api', powerRouter, folioRouter, userImageRouter)
 
 function error(err, req, res, next) {
     console.error(err.stack);

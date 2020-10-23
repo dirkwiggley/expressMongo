@@ -64,3 +64,5 @@
 * A little work on auth. More to do though
 10/19/2020
 * Using sha256 hash on seed user passwords
+10/23/2020
+* Got minimum of Image CRUD code working to make gallery work on front end

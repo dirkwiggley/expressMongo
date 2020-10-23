@@ -91,12 +91,11 @@ getRaceById = async (req, res) => {
 
 getRace = async (req, res) => {
     const byName = { name: 1}
-    await Race.find({}, (err, race) => {
-        result = race;
+    await Race.find({}, (err, result) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
-        if (!race.length) {
+        if (!result.length) {
             return res
                 .status(404)
                 .json({ success: false, error: `Race not found` })
