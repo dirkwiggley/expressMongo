@@ -8,6 +8,6 @@ router.post('/race', RaceCtrl.insertRace)
 router.put('/race/:id', RaceCtrl.updateRace)
 router.delete('/race/:id', RaceCtrl.deleteRace)
 router.get('/race/:id', RaceCtrl.getRaceById)
-router.get('/race', RaceCtrl.getRace)
+router.get('/race', RaceCtrl.getRaces)
 
 module.exports = router

@@ -43,7 +43,7 @@ updateRank = async (req, res) => {
         })
     }
 
-    Rank.replaceOne({ _id: req.params.id}, body, (error, rank) => {
+    Rank.replaceOne({ _id: req.params.id}, body, (error, data) => {
         if (error) {
             return res.status(404).json({
                 error,
@@ -52,14 +52,14 @@ updateRank = async (req, res) => {
         } else {
             return res.status(200).json({
                 success: true,
-                message: rank,
+                message: data,
             })
         }
     })
 }
 
 deleteRank = async (req, res) => {
-    await Rank.findOneAndDelete({ _id: req.params.id }, (err, rank) => {
+    await Rank.findOneAndDelete({ _id: req.params.id }, (err, data) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
@@ -70,7 +70,7 @@ deleteRank = async (req, res) => {
                 .json({ success: false, error: `Rank not found` })
         }
 
-        return res.status(200).json({ success: true, data: rank })
+        return res.status(200).json({ success: true, message: data })
     }).catch(err => console.log(err))
 }
 
@@ -85,11 +85,11 @@ getRankById = async (req, res) => {
                 .status(404)
                 .json({ success: false, error: `Rank not found` })
         }
-        return res.status(200).json({ success: true, data: rank })
+        return res.status(200).json({ success: true, rank: rank })
     }).catch(err => console.log(err))
 }
 
-getRank = async (req, res) => {
+getRanks = async (req, res) => {
     const byOrdinal = { ordinal: 1}
     await Rank.find({}, (err, rank) => {
         result = rank;
@@ -106,7 +106,7 @@ getRank = async (req, res) => {
             console.log(err)
             return res.status(400).json({ success: false, error: err })
         }
-        return res.status(200).json({ success: true, data: result })
+        return res.status(200).json({ success: true, ranks: result })
     })
 }
 
@@ -114,6 +114,6 @@ module.exports = {
     insertRank,
     updateRank,
     deleteRank,
-    getRank,
+    getRanks,
     getRankById
 }

@@ -43,7 +43,7 @@ updatePower = async (req, res) => {
         })
     }
 
-    Power.replaceOne({ _id: req.params.id}, body, (error, power) => {
+    Power.replaceOne({ _id: req.params.id}, body, (error, data) => {
         if (error) {
             return res.status(404).json({
                 error,
@@ -52,14 +52,14 @@ updatePower = async (req, res) => {
         } else {
             return res.status(200).json({
                 success: true,
-                message: power,
+                message: data,
             })
         }
     })
 }
 
 deletePower = async (req, res) => {
-    await Power.findOneAndDelete({ _id: req.params.id }, (err, power) => {
+    await Power.findOneAndDelete({ _id: req.params.id }, (err, data) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
@@ -70,7 +70,7 @@ deletePower = async (req, res) => {
                 .json({ success: false, error: `Power not found` })
         }
 
-        return res.status(200).json({ success: true, data: power })
+        return res.status(200).json({ success: true, message: data })
     }).catch(err => console.log(err))
 }
 
@@ -89,7 +89,7 @@ getPowerById = async (req, res) => {
     }).catch(err => console.log(err))
 }
 
-getPower = async (req, res) => {
+getPowers = async (req, res) => {
     await Power.find({}, (err, power) => {
         result = power;
         if (err) {
@@ -113,6 +113,6 @@ module.exports = {
     insertPower,
     updatePower,
     deletePower,
-    getPower,
+    getPowers,
     getPowerById
 }

@@ -8,6 +8,6 @@ router.post('/arcaneBackground', ArcaneBackgroundCtrl.insertArcaneBackground)
 router.put('/arcaneBackground/:id', ArcaneBackgroundCtrl.updateArcaneBackground)
 router.delete('/arcaneBackground/:id', ArcaneBackgroundCtrl.deleteArcaneBackground)
 router.get('/arcaneBackground/:id', ArcaneBackgroundCtrl.getArcaneBackgroundById)
-router.get('/arcaneBackground', ArcaneBackgroundCtrl.getArcaneBackground)
+router.get('/arcaneBackground', ArcaneBackgroundCtrl.getArcaneBackgrounds)
 
 module.exports = router

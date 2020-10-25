@@ -43,7 +43,7 @@ updateRace = async (req, res) => {
         })
     }
 
-    Race.replaceOne({ _id: req.params.id}, body, (error, race) => {
+    Race.replaceOne({ _id: req.params.id}, body, (error, data) => {
         if (error) {
             return res.status(404).json({
                 error,
@@ -52,14 +52,14 @@ updateRace = async (req, res) => {
         } else {
             return res.status(200).json({
                 success: true,
-                message: race,
+                message: data,
             })
         }
     })
 }
 
 deleteRace = async (req, res) => {
-    await Race.findOneAndDelete({ _id: req.params.id }, (err, race) => {
+    await Race.findOneAndDelete({ _id: req.params.id }, (err, data) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
@@ -70,7 +70,7 @@ deleteRace = async (req, res) => {
                 .json({ success: false, error: `Race not found` })
         }
 
-        return res.status(200).json({ success: true, data: race })
+        return res.status(200).json({ success: true, message: data })
     }).catch(err => console.log(err))
 }
 
@@ -85,11 +85,11 @@ getRaceById = async (req, res) => {
                 .status(404)
                 .json({ success: false, error: `Race not found` })
         }
-        return res.status(200).json({ success: true, data: race })
+        return res.status(200).json({ success: true, race: race })
     }).catch(err => console.log(err))
 }
 
-getRace = async (req, res) => {
+getRaces = async (req, res) => {
     const byName = { name: 1}
     await Race.find({}, (err, result) => {
         if (err) {
@@ -105,7 +105,7 @@ getRace = async (req, res) => {
             console.log(err)
             return res.status(400).json({ success: false, error: err })
         }
-        return res.status(200).json({ success: true, data: result })
+        return res.status(200).json({ success: true, races: result })
     })
 }
 
@@ -113,6 +113,6 @@ module.exports = {
     insertRace,
     updateRace,
     deleteRace,
-    getRace,
+    getRaces,
     getRaceById
 }

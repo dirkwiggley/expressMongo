@@ -43,7 +43,7 @@ updateDice = async (req, res) => {
         })
     }
 
-    Dice.replaceOne({ _id: req.params.id}, body, (error, dice) => {
+    Dice.replaceOne({ _id: req.params.id}, body, (error, message) => {
         if (error) {
             return res.status(404).json({
                 error,
@@ -52,7 +52,7 @@ updateDice = async (req, res) => {
         } else {
             return res.status(200).json({
                 success: true,
-                message: dice,
+                message: message,
             })
         }
     })
@@ -70,7 +70,7 @@ deleteDice = async (req, res) => {
                 .json({ success: false, error: `Dice not found` })
         }
 
-        return res.status(200).json({ success: true, data: dice })
+        return res.status(200).json({ success: true })
     }).catch(err => console.log(err))
 }
 
@@ -85,7 +85,7 @@ getDiceById = async (req, res) => {
                 .status(404)
                 .json({ success: false, error: `Dice not found` })
         }
-        return res.status(200).json({ success: true, data: dice })
+        return res.status(200).json({ success: true, dice: dice })
     }).catch(err => console.log(err))
 }
 
@@ -105,7 +105,7 @@ getDice = async (req, res) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
-        return res.status(200).json({ success: true, data: result })
+        return res.status(200).json({ success: true, dice: result })
     })
 }
 

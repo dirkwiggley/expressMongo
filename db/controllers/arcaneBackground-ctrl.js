@@ -43,7 +43,7 @@ updateArcaneBackground = async (req, res) => {
         })
     }
 
-    ArcaneBackground.replaceOne({ _id: req.params.id}, body, (error, arcaneBackground) => {
+    ArcaneBackground.replaceOne({ _id: req.params.id}, body, (error, data) => {
         if (error) {
             return res.status(404).json({
                 error,
@@ -52,14 +52,14 @@ updateArcaneBackground = async (req, res) => {
         } else {
             return res.status(200).json({
                 success: true,
-                message: arcaneBackground,
+                message: data,
             })
         }
     })
 }
 
 deleteArcaneBackground = async (req, res) => {
-    await ArcaneBackground.findOneAndDelete({ _id: req.params.id }, (err, arcaneBackground) => {
+    await ArcaneBackground.findOneAndDelete({ _id: req.params.id }, (err, data) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
@@ -70,7 +70,7 @@ deleteArcaneBackground = async (req, res) => {
                 .json({ success: false, error: `Arcane Background not found` })
         }
 
-        return res.status(200).json({ success: true, data: arcaneBackground })
+        return res.status(200).json({ success: true, message: data })
     }).catch(err => console.log(err))
 }
 
@@ -85,28 +85,28 @@ getArcaneBackgroundById = async (req, res) => {
                 .status(404)
                 .json({ success: false, error: `Arcane Background not found` })
         }
-        return res.status(200).json({ success: true, data: arcaneBackground })
+        return res.status(200).json({ success: true, arcaneBackground: arcaneBackground })
     }).catch(err => console.log(err))
 }
 
-getArcaneBackground = async (req, res) => {
+getArcaneBackgrounds = async (req, res) => {
     const byOrdinal = { ordinal: 1 }
-    await ArcaneBackground.find({}, (err, arcaneBackground) => {
-        result = arcaneBackground;
+    await ArcaneBackground.find({}, (err, arcaneBackgrounds) => {
+        result = arcaneBackgrounds;
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
-        if (!arcaneBackground.length) {
+        if (!arcaneBackgrounds.length) {
             return res
                 .status(404)
-                .json({ success: false, error: `Arcane Background not found` })
+                .json({ success: false, error: `Arcane Backgrounds not found` })
         }
     }).sort(byOrdinal).exec(function(err, result) {
         if (err) {
             console.log(err)
             return res.status(400).json({ success: false, error: err })
         }
-        return res.status(200).json({ success: true, data: result })
+        return res.status(200).json({ success: true, arcaneBackgrounds: result })
     })
 }
 
@@ -114,6 +114,6 @@ module.exports = {
     insertArcaneBackground,
     updateArcaneBackground,
     deleteArcaneBackground,
-    getArcaneBackground,
+    getArcaneBackgrounds,
     getArcaneBackgroundById
 }

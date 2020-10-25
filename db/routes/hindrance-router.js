@@ -8,6 +8,6 @@ router.post('/hindrance', HindranceCtrl.insertHindrance)
 router.put('/hindrance/:id', HindranceCtrl.updateHindrance)
 router.delete('/hindrance/:id', HindranceCtrl.deleteHindrance)
 router.get('/hindrance/:id', HindranceCtrl.getHindranceById)
-router.get('/hindrance', HindranceCtrl.getHindrance)
+router.get('/hindrance', HindranceCtrl.getHindrances)
 
 module.exports = router

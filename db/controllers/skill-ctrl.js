@@ -43,7 +43,7 @@ updateSkill = async (req, res) => {
         })
     }
 
-    Skill.replaceOne({ _id: req.params.id}, body, (error, skill) => {
+    Skill.replaceOne({ _id: req.params.id}, body, (error, data) => {
         if (error) {
             return res.status(404).json({
                 error,
@@ -52,14 +52,14 @@ updateSkill = async (req, res) => {
         } else {
             return res.status(200).json({
                 success: true,
-                message: skill,
+                message: data,
             })
         }
     });
 }
 
 deleteSkill = async (req, res) => {
-    await Skill.findOneAndDelete({ _id: req.params.id }, (err, skill) => {
+    await Skill.findOneAndDelete({ _id: req.params.id }, (err, data) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
@@ -70,7 +70,7 @@ deleteSkill = async (req, res) => {
                 .json({ success: false, error: `Skill not found` })
         }
 
-        return res.status(200).json({ success: true, data: skill })
+        return res.status(200).json({ success: true, message: data })
     }).catch(err => console.log(err))
 }
 
@@ -85,11 +85,11 @@ getSkillById = async (req, res) => {
                 .status(404)
                 .json({ success: false, error: `Skill not found` })
         }
-        return res.status(200).json({ success: true, data: skill })
+        return res.status(200).json({ success: true, skill: skill })
     }).catch(err => console.log(err))
 }
 
-getSkill = async (req, res) => {
+getSkills = async (req, res) => {
     const byOrdinal = { ordinal: 1}
     await Skill.find({}, (err, skill) => {
         result = skill;
@@ -106,7 +106,7 @@ getSkill = async (req, res) => {
             console.log(err)
             return res.status(400).json({ success: false, error: err })
         }
-        return res.status(200).json({ success: true, data: result })
+        return res.status(200).json({ success: true, skills: result })
     })
 }
 
@@ -114,6 +114,6 @@ module.exports = {
     insertSkill,
     updateSkill,
     deleteSkill,
-    getSkill,
+    getSkills,
     getSkillById
 }

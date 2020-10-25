@@ -43,7 +43,7 @@ updateHindrance = async (req, res) => {
         })
     }
 
-    Hindrance.replaceOne({ _id: req.params.id}, body, (error, hindrance) => {
+    Hindrance.replaceOne({ _id: req.params.id}, body, (error, data) => {
         if (error) {
             return res.status(404).json({
                 error,
@@ -52,14 +52,14 @@ updateHindrance = async (req, res) => {
         } else {
             return res.status(200).json({
                 success: true,
-                message: hindrance,
+                message: data,
             })
         }
     })
 }
 
 deleteHindrance = async (req, res) => {
-    await Hindrance.findOneAndDelete({ _id: req.params.id }, (err, hindrance) => {
+    await Hindrance.findOneAndDelete({ _id: req.params.id }, (err, data) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
@@ -70,7 +70,7 @@ deleteHindrance = async (req, res) => {
                 .json({ success: false, error: `Hindrance not found` })
         }
 
-        return res.status(200).json({ success: true, data: hindrance })
+        return res.status(200).json({ success: true, message: data })
     }).catch(err => console.log(err))
 }
 
@@ -85,11 +85,11 @@ getHindranceById = async (req, res) => {
                 .status(404)
                 .json({ success: false, error: `Hindrance not found` })
         }
-        return res.status(200).json({ success: true, data: hindrance })
+        return res.status(200).json({ success: true, hindrance: hindrance })
     }).catch(err => console.log(err))
 }
 
-getHindrance = async (req, res) => {
+getHindrances = async (req, res) => {
     const byOrdinal = { ordinal: 1 }
     await Hindrance.find({}, (err, hindrance) => {
         result = hindrance
@@ -105,7 +105,7 @@ getHindrance = async (req, res) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
-        return res.status(200).json({ success: true, data: result })
+        return res.status(200).json({ success: true, hindrances: result })
     })
 }
 
@@ -113,6 +113,6 @@ module.exports = {
     insertHindrance,
     updateHindrance,
     deleteHindrance,
-    getHindrance,
+    getHindrances,
     getHindranceById
 }

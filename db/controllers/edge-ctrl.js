@@ -43,7 +43,7 @@ updateEdge = async (req, res) => {
         })
     }
 
-    Edge.replaceOne({ _id: req.params.id}, body, (error, edge) => {
+    Edge.replaceOne({ _id: req.params.id}, body, (error, data) => {
         if (error) {
             return res.status(404).json({
                 error,
@@ -52,14 +52,14 @@ updateEdge = async (req, res) => {
         } else {
             return res.status(200).json({
                 success: true,
-                message: edge,
+                message: data,
             })
         }
     })
 }
 
 deleteEdge = async (req, res) => {
-    await Edge.findOneAndDelete({ _id: req.params.id }, (err, edge) => {
+    await Edge.findOneAndDelete({ _id: req.params.id }, (err, data) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
@@ -70,7 +70,7 @@ deleteEdge = async (req, res) => {
                 .json({ success: false, error: `Edge not found` })
         }
 
-        return res.status(200).json({ success: true, data: edge })
+        return res.status(200).json({ success: true, message: data })
     }).catch(err => console.log(err))
 }
 
@@ -85,11 +85,11 @@ getEdgeById = async (req, res) => {
                 .status(404)
                 .json({ success: false, error: `Edge not found` })
         }
-        return res.status(200).json({ success: true, data: edge })
+        return res.status(200).json({ success: true, edge: edge })
     }).catch(err => console.log(err))
 }
 
-getEdge = async (req, res) => {
+getEdges = async (req, res) => {
     const byOrdinal = { ordinal: 1}
     await Edge.find({}, (err, edge) => {
         result = edge;
@@ -113,6 +113,6 @@ module.exports = {
     insertEdge,
     updateEdge,
     deleteEdge,
-    getEdge,
+    getEdges,
     getEdgeById
 }

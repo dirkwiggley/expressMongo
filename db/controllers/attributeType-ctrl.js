@@ -59,7 +59,7 @@ updateAttributeType = async (req, res) => {
 }
 
 deleteAttributeType = async (req, res) => {
-    await AttributeType.findOneAndDelete({ _id: req.params.id }, (err, attributeType) => {
+    await AttributeType.findOneAndDelete({ _id: req.params.id }, (err, data) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
@@ -70,7 +70,7 @@ deleteAttributeType = async (req, res) => {
                 .json({ success: false, error: `AttributeType not found` })
         }
 
-        return res.status(200).json({ success: true, data: attributeType })
+        return res.status(200).json({ success: true, message: data })
     }).catch(err => console.log(err))
 }
 
@@ -85,11 +85,11 @@ getAttributeTypeById = async (req, res) => {
                 .status(404)
                 .json({ success: false, error: `AttributeType not found` })
         }
-        return res.status(200).json({ success: true, data: attributeType })
+        return res.status(200).json({ success: true, attributeType: attributeType })
     }).catch(err => console.log(err))
 }
 
-getAttributeType = async (req, res) => {
+getAttributeTypes = async (req, res) => {
     const byOrdinal = { ordinal: 1}
     await AttributeType.find({}, (err, attributeType) => {
         result = attributeType;
@@ -102,7 +102,7 @@ getAttributeType = async (req, res) => {
                 .json({ success: false, error: `AttributeType not found` })
         }
     }).sort(byOrdinal).exec(function(err, result) {
-        return res.status(200).json({ success: true, data: result })
+        return res.status(200).json({ success: true, attributeTypes: result })
     })
 }
 
@@ -110,6 +110,6 @@ module.exports = {
     insertAttributeType,
     updateAttributeType,
     deleteAttributeType,
-    getAttributeType,
+    getAttributeTypes,
     getAttributeTypeById
 }

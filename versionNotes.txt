@@ -68,3 +68,5 @@
 * Got minimum of Image CRUD code working to make gallery work on front end
 10/25/2020
 * Minor bug fixes (except on seed data stuff bigger changes there) and a little work on character stuff
+10/25/2020
+* Housekeeping code cleanup

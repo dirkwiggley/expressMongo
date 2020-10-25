@@ -8,6 +8,6 @@ router.post('/rank', RankCtrl.insertRank)
 router.put('/rank/:id', RankCtrl.updateRank)
 router.delete('/rank/:id', RankCtrl.deleteRank)
 router.get('/rank/:id', RankCtrl.getRankById)
-router.get('/rank', RankCtrl.getRank)
+router.get('/rank', RankCtrl.getRanks)
 
 module.exports = router

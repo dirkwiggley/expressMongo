@@ -43,7 +43,7 @@ updateAbility = async (req, res) => {
         })
     }
 
-    Ability.replaceOne({ _id: req.params.id}, body, (error, ability) => {
+    Ability.replaceOne({ _id: req.params.id}, body, (error, data) => {
         if (error) {
             return res.status(404).json({
                 error,
@@ -52,14 +52,14 @@ updateAbility = async (req, res) => {
         } else {
             return res.status(200).json({
                 success: true,
-                message: ability,
+                message: data,
             })
         }
     })
 }
 
 deleteAbility = async (req, res) => {
-    await Ability.findOneAndDelete({ _id: req.params.id }, (err, ability) => {
+    await Ability.findOneAndDelete({ _id: req.params.id }, (err, data) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
@@ -70,7 +70,7 @@ deleteAbility = async (req, res) => {
                 .json({ success: false, error: `Ability not found` })
         }
 
-        return res.status(200).json({ success: true, data: ability })
+        return res.status(200).json({ success: true, message: data })
     }).catch(err => console.log(err))
 }
 
@@ -85,11 +85,11 @@ getAbilityById = async (req, res) => {
                 .status(404)
                 .json({ success: false, error: `Ability not found` })
         }
-        return res.status(200).json({ success: true, data: ability })
+        return res.status(200).json({ success: true, ability: ability })
     }).catch(err => console.log(err))
 }
 
-getAbility = async (req, res) => {
+getAbilities = async (req, res) => {
     const byName = { name: 1 }
     await Ability.find({}, (err, ability) => {
         result = ability
@@ -105,7 +105,7 @@ getAbility = async (req, res) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
-        return res.status(200).json({ success: true, data: result })
+        return res.status(200).json({ success: true, abilities: result })
     })
 }
 
@@ -113,6 +113,6 @@ module.exports = {
     insertAbility,
     updateAbility,
     deleteAbility,
-    getAbility,
+    getAbilities,
     getAbilityById
 }

@@ -8,6 +8,6 @@ router.post('/skill', SkillCtrl.insertSkill)
 router.put('/skill/:id', SkillCtrl.updateSkill)
 router.delete('/skill/:id', SkillCtrl.deleteSkill)
 router.get('/skill/:id', SkillCtrl.getSkillById)
-router.get('/skill', SkillCtrl.getSkill)
+router.get('/skill', SkillCtrl.getSkills)
 
 module.exports = router
