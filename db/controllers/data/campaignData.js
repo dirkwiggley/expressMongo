@@ -107,9 +107,9 @@ function getCampaigns() {
         { 
             name: 'Pirates',
             genre: { name: 'Fantasy' },
-            owner: { login: 'player', nickname: 'Demo' },
-            gms: [ { login: 'player', nickname: 'Demo' } ],
-            players: [ { login: 'tim', nickname: 'DM Tim' } ],
+            owner: { login: 'tim', nickname: 'DM Tim' },
+            gms: [ { login: 'tim', nickname: 'DM Tim' } ],
+            players: [ { login: 'player', nickname: 'Demo' } ],
             metaData: {
                 abilities: [
                     { name: 'Adaptable' },

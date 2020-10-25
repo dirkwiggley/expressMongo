@@ -89,8 +89,22 @@ getCharacterById = async (req, res) => {
     }).catch(err => console.log(err))
 }
 
-getAllCharacters = async (req, res) => {
-    await Character.find({}, (err, characters) => {
+getCharactersByCampaign = async (req, res) => {
+    await Character.find({ campaignId: req.params.id, ownerId: req.params.ownerId }, (err, characters) => {
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
+        }
+        if (!characters.length) {
+            return res
+                .status(404)
+                .json({ success: false, error: `Character not found` })
+        }
+        return res.status(200).json({ success: true, data: characters })
+    }).catch(err => console.log(err))
+}
+
+getGMCharactersByCampaign = async (req, res) => {
+    await Character.find({ campaignId: req.params.id }, (err, characters) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
@@ -107,6 +121,7 @@ module.exports = {
     insertCharacter,
     updateCharacter,
     deleteCharacter,
-    getAllCharacters,
+    getCharactersByCampaign,
+    getGMCharactersByCampaign,
     getCharacterById,
 }

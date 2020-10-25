@@ -8,6 +8,7 @@ router.post('/character', CharacterCtrl.insertCharacter)
 router.put('/character/:id', CharacterCtrl.updateCharacter)
 router.delete('/character/:id', CharacterCtrl.deleteCharacter)
 router.get('/character/:id', CharacterCtrl.getCharacterById)
-router.get('/character', CharacterCtrl.getAllCharacters)
+router.get('/character/campaign/:id/owner/:ownerId', CharacterCtrl.getCharactersByCampaign)
+router.get('/character/gm/campaign/:id', CharacterCtrl.getGMCharactersByCampaign)
 
 module.exports = router

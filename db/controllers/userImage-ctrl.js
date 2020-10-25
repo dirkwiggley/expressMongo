@@ -9,8 +9,6 @@ insertUserImage = (req, res) => {
           next(err);
           return;
         }
-        console.log(JSON.stringify(fields, null, 2));
-        console.log(JSON.stringify(files, null, 2));
 
         const image = files.image
         const userId = fields.userId;

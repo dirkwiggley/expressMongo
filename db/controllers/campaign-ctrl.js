@@ -43,7 +43,7 @@ updateCampaign = async (req, res) => {
         })
     }
 
-    Campaign.replaceOne({ _id: req.params.id}, body, (error, campaign) => {
+    Campaign.replaceOne({ _id: req.params.id}, body, (error, data) => {
         if (error) {
             return res.status(404).json({
                 error,
@@ -52,7 +52,7 @@ updateCampaign = async (req, res) => {
         } else {
             return res.status(200).json({
                 success: true,
-                message: campaign,
+                data: data,
             })
         }
     })   

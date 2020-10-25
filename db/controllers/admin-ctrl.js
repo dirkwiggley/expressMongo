@@ -43,19 +43,16 @@ initDataTypes = (req, res) => {
         { name: 'skill' }
     ]
 
-    let finalVal = false
-    bodyList.map((body) => {
-        if (body.name == 'rank')
-            finalVal = true;
-        saveDataTypes(res, body, finalVal)
+    bodyList.forEach(body => {
+        saveDataTypes(res, body)
+    })
+    return res.status(201).json({
+        success: true,
+        message: 'DataTypes created!',
     })
 }
 
-/**
- * I know this is wrong. It's working well enough for me 
- * to get back to it later.
- */
-saveDataTypes = (res, body, finalVal) => {
+saveDataTypes = (res, body) => {
     const dataType = new DataType(body)
 
     if (!dataType) {
@@ -64,17 +61,6 @@ saveDataTypes = (res, body, finalVal) => {
 
     dataType
         .save()
-        .then(() => {
-            if (finalVal) {
-                return res.status(201).json({
-                    success: true,
-                    id: dataType._id,
-                    message: 'DataTypes created!',
-                })
-            } else {
-                return
-            }
-        })
         .catch(error => {
             return res.status(400).json({
                 error,
@@ -84,20 +70,17 @@ saveDataTypes = (res, body, finalVal) => {
 }
 
 initCampaigns = (req, res) => {
-    let finalVal = false
-
-    campaignData.getCampaigns().map((body) => {
-        if (body.name == 'Generic') 
-            finalVal = true;
-        saveCampaigns(res, body, finalVal)
+    let campaigns = campaignData.getCampaigns();
+    campaigns.forEach(body => {
+        saveCampaigns(res, body)
+    })
+    return res.status(201).json({
+        success: true,
+        message: 'Campaigns created!',
     })
 }
 
-/**
- * I know this is wrong. It's working well enough for me 
- * to get back to it later.
- */
-saveCampaigns = (res, body, finalVal) => {
+saveCampaigns = (res, body) => {
     const campaign = new Campaign(body)
 
     if (!campaign) {
@@ -106,17 +89,6 @@ saveCampaigns = (res, body, finalVal) => {
 
     campaign
         .save()
-        .then(() => {
-            if (finalVal) {
-                return res.status(201).json({
-                    success: true,
-                    id: campaign._id,
-                    message: 'Campaigns created!',
-                })
-            } else {
-                return
-            }
-        })
         .catch(error => {
             return res.status(400).json({
                 error,
@@ -126,20 +98,17 @@ saveCampaigns = (res, body, finalVal) => {
 }
 
 initGenres = (req, res) => {
-    let finalVal = false
-
-    genreData.getGenres().map((body) => {
-        if (body.name == 'Post Apocalyptic') 
-            finalVal = true;
-        saveGenres(res, body, finalVal)
+    let genres = genreData.getGenres()
+    genres.forEach(body => {
+        saveGenres(res, body)
+    })
+    return res.status(201).json({
+        success: true,
+        message: 'Genres created!',
     })
 }
 
-/**
- * I know this is wrong. It's working well enough for me 
- * to get back to it later.
- */
-saveGenres = (res, body, finalVal) => {
+saveGenres = (res, body) => {
     const genre = new Genre(body)
 
     if (!genre) {
@@ -148,17 +117,6 @@ saveGenres = (res, body, finalVal) => {
 
     genre
         .save()
-        .then(() => {
-            if (finalVal) {
-                return res.status(201).json({
-                    success: true,
-                    id: genre._id,
-                    message: 'Genres created!',
-                })
-            } else {
-                return
-            }
-        })
         .catch(error => {
             return res.status(400).json({
                 error,
@@ -179,21 +137,16 @@ initDice = (req, res) => {
         { name: 'D12+1', min: 2, max: 13, ordinal: 7 },
         { name: 'D12+2', min: 3, max: 14, ordinal: 8 } ]
         
-    let finalVal = false;
-
-    bodyList.map((body) => {
-        if (body.name == 'D12+2') 
-            finalVal = true;
-        saveDice(res, body, finalVal)
+    bodyList.forEach(body => {
+        saveDice(res, body)
     })
-
+    return res.status(201).json({
+        success: true,
+        message: 'Dice created!',
+    })
 }
 
-/**
- * I know this is wrong. It's working well enough for me 
- * to get back to it later.
- */
-saveDice = (res, body, finalVal) => {
+saveDice = (res, body) => {
     const dice = new Dice(body)
 
     if (!dice) {
@@ -202,17 +155,6 @@ saveDice = (res, body, finalVal) => {
 
     dice
         .save()
-        .then(() => {
-            if (finalVal) {
-                return res.status(201).json({
-                    success: true,
-                    id: dice._id,
-                    message: 'Dice created!',
-                })
-            } else {
-                return
-            }
-        })
         .catch(error => {
             return res.status(400).json({
                 error,
@@ -222,21 +164,17 @@ saveDice = (res, body, finalVal) => {
 }
 
 initAttributeTypes = (req, res) => {
-    let finalVal = false
-
-    attrData.getAttributes().map((body) => {
-        if (body.name == 'Vigour') 
-            finalVal = true;
+    let attributes = attrData.getAttributes();
+    attributes.forEach(body => {
         saveAttributeTypes(res, body, finalVal)
     })
-
+    return res.status(201).json({
+        success: true,
+        message: 'AttributeTypes created!',
+    })
 }
 
-/**
- * I know this is wrong. It's working well enough for me 
- * to get back to it later.
- */
-saveAttributeTypes = (res, body, finalVal) => {
+saveAttributeTypes = (res, body) => {
     const attributeType = new AttributeType(body)
 
     if (!attributeType) {
@@ -245,42 +183,27 @@ saveAttributeTypes = (res, body, finalVal) => {
 
     attributeType
         .save()
-        .then(() => {
-            if (finalVal) {
-                return res.status(201).json({
-                    success: true,
-                    id: attributeType._id,
-                    message: 'AttributeType created!',
-                })
-            } else {
-                return
-            }
-        })
         .catch(error => {
             console.log('error', error)
             return res.status(400).json({
                 error,
-                message: 'AttributeType not created!',
+                message: 'AttributeTypes not created!',
             })
         })
 }
 
 initRanks = (req, res) => {
-    let finalVal = false
-
-    rankData.getRanks().map((body) => {
-        if (body.ordinal == 4) 
-            finalVal = true;
-        saveRanks(res, body, finalVal)
+    let ranks = rankData.getRanks();
+    ranks.forEach(body => {
+        saveRanks(res, body)
     })
-
+    return res.status(201).json({
+        success: true,
+        message: 'Ranks created!',
+    })
 }
 
-/**
- * I know this is wrong. It's working well enough for me 
- * to get back to it later.
- */
-saveRanks = (res, body, finalVal) => {
+saveRanks = (res, body) => {
     const rank = new Rank(body)
 
     if (!rank) {
@@ -289,42 +212,27 @@ saveRanks = (res, body, finalVal) => {
 
     rank
         .save()
-        .then(() => {
-            if (finalVal) {
-                return res.status(201).json({
-                    success: true,
-                    id: rank._id,
-                    message: 'Rank created!',
-                })
-            } else {
-                return
-            }
-        })
         .catch(error => {
             console.log('error', error)
             return res.status(400).json({
                 error,
-                message: 'Rank not created!',
+                message: 'Ranks not created!',
             })
         })
 }
 
 initHindrances = (req, res) => {
-    let finalVal = false;
-
-    hindranceData.getHindrances().map((body) => {
-        if (body.name == 'Bloodthirsty') 
-            finalVal = true;
-        saveHindrances(res, body, finalVal)
+    let hindrances = hindranceData.getHindrances();
+    hindrances.forEach(body => {
+        saveHindrances(res, body)
     })
-
+    return res.status(201).json({
+        success: true,
+        message: 'Hindrances created!',
+    })
 }
 
-/**
- * I know this is wrong. It's working well enough for me 
- * to get back to it later.
- */
-saveHindrances = (res, body, finalVal) => {
+saveHindrances = (res, body) => {
     const hindrance = new Hindrance(body)
 
     if (!hindrance) {
@@ -333,41 +241,26 @@ saveHindrances = (res, body, finalVal) => {
 
     hindrance
         .save()
-        .then(() => {
-            if (finalVal) {
-                return res.status(201).json({
-                    success: true,
-                    id: hindrance._id,
-                    message: 'Hindrance created!',
-                })
-            } else {
-                return
-            }
-        })
         .catch(error => {
             console.log('error', error)
             return res.status(400).json({
                 error,
-                message: 'Hindrance not created!',
+                message: 'Hindrances not created!',
             })
         })
 }
 
 initEdges = (req, res) => {
-    let finalVal = false;
-
-    edgeData.getEdges().map((body) => {
-        if (body.name == 'Aristocrat') 
-            finalVal = true;
+    let edges = edgeData.getEdges()
+    edges.forEach(body => {
         saveEdges(res, body, finalVal)
     })
-
+    return res.status(201).json({
+        success: true,
+        message: 'Edges created!',
+    })
 }
 
-/**
- * I know this is wrong. It's working well enough for me 
- * to get back to it later.
- */
 saveEdges = (res, body, finalVal) => {
     const edge = new Edge(body)
 
@@ -377,41 +270,26 @@ saveEdges = (res, body, finalVal) => {
 
     edge
         .save()
-        .then(() => {
-            if (finalVal) {
-                return res.status(201).json({
-                    success: true,
-                    id: edge._id,
-                    message: 'Edge created!',
-                })
-            } else {
-                return
-            }
-        })
         .catch(error => {
             console.log('error', error)
             return res.status(400).json({
                 error,
-                message: 'Edge not created!',
+                message: 'Edges not created!',
             })
         })
 }
 
 initArcaneBackgrounds = (req, res) => {
-    let finalVal = false;
-
-    arcaneBackgroundData.getArcaneBackgrounds().map((body) => {
-        if (body.ordinal === 4) 
-            finalVal = true;
+    let arcaneBackgrounds = arcaneBackgroundData.getArcaneBackgrounds();
+    arcaneBackgrounds.forEach(body => {
         saveArcaneBackgrounds(res, body, finalVal)
     })
-
+    return res.status(201).json({
+        success: true,
+        message: 'Arcane Backgrounds created!',
+    })
 }
 
-/**
- * I know this is wrong. It's working well enough for me 
- * to get back to it later.
- */
 saveArcaneBackgrounds = (res, body, finalVal) => {
     const arcaneBackground = new ArcaneBackground(body)
 
@@ -421,41 +299,26 @@ saveArcaneBackgrounds = (res, body, finalVal) => {
 
     arcaneBackground
         .save()
-        .then(() => {
-            if (finalVal) {
-                return res.status(201).json({
-                    success: true,
-                    id: arcaneBackground._id,
-                    message: 'Arcane Background created!',
-                })
-            } else {
-                return
-            }
-        })
         .catch(error => {
             console.log('error', error)
             return res.status(400).json({
                 error,
-                message: 'Arcane Background not created!',
+                message: 'Arcane Backgrounds not created!',
             })
         })
 }
 
 initAbilities = (req, res) => {
-    let finalVal = false;
-
-    abilityData.getAbilities().map((body) => {
-        if (body.name == 'Low Light Vision') 
-            finalVal = true;
+    let abilities = abilityData.getAbilities()
+    abilities.forEach(body => {
         saveAbilities(res, body, finalVal)
     })
-
+    return res.status(201).json({
+        success: true,
+        message: 'Ability created!',
+    })
 }
 
-/**
- * I know this is wrong. It's working well enough for me 
- * to get back to it later.
- */
 saveAbilities = (res, body, finalVal) => {
     const ability = new Ability(body)
 
@@ -465,17 +328,6 @@ saveAbilities = (res, body, finalVal) => {
 
     ability
         .save()
-        .then(() => {
-            if (finalVal) {
-                return res.status(201).json({
-                    success: true,
-                    id: ability._id,
-                    message: 'Ability created!',
-                })
-            } else {
-                return
-            }
-        })
         .catch(error => {
             console.log('error', error)
             return res.status(400).json({
@@ -486,20 +338,16 @@ saveAbilities = (res, body, finalVal) => {
 }
 
 initRaces = (req, res) => {
-    let finalVal = false;
-
-    raceData.getRaces().map((body) => {
-        if (body.name == 'Elves') 
-            finalVal = true;
+    let races = raceData.getRaces();
+    races.forEach(body => {
         saveRaces(res, body, finalVal)
     })
-
+    return res.status(201).json({
+        success: true,
+        message: 'Race created!',
+    })
 }
 
-/**
- * I know this is wrong. It's working well enough for me 
- * to get back to it later.
- */
 saveRaces = (res, body, finalVal) => {
     const race = new Race(body)
 
@@ -509,17 +357,6 @@ saveRaces = (res, body, finalVal) => {
 
     race
         .save()
-        .then(() => {
-            if (finalVal) {
-                return res.status(201).json({
-                    success: true,
-                    id: race._id,
-                    message: 'Race created!',
-                })
-            } else {
-                return
-            }
-        })
         .catch(error => {
             console.log('error', error)
             return res.status(400).json({
@@ -530,20 +367,16 @@ saveRaces = (res, body, finalVal) => {
 }
 
 initSkills = (req, res) => {
-    let finalVal = false;
-
-    skillData.getSkills().map((body) => {
-        if (body.name == 'Battle') 
-            finalVal = true;
+    let skills = skillData.getSkills();
+    skills.forEach(body => {
         saveSkills(res, body, finalVal)
     })
-
+    return res.status(201).json({
+        success: true,
+        message: 'Skills created!',
+    })
 }
 
-/**
- * I know this is wrong. It's working well enough for me 
- * to get back to it later.
- */
 saveSkills = (res, body, finalVal) => {
     const skill = new Skill(body)
 
@@ -553,41 +386,26 @@ saveSkills = (res, body, finalVal) => {
 
     skill
         .save()
-        .then(() => {
-            if (finalVal) {
-                return res.status(201).json({
-                    success: true,
-                    id: skill._id,
-                    message: 'Skill created!',
-                })
-            } else {
-                return
-            }
-        })
         .catch(error => {
             console.log('error', error)
             return res.status(400).json({
                 error,
-                message: 'Skill not created!',
+                message: 'Skills not created!',
             })
         })
 }
 
 initPowers = (req, res) => {
-    let finalVal = false;
-
-    powerData.getPowers().map((body) => {
-        if (body.name == 'Armor') 
-            finalVal = true;
+    let powers = powerData.getPowers();
+    powers.map((body) => {
         savePowers(res, body, finalVal)
     })
-
+    return res.status(201).json({
+        success: true,
+        message: 'Powers created!',
+    })
 }
 
-/**
- * I know this is wrong. It's working well enough for me 
- * to get back to it later.
- */
 savePowers = (res, body, finalVal) => {
     const power = new Power(body)
 
@@ -597,40 +415,27 @@ savePowers = (res, body, finalVal) => {
 
     power
         .save()
-        .then(() => {
-            if (finalVal) {
-                return res.status(201).json({
-                    success: true,
-                    id: power._id,
-                    message: 'Power created!',
-                })
-            } else {
-                return
-            }
-        })
         .catch(error => {
             console.log('error', error)
             return res.status(400).json({
                 error,
-                message: 'Power not created!',
+                message: 'Powers not created!',
             })
         })
 }
 
 initCharacters = (req, res) => {
-    let finalVal = false
-
-    characterData.getCharacters().map((body) => {
-        if (body.name == 'Blank') 
-            finalVal = true;
+    let characters = characterData.getCharacters();
+    characters.forEach(body => {
         saveCharacters(res, body, finalVal)
+    })
+    return res.status(201).json({
+        success: true,
+        id: character._id,
+        message: 'Characters created!',
     })
 }
 
-/**
- * I know this is wrong. It's working well enough for me 
- * to get back to it later.
- */
 saveCharacters = (res, body, finalVal) => {
     const character = new Character(body)
 
@@ -640,17 +445,6 @@ saveCharacters = (res, body, finalVal) => {
 
     character
         .save()
-        .then(() => {
-            if (finalVal) {
-                return res.status(201).json({
-                    success: true,
-                    id: character._id,
-                    message: 'Characters created!',
-                })
-            } else {
-                return
-            }
-        })
         .catch(error => {
             return res.status(400).json({
                 error,
@@ -661,23 +455,18 @@ saveCharacters = (res, body, finalVal) => {
 
 initUsers = (req, res) => {
     let finalVal = false
-    let max = userData.getUsers.length
-    let index = 0;
     const pwd = sha256.hmac('key', body.password);
     body.password = pwd;
-    userData.getUsers().map((body) => {
-        if (++index === max) {
-            finalVal = true;
-        }
-
+    let users = userData.getUsers();
+    users.forEach(body => {
         saveUsers(res, body, finalVal)
+    })
+    return res.status(201).json({
+        success: true,
+        message: 'Users created!',
     })
 }
 
-/**
- * I know this is wrong. It's working well enough for me 
- * to get back to it later.
- */
 saveUsers = (res, body, finalVal) => {
     const user = new User(body)
 
@@ -687,17 +476,6 @@ saveUsers = (res, body, finalVal) => {
 
     user
         .save()
-        .then(() => {
-            if (finalVal) {
-                return res.status(201).json({
-                    success: true,
-                    id: user._id,
-                    message: 'Users created!',
-                })
-            } else {
-                return
-            }
-        })
         .catch(error => {
             return res.status(400).json({
                 error,

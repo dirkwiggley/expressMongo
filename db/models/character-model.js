@@ -3,7 +3,11 @@ const Schema = mongoose.Schema
 
 const Character = new Schema(
     {
-        campaign: { type: String, required: true },
+        campaignId: { type: String, required: true },
+        ownerId: { type: String, required: true },
+        ownerLogin: { type: String, required: true },
+        ownerName: { type: String, required: true },
+        ownerNickName: { type: String, required: true},
         name: { type: String, required: true },
         player: { type: String, required: true },
         race: { type: String, required: true },
