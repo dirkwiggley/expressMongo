@@ -70,3 +70,5 @@
 * Minor bug fixes (except on seed data stuff bigger changes there) and a little work on character stuff
 10/25/2020
 * Housekeeping code cleanup
+11/8/2020
+* Staring on character editing

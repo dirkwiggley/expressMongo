@@ -103,17 +103,23 @@ getCharactersByCampaign = async (req, res) => {
     }).catch(err => console.log(err))
 }
 
-getGMCharactersByCampaign = async (req, res) => {
+getAllCharsByCampaign = async (req, res) => {
     await Character.find({ campaignId: req.params.id }, (err, characters) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
         if (!characters.length) {
             return res
-                .status(404)
+                .status(550)
                 .json({ success: false, error: `Character not found` })
         }
-        return res.status(200).json({ success: true, data: characters })
+
+        let charList = [];
+        for (const { ownerId: ownerId, ownerNickname: ownerNickname, _id: characterId, name: name} of characters) {
+            charList.push( { ownerId: ownerId, ownerNickname: ownerNickname, characterId: characterId, name: name } );
+        }
+
+        return res.status(200).json({ success: true, characters: charList })
     }).catch(err => console.log(err))
 }
 
@@ -122,6 +128,6 @@ module.exports = {
     updateCharacter,
     deleteCharacter,
     getCharactersByCampaign,
-    getGMCharactersByCampaign,
+    getAllCharsByCampaign,
     getCharacterById,
 }

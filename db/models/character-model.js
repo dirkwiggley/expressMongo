@@ -9,7 +9,6 @@ const Character = new Schema(
         ownerName: { type: String, required: true },
         ownerNickName: { type: String, required: true},
         name: { type: String, required: true },
-        player: { type: String, required: true },
         race: { type: String, required: true },
         abilities: [ { name: { type: String, required: true }, cost: { type: Number, required: true} } ],
         attributes: [ { name: { type: String, required: true }, dice: { type: String, required: true} } ],
