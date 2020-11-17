@@ -19,8 +19,6 @@ function getUsers() {
             name: 'Tim',
             nickname: 'Tim',
             email: 'dm_tim@yahoo.com',
-            campaignsPlayer: [ { id: 'Generic' } ],
-            campaignsGM: [ { id: 'Generic' } ],
             isAdmin: false,
             isUser: true,
             token: null
@@ -31,9 +29,17 @@ function getUsers() {
             name: 'Tim',
             nickname: 'Timmay',
             email: 'dm_tim@yahoo.com',
-            campaignsPlayer: [ { id: 'Generic' } ],
-            campaignsGM: [ { id: 'Generic' } ],
             isAdmin: true,
+            isUser: true,
+            token: null
+        },
+        { 
+            login: 'eric',
+            password: 'ericeric',
+            name: 'Eric',
+            nickname: 'Eric',
+            email: 'ewburnham@gmail.com',
+            isAdmin: false,
             isUser: true,
             token: null
         }

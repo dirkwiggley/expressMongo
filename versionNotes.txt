@@ -72,3 +72,5 @@
 * Housekeeping code cleanup
 11/8/2020
 * Staring on character editing
+11/17/2020
+* streamlined data seeder methods, multiple saves now make sense

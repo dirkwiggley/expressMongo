@@ -15,14 +15,14 @@ const Character = require('../models/character-model')
 const User = require('../models/user-model')
 const campaignData = require('./data/campaignData')
 const genreData = require('./data/genreData')
-const attrData = require('./data/attributeData')
+const attributeTypeData = require('./data/attributeData')
 const rankData = require('./data/rankData')
+const skillData = require('./data/skillData')
 const hindranceData  = require('./data/hindranceData')
 const edgeData = require('./data/edgeData')
 const arcaneBackgroundData = require('./data/arcaneBackgroundData')
 const abilityData = require('./data/abilityData')
 const raceData = require('./data/raceData')
-const skillData = require('./data/skillData')
 const powerData = require('./data/powerData')
 const characterData = require('./data/characterData')
 const userData = require('./data/userData')
@@ -69,62 +69,6 @@ saveDataTypes = (res, body) => {
         })
 }
 
-initCampaigns = (req, res) => {
-    let campaigns = campaignData.getCampaigns();
-    campaigns.forEach(body => {
-        saveCampaigns(res, body)
-    })
-    return res.status(201).json({
-        success: true,
-        message: 'Campaigns created!',
-    })
-}
-
-saveCampaigns = (res, body) => {
-    const campaign = new Campaign(body)
-
-    if (!campaign) {
-        return res.status(400).json({ success: false, error: err })
-    }
-
-    campaign
-        .save()
-        .catch(error => {
-            return res.status(400).json({
-                error,
-                message: 'Campaigns not created!',
-            })
-        })
-}
-
-initGenres = (req, res) => {
-    let genres = genreData.getGenres()
-    genres.forEach(body => {
-        saveGenres(res, body)
-    })
-    return res.status(201).json({
-        success: true,
-        message: 'Genres created!',
-    })
-}
-
-saveGenres = (res, body) => {
-    const genre = new Genre(body)
-
-    if (!genre) {
-        return res.status(400).json({ success: false, error: err })
-    }
-
-    genre
-        .save()
-        .catch(error => {
-            return res.status(400).json({
-                error,
-                message: 'Genres not created!',
-            })
-        })
-}
-
 initDice = (req, res) => {
     const bodyList = [
         { name: 'D4-2', min: 1, max: 2, ordinal: 0 },
@@ -163,325 +107,116 @@ saveDice = (res, body) => {
         })
 }
 
-initAttributeTypes = (req, res) => {
-    let attributes = attrData.getAttributes();
-    attributes.forEach(body => {
-        saveAttributeTypes(res, body, finalVal)
-    })
+function initCampaigns(req, res) {
+    const items = campaignData.getCampaigns()
+    initItems(req, res, items, Campaign, 'Campaigns', 'campaign')
+}
+
+function initGenres(req, res) {
+    const items = genreData.getGenres()
+    initItems(req, res, items, Genre, 'Genres', 'genre')
+}
+
+function initAttributeTypes(req, res) {
+    const items = attributeTypeData.getAttributes()
+    initItems(req, res, items, AttributeType, 'Attribute Types', 'attribute type')
+}
+
+function initRanks(req, res) {
+    const items = rankData.getRanks()
+    initItems(req, res, items, Rank, 'Ranks', 'rank')
+}
+
+function initHindrances(req, res) {
+    const items = hindranceData.getHindrances()
+    initItems(req, res, items, Hindrance, 'Hindrnces', 'hindrance')
+}
+
+function initEdges(req, res) {
+    const items = edgeData.getEdges()
+    initItems(req, res, items, Edge, 'Edges', 'edge')
+}
+
+function initArcaneBackgrounds(req, res) {
+    const items = arcaneBackgroundData.getArcaneBackgrounds()
+    initItems(req, res, items, ArcaneBackground, 'ArcaneBackgrounds', 'arcaneBackground')
+}
+
+function initAbilities(req, res) {
+    const items = abilityData.getAbilities()
+    initItems(req, res, items, Ability, 'Abilities', 'ability')
+}
+
+function initRaces(req, res) {
+    const items = raceData.getRaces()
+    initItems(req, res, items, Race, 'Races', 'race')
+}
+
+function initSkills(req, res) {
+    const items = skillData.getSkills()
+    initItems(req, res, items, Skill, 'Skills', 'skill')
+}
+
+function initPowers(req, res) {
+    const items = powerData.getPowers()
+    initItems(req, res, items, Power, 'Powers', 'power')
+}
+
+function initCharacters(req, res) {
+    const items = characterData.getCharacters()
+    initItems(req, res, items, Character, 'Characters', 'character')
+}
+
+async function initItems(req, res, items, classType, pluralCap, singular) {
+    const successMsg = pluralCap + " created"
+    const errMsg1 = singular
+    const errMsg2 = pluralCap + " not created"
+    let responses = []
+    for (const body of items) {
+        await saveItem(classType, body, errMsg1, errMsg2).catch(reject => responses.push(reject));
+    }
+    if (responses.length > 0) {
+        return res.status(400).json( { success: false, responses: responses } )
+    }
     return res.status(201).json({
         success: true,
-        message: 'AttributeTypes created!',
+        message: successMsg,
     })
 }
 
-saveAttributeTypes = (res, body) => {
-    const attributeType = new AttributeType(body)
-
-    if (!attributeType) {
-        return res.status(400).json({ success: false, error: err })
-    }
-
-    attributeType
-        .save()
-        .catch(error => {
-            console.log('error', error)
-            return res.status(400).json({
-                error,
-                message: 'AttributeTypes not created!',
-            })
-        })
-}
-
-initRanks = (req, res) => {
-    let ranks = rankData.getRanks();
-    ranks.forEach(body => {
-        saveRanks(res, body)
-    })
-    return res.status(201).json({
-        success: true,
-        message: 'Ranks created!',
+async function saveItem(classType, body, errMsg1, errMsg2) {
+    return new Promise((resolve, reject) => {
+        const item = new classType(body)
+        if (!item) {
+            reject( { status: 400, message: errMsg1, errMsg2} )
+        }
+    
+        classType.findOne({ name: body.name }, (err, foundItem) => {
+            if (err) {
+                reject( { status: 401, error: error, message: errMsg2} )
+            }
+    
+            if (!foundItem) {
+                item
+                .save()
+                .catch(error => {
+                    reject( { status: 401, error: error, message: errMsg2} )
+                })
+            }
+    
+            resolve()
+        }).catch(err => console.log(err))
     })
 }
 
-saveRanks = (res, body) => {
-    const rank = new Rank(body)
-
-    if (!rank) {
-        return res.status(400).json({ success: false, error: err })
-    }
-
-    rank
-        .save()
-        .catch(error => {
-            console.log('error', error)
-            return res.status(400).json({
-                error,
-                message: 'Ranks not created!',
-            })
-        })
-}
-
-initHindrances = (req, res) => {
-    let hindrances = hindranceData.getHindrances();
-    hindrances.forEach(body => {
-        saveHindrances(res, body)
+function initUsers(req, res) {
+    const items = userData.getUsers();
+    // seed user pwds are not encrypted in the data file
+    items.forEach(body => {
+        const pwd = sha256.hmac('key', body.password)
+        body.password = pwd;
     })
-    return res.status(201).json({
-        success: true,
-        message: 'Hindrances created!',
-    })
-}
-
-saveHindrances = (res, body) => {
-    const hindrance = new Hindrance(body)
-
-    if (!hindrance) {
-        return res.status(400).json({ success: false, error: err })
-    }
-
-    hindrance
-        .save()
-        .catch(error => {
-            console.log('error', error)
-            return res.status(400).json({
-                error,
-                message: 'Hindrances not created!',
-            })
-        })
-}
-
-initEdges = (req, res) => {
-    let edges = edgeData.getEdges()
-    edges.forEach(body => {
-        saveEdges(res, body, finalVal)
-    })
-    return res.status(201).json({
-        success: true,
-        message: 'Edges created!',
-    })
-}
-
-saveEdges = (res, body, finalVal) => {
-    const edge = new Edge(body)
-
-    if (!edge) {
-        return res.status(400).json({ success: false, error: err })
-    }
-
-    edge
-        .save()
-        .catch(error => {
-            console.log('error', error)
-            return res.status(400).json({
-                error,
-                message: 'Edges not created!',
-            })
-        })
-}
-
-initArcaneBackgrounds = (req, res) => {
-    let arcaneBackgrounds = arcaneBackgroundData.getArcaneBackgrounds();
-    arcaneBackgrounds.forEach(body => {
-        saveArcaneBackgrounds(res, body, finalVal)
-    })
-    return res.status(201).json({
-        success: true,
-        message: 'Arcane Backgrounds created!',
-    })
-}
-
-saveArcaneBackgrounds = (res, body, finalVal) => {
-    const arcaneBackground = new ArcaneBackground(body)
-
-    if (!arcaneBackground) {
-        return res.status(400).json({ success: false, error: err })
-    }
-
-    arcaneBackground
-        .save()
-        .catch(error => {
-            console.log('error', error)
-            return res.status(400).json({
-                error,
-                message: 'Arcane Backgrounds not created!',
-            })
-        })
-}
-
-initAbilities = (req, res) => {
-    let abilities = abilityData.getAbilities()
-    abilities.forEach(body => {
-        saveAbilities(res, body, finalVal)
-    })
-    return res.status(201).json({
-        success: true,
-        message: 'Ability created!',
-    })
-}
-
-saveAbilities = (res, body, finalVal) => {
-    const ability = new Ability(body)
-
-    if (!ability) {
-        return res.status(400).json({ success: false, error: err })
-    }
-
-    ability
-        .save()
-        .catch(error => {
-            console.log('error', error)
-            return res.status(400).json({
-                error,
-                message: 'Ability not created!',
-            })
-        })
-}
-
-initRaces = (req, res) => {
-    let races = raceData.getRaces();
-    races.forEach(body => {
-        saveRaces(res, body, finalVal)
-    })
-    return res.status(201).json({
-        success: true,
-        message: 'Race created!',
-    })
-}
-
-saveRaces = (res, body, finalVal) => {
-    const race = new Race(body)
-
-    if (!race) {
-        return res.status(400).json({ success: false, error: err })
-    }
-
-    race
-        .save()
-        .catch(error => {
-            console.log('error', error)
-            return res.status(400).json({
-                error,
-                message: 'Race not created!',
-            })
-        })
-}
-
-initSkills = (req, res) => {
-    let skills = skillData.getSkills();
-    skills.forEach(body => {
-        saveSkills(res, body, finalVal)
-    })
-    return res.status(201).json({
-        success: true,
-        message: 'Skills created!',
-    })
-}
-
-saveSkills = (res, body, finalVal) => {
-    const skill = new Skill(body)
-
-    if (!skill) {
-        return res.status(400).json({ success: false, error: err })
-    }
-
-    skill
-        .save()
-        .catch(error => {
-            console.log('error', error)
-            return res.status(400).json({
-                error,
-                message: 'Skills not created!',
-            })
-        })
-}
-
-initPowers = (req, res) => {
-    let powers = powerData.getPowers();
-    powers.map((body) => {
-        savePowers(res, body, finalVal)
-    })
-    return res.status(201).json({
-        success: true,
-        message: 'Powers created!',
-    })
-}
-
-savePowers = (res, body, finalVal) => {
-    const power = new Power(body)
-
-    if (!power) {
-        return res.status(400).json({ success: false, error: err })
-    }
-
-    power
-        .save()
-        .catch(error => {
-            console.log('error', error)
-            return res.status(400).json({
-                error,
-                message: 'Powers not created!',
-            })
-        })
-}
-
-initCharacters = (req, res) => {
-    let characters = characterData.getCharacters();
-    characters.forEach(body => {
-        saveCharacters(res, body, finalVal)
-    })
-    return res.status(201).json({
-        success: true,
-        id: character._id,
-        message: 'Characters created!',
-    })
-}
-
-saveCharacters = (res, body, finalVal) => {
-    const character = new Character(body)
-
-    if (!character) {
-        return res.status(400).json({ success: false, error: err })
-    }
-
-    character
-        .save()
-        .catch(error => {
-            return res.status(400).json({
-                error,
-                message: 'Characters not created!',
-            })
-        })
-}
-
-initUsers = (req, res) => {
-    let finalVal = false
-    const pwd = sha256.hmac('key', body.password);
-    body.password = pwd;
-    let users = userData.getUsers();
-    users.forEach(body => {
-        saveUsers(res, body, finalVal)
-    })
-    return res.status(201).json({
-        success: true,
-        message: 'Users created!',
-    })
-}
-
-saveUsers = (res, body, finalVal) => {
-    const user = new User(body)
-
-    if (!user) {
-        return res.status(400).json({ success: false, error: err })
-    }
-
-    user
-        .save()
-        .catch(error => {
-            return res.status(400).json({
-                error,
-                message: 'Users not created!',
-            })
-        })
+    initItems(req, res, items, User, 'Users', 'user')
 }
 
 getItemId = (type, name, params) => {
@@ -628,10 +363,19 @@ async function updateIds(req, res) {
     users = await User.find({ }, (err, userList) => {
         if (err) {
             console.log('Users not found!');
-            return
+            return;
         }
 
         return userList;
+    });
+
+    characters = await Character.find({ }, (err, charList) => {
+        if (err) {
+            console.log('Characters not found!');
+            return;
+        }
+
+        return charList;
     });
 
     let params = {
@@ -644,7 +388,8 @@ async function updateIds(req, res) {
         'arcaneBackgrounds': arcaneBackgrounds,
         'powers': powers,
         'campaigns': campaigns,
-        'users': users
+        'users': users,
+        'characters': characters
     }
     updateAll(params);
 
@@ -836,7 +581,46 @@ updateAll = (params) => {
 
             campaign.save();
         }
-
+        if (params.characters) {
+            // iterate over the characters
+            for (const character of params.characters) {
+                // set the race id
+                let race = character.race;
+                race.id = getItemId(DataTypes.RACE, race.name, params);
+                // set the ability ids
+                for (i = 0; i < character.abilities.length; i++) {
+                    let ability = character.abilities[i];
+                    ability.id = getItemId(DataTypes.ABILITY, character.abilities[i].name, params)
+                }
+                // set the edge ids
+                for (i = 0; i < character.edges.length; i++) {
+                    let edge = character.edges[i];
+                    edge.id = getItemId(DataTypes.EDGE, character.edges[i].name, params)
+                }
+                // set the hindrance ids
+                for (i = 0; i < character.hindrances.length; i++) {
+                    let hindrance = character.hindrances[i];
+                    hindrance.id = getItemId(DataTypes.HINDRANCE, character.hindrances[i].name, params)
+                }
+                // set the skill ids
+                for (i = 0; i < character.skills.length; i++) {
+                    let skill = character.skills[i];
+                    skill.id = getItemId(DataTypes.SKILL, character.skills[i].name, params)
+                }            
+                // set the arcaneBackground ids
+                for (i = 0; i < character.arcaneBackgrounds.length; i++) {
+                    let arcaneBackground = character.arcaneBackgrounds[i];
+                    arcaneBackground.id = getItemId(DataTypes.ARCANE_BACKGROUND, character.arcaneBackgrounds[i].name, params)
+                }            
+                // set the power ids
+                for (i = 0; i < character.powers.length; i++) {
+                    let power = character.powers[i];
+                    power.id = getItemId(DataTypes.POWER, character.powers[i].name, params)
+                }  
+    
+                character.save();
+            }
+        }
     }
 };
 

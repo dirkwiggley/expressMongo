@@ -61,8 +61,8 @@ function getCampaigns() {
                     { name: 'Low Light Vision' }
                 ],
                 races: [ 
-                    { name: 'Humans' },
-                    { name: 'Elves' }
+                    { name: 'Human' },
+                    { name: 'Elf' }
                 ],
                 edges: [
                     { name: 'Alertness' },
@@ -125,8 +125,8 @@ function getCampaigns() {
                     { name: 'Low Light Vision' }
                 ],
                 races: [ 
-                    { name: 'Humans' },
-                    { name: 'Elves' }
+                    { name: 'Human' },
+                    { name: 'Elf' }
                 ],
                 edges: [
                     { name: 'Alertness' },
