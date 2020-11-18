@@ -588,32 +588,38 @@ updateAll = (params) => {
                 let race = character.race;
                 race.id = getItemId(DataTypes.RACE, race.name, params);
                 // set the ability ids
-                for (i = 0; i < character.abilities.length; i++) {
+                const abilitiesLength = character.abilities ? character.abilities.length : 0;
+                for (i = 0; i < abilitiesLength; i++) {
                     let ability = character.abilities[i];
                     ability.id = getItemId(DataTypes.ABILITY, character.abilities[i].name, params)
                 }
                 // set the edge ids
-                for (i = 0; i < character.edges.length; i++) {
+                const edgesLength = character.edges ? character.edges.length : 0;
+                for (i = 0; i < edgesLength; i++) {
                     let edge = character.edges[i];
                     edge.id = getItemId(DataTypes.EDGE, character.edges[i].name, params)
                 }
                 // set the hindrance ids
-                for (i = 0; i < character.hindrances.length; i++) {
+                const hindrancesLength = character.hindrances ? character.hindrances.length : 0;
+                for (i = 0; i < hindrancesLength; i++) {
                     let hindrance = character.hindrances[i];
                     hindrance.id = getItemId(DataTypes.HINDRANCE, character.hindrances[i].name, params)
                 }
                 // set the skill ids
-                for (i = 0; i < character.skills.length; i++) {
+                const skillsLength = character.skills ? character.skills.length : 0;
+                for (i = 0; i < skillsLength; i++) {
                     let skill = character.skills[i];
                     skill.id = getItemId(DataTypes.SKILL, character.skills[i].name, params)
                 }            
                 // set the arcaneBackground ids
-                for (i = 0; i < character.arcaneBackgrounds.length; i++) {
+                const arcaneBackgroundsLength = character.arcaneBackgrounds ? character.arcaneBackgrounds.length : 0;
+                for (i = 0; i < arcaneBackgroundsLength; i++) {
                     let arcaneBackground = character.arcaneBackgrounds[i];
                     arcaneBackground.id = getItemId(DataTypes.ARCANE_BACKGROUND, character.arcaneBackgrounds[i].name, params)
                 }            
                 // set the power ids
-                for (i = 0; i < character.powers.length; i++) {
+                const powersLength = character.powers ? character.powers.length : 0;
+                for (i = 0; i < powersLength; i++) {
                     let power = character.powers[i];
                     power.id = getItemId(DataTypes.POWER, character.powers[i].name, params)
                 }  
@@ -621,7 +627,7 @@ updateAll = (params) => {
                 character.save();
             }
         }
-    }
+    // }
 };
 
 module.exports = {

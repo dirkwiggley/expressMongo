@@ -74,3 +74,5 @@
 * Staring on character editing
 11/17/2020
 * streamlined data seeder methods, multiple saves now make sense
+11/17/2020
+* Some seed data work
