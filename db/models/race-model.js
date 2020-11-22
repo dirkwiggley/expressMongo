@@ -5,10 +5,18 @@ const Race = new Schema(
     {
         name: { type: String, required: true },
         description: { type: String, required: true },
-        abilities: [ { id: { type: String, required: false } } ],
-        skills: [ { id: { type: String, required: false } } ],
-        edges: [ { id: { type: String, required: false } } ],
-        hindrances: [ { id: { type: String, required: false } } ]
+        abilities: [ { 
+            id: { type: String, required: false },
+            name: { type: String, required: false } } ],
+        skills: [ { 
+            id: { type: String, required: false },
+            name: { type: String, required: false } } ],
+        edges: [ { 
+            id: { type: String, required: false },
+            name: { type: String, required: false } } ],
+        hindrances: [ { 
+            id: { type: String, required: false },
+            name: { type: String, required: false } } ]
     },
     { timestamps: true },
 )

@@ -41,7 +41,8 @@ const Character = new Schema(
         hindrances: [ { 
             name: { type: String, required: true },
             id: { type: String, required: false }, 
-            cost: { type: Number, required: true} } ],
+            cost: { type: Number, required: true },
+            paid: { type: String, required: false } } ],
         skills: [ { 
             name: { type: String, required: true },
             id: { type: String, required: false }, 

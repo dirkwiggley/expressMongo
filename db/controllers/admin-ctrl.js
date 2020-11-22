@@ -411,7 +411,7 @@ updateAll = (params) => {
                     }
                 }
                 if (saveAbility) {
-                    ability.save();
+                    ability.save().catch(error => console.log('[updateAll] saveAbility: ' + error));
                 }
             }
         };
@@ -428,7 +428,7 @@ updateAll = (params) => {
                     }
                 }
                 if (saveEdge) {
-                    edge.save();
+                    edge.save().catch(error => console.log('[updateAll] saveEdge: ' + error));
                 }
             }
         }
@@ -446,7 +446,7 @@ updateAll = (params) => {
                     }
                 }
                 if (saveHindrance) {
-                    hindrance.save();
+                    hindrance.save().catch(error => console.log('[updateAll] saveHindrance: ' + error));
                 }
             }
         }
@@ -462,7 +462,7 @@ updateAll = (params) => {
                     }
                 }
                 if (saveSkill) {
-                    skill.save();
+                    skill.save().catch(error => console.log('[updateAll] saveSkill: ' + error));
                 }
             }
         }        
@@ -520,9 +520,39 @@ updateAll = (params) => {
             }
 
             if (saveGenre) {
-                genre.save();
+                genre.save().catch(error => console.log('[updateAll] saveGenre: ' + error));
             }
         }        
+    }
+    if (params.races) {
+        // iterate over the races
+        for (const race of params.races) {
+            // set the abilities ids
+            const abilitiesLength = race.abilities ? race.abilities.length : 0;
+            for (i = 0; i < abilitiesLength; i++) {
+                let ability = race.abilities[i];
+                ability.id = getItemId(DataTypes.ABILITY, ability.name, params);
+            }
+            // set the skills ids
+            const skillsLength = race.skills ? race.skills.length : 0;
+            for (i = 0; i < skillsLength; i++) {
+                let skill = race.skills[i];
+                skill.id = getItemId(DataTypes.SKILL, skill.name, params);
+            }
+            // set the edges ids
+            const edgesLength = race.edges ? race.edges.length : 0;
+            for (i = 0; i < edgesLength; i++) {
+                let edge = rage.edges[i];
+                edge.id = getItemId(DataTypes.EDGE, edge.name, params);
+            }
+            // set the hindrances ids
+            const hindrancesLength = race.hindrances ? race.hindrances.length : 0;
+            for (i = 0; i < hindrancesLength; i++) {
+                let hindrance = race.hindrances[i];
+                hindrance.id = getItemId(DataTypes.HINDRANCE, hindrance.name, params);
+            }
+            race.save().catch(error => console.log('[updateAll] saveRace: ' + error));
+        }
     }
     if (params.campaigns) {
         // iterate over the campaigns
@@ -579,11 +609,15 @@ updateAll = (params) => {
                 power.id = getItemId(DataTypes.POWER, campaign.metaData.powers[i].name, params)
             }  
 
-            campaign.save();
+            campaign.save().catch(error => console.log('[updateAll] saveCampaign: ' + error));
         }
         if (params.characters) {
             // iterate over the characters
-            for (const character of params.characters) {
+            for (const character of params.characters) { 
+                // set the campaign id
+                let campaignName = character.campaign;
+                const campaignId = getItemId(DataTypes.CAMPAIGN, campaignName, params);
+                character.campaignId = campaignId;
                 // set the race id
                 let race = character.race;
                 race.id = getItemId(DataTypes.RACE, race.name, params);
@@ -624,10 +658,10 @@ updateAll = (params) => {
                     power.id = getItemId(DataTypes.POWER, character.powers[i].name, params)
                 }  
     
-                character.save();
+                character.save().catch(error => console.log('[updateAll] saveCharacter: ' + error));
             }
         }
-    // }
+    }
 };
 
 module.exports = {

@@ -9,7 +9,7 @@ const Ability = new Schema(
         types: [ { type: { type: String, required: true }, subtype: { type: { type: String, required: false } } } ],
         incompatible: [ { dataType: { type: String, required: false }, id: { type: String, required: false }, name: { type: String, required: false } } ],
         max: { type: Number, required: true },
-        cost: [ { type: Number, required: true } ]
+        cost: { type: Number, required: true }
     },
     { timestamps: true },
 )

@@ -22,16 +22,19 @@ const Campaign = new Schema(
         metaData: {
             abilities: [ { 
                 id: { type: String, required: false }, 
-                name: { type: String, required: true } } ],
+                name: { type: String, required: true },
+                cost: { type: Number, required: true } } ],
             races: [ { 
                 id: { type: String, required: false }, 
                 name: { type: String, required: true } } ],
             edges: [ { 
                 id: { type: String, required: false }, 
-                name: { type: String, required: true } } ],
+                name: { type: String, required: true },
+                cost: { type: Number, required: true } } ],
             hindrances: [ { 
                 id: { type: String, required: false }, 
-                name: { type: String, required: true } } ],
+                name: { type: String, required: true },
+                cost: { type: Number, required: true } } ],
             skills: [ { 
                 id: { type: String, required: false }, 
                 name: { type: String, required: true } } ],
@@ -40,7 +43,8 @@ const Campaign = new Schema(
                 name: { type: String, required: true } } ],
             powers: [ { 
                 id: { type: String, required: false }, 
-                name: { type: String, required: false } } ],
+                name: { type: String, required: false },
+                cost: [ { type: Number, required: true } ] } ],
         },
         description: { type: String, required: true }
     },

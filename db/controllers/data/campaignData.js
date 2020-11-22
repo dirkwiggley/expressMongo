@@ -1,43 +1,3 @@
-//         name: { type: String, required: true },
-//         genre: { 
-//             id: { type: String, required: true }, 
-//             name: { type: String, required: true } },
-//         owner: { 
-//             id: { type: String, required: true }, 
-//             login: { type: String, required: true }, 
-//             nickname: { type: String, required: true } },
-//         gms: [ { 
-//             id: { type: String, required: true }, 
-//             login: { type: String, required: true }, 
-//             nickname: { type: String, required: true } } ],
-//         players: [ { 
-//             id: { type: String, required: true }, 
-//             login: { type: String, required: true }, 
-//             nickname: { type: String, required: true } } ],
-//         metaData: {
-//             abilities: [ { 
-//                 id: { type: String, required: true }, 
-//                 name: { type: String, required: true } } ],
-//             races: [ { 
-//                 id: { type: String, required: true }, 
-//                 name: { type: String, required: true } } ],
-//             edges: [ { 
-//                 id: { type: String, required: true }, 
-//                 name: { type: String, required: true } } ],
-//             hindrances: [ { 
-//                 id: { type: String, required: true }, 
-//                 name: { type: String, required: true } } ],
-//             skills: [ { 
-//                 id: { type: String, required: true }, 
-//                 name: { type: String, required: true } } ],
-//             arcaneBackgrounds: [ { 
-//                 id: { type: String, required: true }, 
-//                 name: { type: String, required: true } } ],
-//             powers: [ { 
-//                 id: { type: String, required: true }, 
-//                 name: { type: String, required: true } } ]
-//         }
-
 function getCampaigns() {
     return  [
         { 
@@ -48,47 +8,52 @@ function getCampaigns() {
             // players: [ {} ],
             metaData: {
                 abilities: [
-                    { name: 'Adaptable' },
-                    { name: 'Additional Action' },
-                    { name: 'Semi-Aquatic' },
-                    { name: 'Aquatic' },
-                    { name: 'Armor' },
-                    { name: 'Agile' },
-                    { name: 'Smart' },
-                    { name: 'Spirited' },
-                    { name: 'Strong' },
-                    { name: 'Vigorous' },
-                    { name: 'Low Light Vision' }
+                    { name: 'Adaptable', cost: 2 },
+                    { name: 'Additional Action', cost: 3 },
+                    { name: 'Semi-Aquatic', cost: 1 },
+                    { name: 'Aquatic', cost: 2 },
+                    { name: 'Armor', cost: 1 },
+                    { name: 'Agile', cost: 2 },
+                    { name: 'Smart', cost: 2 },
+                    { name: 'Spirited', cost: 2 },
+                    { name: 'Strong', cost: 2 },
+                    { name: 'Vigorous', cost: 2 },
+                    { name: 'Low Light Vision', cost: 1 }
                 ],
                 races: [ 
                     { name: 'Human' },
                     { name: 'Elf' }
                 ],
                 edges: [
-                    { name: 'Alertness' },
-                    { name: 'Ambidextrous' },
-                    { name: 'Arcane Background' },
-                    { name: 'Arcane Resistance' },
-                    { name: 'Improved Arcane Resistance' },
-                    { name: 'Aristocrat' },
-                    { name: 'Luck' }
+                    { name: 'Alertness', cost: 1 },
+                    { name: 'Ambidextrous', cost: 1 },
+                    { name: 'Arcane Background', cost: 1 },
+                    { name: 'Arcane Resistance', cost: 1 },
+                    { name: 'Improved Arcane Resistance', cost: 1 },
+                    { name: 'Aristocrat', cost: 1 },
+                    { name: 'Luck', cost: 1 }
                 ],
                 hindrances: [
-                    { name: 'All Thumbs' },
-                    { name: 'Anemic' },
-                    { name: 'Arrogant' },
-                    { name: 'Bad Eyes - Minor' },
-                    { name: 'Bad Eyes - Major' },
-                    { name: 'Bad Luck' },
-                    { name: 'Big Mouth' },
-                    { name: 'Blind' },
-                    { name: 'Bloodthirsty' },
+                    { name: 'All Thumbs', cost: 1 },
+                    { name: 'Anemic', cost: 1 },
+                    { name: 'Arrogant', cost: 2 },
+                    { name: 'Bad Eyes - Minor', cost: 1 },
+                    { name: 'Bad Eyes - Major', cost: 2 },
+                    { name: 'Bad Luck', cost: 2 },
+                    { name: 'Big Mouth', cost: 1 },
+                    { name: 'Blind', cost: 2 },
+                    { name: 'Bloodthirsty', cost: 2 },
                 ],
                 skills: [
                     { name: 'Academics' },
                     { name: 'Athletics (Agility)' },
                     { name: 'Athletics (Strength)' },
-                    { name: 'Battle' }
+                    { name: 'Battle' },
+                    { name: 'Common Knowledge' },
+                    { name: 'Fighting' },
+                    { name: 'Notice' },
+                    { name: 'Persuasion' },
+                    { name: 'Shooting' }
                 ],
                 arcaneBackgrounds: [
                     { name: 'Gifted' },
@@ -112,47 +77,52 @@ function getCampaigns() {
             players: [ { login: 'player', nickname: 'Demo' } ],
             metaData: {
                 abilities: [
-                    { name: 'Adaptable' },
-                    { name: 'Additional Action' },
-                    { name: 'Semi-Aquatic' },
-                    { name: 'Aquatic' },
-                    { name: 'Armor' },
-                    { name: 'Agile' },
-                    { name: 'Smart' },
-                    { name: 'Spirited' },
-                    { name: 'Strong' },
-                    { name: 'Vigorous' },
-                    { name: 'Low Light Vision' }
+                    { name: 'Adaptable', cost: 2 },
+                    { name: 'Additional Action', cost: 3 },
+                    { name: 'Semi-Aquatic', cost: 1 },
+                    { name: 'Aquatic', cost: 2 },
+                    { name: 'Armor', cost: 1 },
+                    { name: 'Agile', cost: 2 },
+                    { name: 'Smart', cost: 2 },
+                    { name: 'Spirited', cost: 2 },
+                    { name: 'Strong', cost: 2 },
+                    { name: 'Vigorous', cost: 2 },
+                    { name: 'Low Light Vision', cost: 1 }
                 ],
                 races: [ 
                     { name: 'Human' },
                     { name: 'Elf' }
                 ],
                 edges: [
-                    { name: 'Alertness' },
-                    { name: 'Ambidextrous' },
-                    { name: 'Arcane Background' },
-                    { name: 'Arcane Resistance' },
-                    { name: 'Improved Arcane Resistance' },
-                    { name: 'Aristocrat' },
-                    { name: 'Luck' }
+                    { name: 'Alertness', cost: 1 },
+                    { name: 'Ambidextrous', cost: 1 },
+                    { name: 'Arcane Background', cost: 1 },
+                    { name: 'Arcane Resistance', cost: 1 },
+                    { name: 'Improved Arcane Resistance', cost: 1 },
+                    { name: 'Aristocrat', cost: 1 },
+                    { name: 'Luck', cost: 1 }
                 ],
                 hindrances: [
-                    { name: 'All Thumbs' },
-                    { name: 'Anemic' },
-                    { name: 'Arrogant' },
-                    { name: 'Bad Eyes - Minor' },
-                    { name: 'Bad Eyes - Major' },
-                    { name: 'Bad Luck' },
-                    { name: 'Big Mouth' },
-                    { name: 'Blind' },
-                    { name: 'Bloodthirsty' },
+                    { name: 'All Thumbs', cost: 1 },
+                    { name: 'Anemic', cost: 1 },
+                    { name: 'Arrogant', cost: 2 },
+                    { name: 'Bad Eyes - Minor', cost: 1 },
+                    { name: 'Bad Eyes - Major', cost: 2 },
+                    { name: 'Bad Luck', cost: 2 },
+                    { name: 'Big Mouth', cost: 1 },
+                    { name: 'Blind', cost: 2 },
+                    { name: 'Bloodthirsty', cost: 2 },
                 ],
                 skills: [
                     { name: 'Academics' },
                     { name: 'Athletics (Agility)' },
                     { name: 'Athletics (Strength)' },
-                    { name: 'Battle' }
+                    { name: 'Battle' },
+                    { name: 'Common Knowledge' },
+                    { name: 'Fighting' },
+                    { name: 'Notice' },
+                    { name: 'Persuasion' },
+                    { name: 'Shooting' }
                 ],
                 arcaneBackgrounds: [
                     { name: 'Gifted' },
