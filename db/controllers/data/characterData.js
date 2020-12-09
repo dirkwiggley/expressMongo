@@ -47,8 +47,8 @@ function getCharacters() {
                     ],
                     modifiers: null
                 },
-                { name: 
-                    'Strength', 
+                { 
+                    name: 'Strength', 
                     dice: 'D6',
                     paid: [
                         'ATTRIBUTE_POINT'
@@ -67,24 +67,29 @@ function getCharacters() {
             edges: null,
             hindrances: null,
             skills: [ {
-                name: 'Common Knowledge',
+                name: 'Athletics (Agility)',
                 id: null, 
-                paid: [ 'FREE' ],
+                paid: [ 'CORE' ],
+                modifiers: null,
+            }, {
+              name: 'Common Knowledge',
+                id: null, 
+                paid: [ 'CORE' ],
                 modifiers: null,
             }, {
                 name: 'Notice',
                 id: null, 
-                paid: [ 'FREE' ],
+                paid: [ 'CORE' ],
                 modifiers: null,
             }, {
                 name: 'Persuasion',
                 id: null, 
-                paid: [ 'FREE' ],
+                paid: [ 'CORE' ],
                 modifiers: null,
             }, {
                 name: 'Stealth',
                 id: null, 
-                paid: [ 'FREE' ],
+                paid: [ 'CORE' ],
                 modifiers: null,
             }, {
                 name: 'Fighting',
@@ -101,7 +106,13 @@ function getCharacters() {
             powers: null,
             advances: 0,
             rank: 'Novice',
-            description: null, 
+            description: null,
+            characterPoints: {
+                attributePoints: 5,
+                skillPoints: 12,
+                hindrancePoints: 0,
+                raises: 0,
+            }
         }
     ]
 }

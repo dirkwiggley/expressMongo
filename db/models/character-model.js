@@ -70,7 +70,13 @@ const Character = new Schema(
             } ] } ],
         advances: { type: Number, required: true },
         rank: { type: String, required: true },
-        description: { type: String, required: false }
+        description: { type: String, required: false },
+        characterPoints: {
+            attributePoints: { type: Number, required: false},
+            skillPoints: { type: Number, required: false},
+            hindrancePoints: { type: Number, required: false},
+            raises: { type: Number, required: false},
+        }
     },
     { timestamps: true },
 )
