@@ -10,7 +10,8 @@ const Skill = new Schema(
         requires: [ { 
             dataType: { type: String, required: false }, 
             id: { type: String, required: false }, 
-            name: { type: String, required: false } } ],
+            name: { type: String, required: false },
+            attribute: { type: String, required: false} } ],
         special: [ { rule: { type: String, required: false} } ]
     },
     { timestamps: true },

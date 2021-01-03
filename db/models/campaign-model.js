@@ -37,7 +37,8 @@ const Campaign = new Schema(
                 cost: { type: Number, required: true } } ],
             skills: [ { 
                 id: { type: String, required: false }, 
-                name: { type: String, required: true } } ],
+                name: { type: String, required: true },
+                attribute: { type: String, required: true } } ],
             arcaneBackgrounds: [ { 
                 id: { type: String, required: false }, 
                 name: { type: String, required: true } } ],

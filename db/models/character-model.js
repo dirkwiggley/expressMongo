@@ -46,6 +46,7 @@ const Character = new Schema(
         skills: [ { 
             name: { type: String, required: true },
             id: { type: String, required: false }, 
+            attribute: { type: String, required: true },
             paid: [ { type: String, required: false } ],
             modifiers: [ {
                 name: { type: String, required: false },

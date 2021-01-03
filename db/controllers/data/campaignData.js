@@ -45,15 +45,15 @@ function getCampaigns() {
                     { name: 'Bloodthirsty', cost: 2 },
                 ],
                 skills: [
-                    { name: 'Academics' },
-                    { name: 'Athletics (Agility)' },
-                    { name: 'Athletics (Strength)' },
-                    { name: 'Battle' },
-                    { name: 'Common Knowledge' },
-                    { name: 'Fighting' },
-                    { name: 'Notice' },
-                    { name: 'Persuasion' },
-                    { name: 'Shooting' }
+                    { name: 'Academics', attribute: 'Smarts' },
+                    { name: 'Athletics (Agility)', attribute: 'Agility' },
+                    { name: 'Athletics (Strength)', attribute: 'Strength' },
+                    { name: 'Battle', attribute: 'Smarts' },
+                    { name: 'Common Knowledge', attribute: 'Smarts' },
+                    { name: 'Fighting', attribute: 'Agility' },
+                    { name: 'Notice', attribute: 'Smarts' },
+                    { name: 'Persuasion', attribute: 'Spirit' },
+                    { name: 'Shooting', attribute: 'Agility' }
                 ],
                 arcaneBackgrounds: [
                     { name: 'Gifted' },
@@ -114,15 +114,15 @@ function getCampaigns() {
                     { name: 'Bloodthirsty', cost: 2 },
                 ],
                 skills: [
-                    { name: 'Academics' },
-                    { name: 'Athletics (Agility)' },
-                    { name: 'Athletics (Strength)' },
-                    { name: 'Battle' },
-                    { name: 'Common Knowledge' },
-                    { name: 'Fighting' },
-                    { name: 'Notice' },
-                    { name: 'Persuasion' },
-                    { name: 'Shooting' }
+                    { name: 'Academics', attribute: 'Smarts' },
+                    { name: 'Athletics (Agility)', attribute: 'Agility' },
+                    { name: 'Athletics (Strength)', attribute: 'Strength' },
+                    { name: 'Battle', attribute: 'Smarts' },
+                    { name: 'Common Knowledge', attribute: 'Smarts' },
+                    { name: 'Fighting', attribute: 'Agility' },
+                    { name: 'Notice', attribute: 'Smarts' },
+                    { name: 'Persuasion', attribute: 'Spirit' },
+                    { name: 'Shooting', attribute: 'Agility' }
                 ],
                 arcaneBackgrounds: [
                     { name: 'Gifted' },

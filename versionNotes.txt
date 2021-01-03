@@ -80,3 +80,5 @@
 * More data seeder work
 12/9/2020
 * A little work on characters for character building
+1/2/2021
+* Some changes to seed data

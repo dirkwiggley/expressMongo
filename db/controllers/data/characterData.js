@@ -68,32 +68,38 @@ function getCharacters() {
             hindrances: null,
             skills: [ {
                 name: 'Athletics (Agility)',
-                id: null, 
+                id: null,
+                attribute: 'Agility', 
                 paid: [ 'CORE' ],
                 modifiers: null,
             }, {
               name: 'Common Knowledge',
                 id: null, 
+                attribute: 'Smarts',
                 paid: [ 'CORE' ],
                 modifiers: null,
             }, {
                 name: 'Notice',
                 id: null, 
+                attribute: 'Smarts',
                 paid: [ 'CORE' ],
                 modifiers: null,
             }, {
                 name: 'Persuasion',
                 id: null, 
+                attribute: 'Spirit',
                 paid: [ 'CORE' ],
                 modifiers: null,
             }, {
                 name: 'Stealth',
                 id: null, 
+                attribute: 'Agility',
                 paid: [ 'CORE' ],
                 modifiers: null,
             }, {
                 name: 'Fighting',
                 id: null, 
+                attribute: 'Agility',
                 paid: [ 'SKILL_POINT', 'SKILL_POINT' ],
                 modifiers: null,
             }, {
