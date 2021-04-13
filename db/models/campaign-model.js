@@ -32,9 +32,9 @@ const Campaign = new Schema(
                 name: { type: String, required: true },
                 cost: { type: Number, required: true } } ],
             hindrances: [ { 
-                id: { type: String, required: false }, 
+                id: { type: String, required: true }, 
                 name: { type: String, required: true },
-                cost: { type: Number, required: true } } ],
+                value: { type: Number, required: true } } ],
             skills: [ { 
                 id: { type: String, required: false }, 
                 name: { type: String, required: true },
